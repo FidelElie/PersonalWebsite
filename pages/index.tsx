@@ -49,7 +49,7 @@ export default function FrontPage() {
 
   useEffect(() => {
     if (experiences && experienceInitialLoad) {
-      setChosenExperiences([experiences[0]]);
+      setChosenExperiences(experiences.slice(0, 1));
       setExperienceInitialLoad(false);
     }
   }, [experiences]);
