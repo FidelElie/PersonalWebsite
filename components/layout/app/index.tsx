@@ -1,4 +1,5 @@
 // ! Next and React
+import Head from "next/head";
 import type { ReactNode } from "react";
 
 // ! Components
@@ -19,6 +20,9 @@ const AppLayout = (props : props) => {
 
   return (
     <div className="w-full min-h-screen flex flex-col">
+      <Head>
+        <title>CV | Fidel Pierre Elie</title>
+      </Head>
       <Navbar {...navbarProps}/>
       { children }
       <Footer/>

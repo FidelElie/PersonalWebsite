@@ -14,8 +14,6 @@ import Skills from "../components/pages/index/Skills";
 import Projects from "../components/pages/index/Projects";
 import Experiences from "../components/pages/index/Experiences";
 import Selector from "../components/pages/index/Selector";
-import Loading from "../components/misc/Loading";
-
 
 export default function FrontPage() {
   const [chosenProjects, setChosenProjects] = useState<EditedProjectsData[]>([]);
@@ -124,7 +122,7 @@ export default function FrontPage() {
             </div>
           </div>
           <div className="wrapper overflow-x-auto">
-            <div id="page">
+            <div id="page" className="shadow-lg">
               <Sidebar showReactTag={showReactTag}/>
               <div className="flex flex-col w-2/3 relative" id="main">
                 <div className="w-full mb-1">
@@ -147,7 +145,7 @@ export default function FrontPage() {
               </div>
             </div>
           </div>
-          <div className="text-tertiary space-x-2 my-3 no-print">
+          <div className="text-tertiary space-x-2 my-3 no-print md:hidden">
             <i className="fas fa-chevron-right" />
             <span className="text-sm">Scroll To See All</span>
           </div>
@@ -155,7 +153,11 @@ export default function FrontPage() {
             <div className="flex w-min rounded-md justify-center overflow-hidden shadow-lg md:flex-col md:sticky md:top-80">
               {
                 (projectsLoading && experiencesLoading) ? (
-                  <Loading/>
+                  <div className="p-5">
+                    <span className="text-primary">
+                      Loading Selectors
+                    </span>
+                  </div>
                 ) : (
                   <>
                       <button className="flex p-3 items-center bg-primary text-white whitespace-nowrap"

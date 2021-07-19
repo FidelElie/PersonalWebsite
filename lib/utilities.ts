@@ -45,5 +45,7 @@ const monthAndYear = (date: Date, truncateMonth = false) => {
     return `${formattedMonth} ${date.getFullYear()}`;
 }
 
+const numberArray = (startFrom: number, maxNumber: number) =>
+    Array.from({ length: maxNumber }, (_, i) => i + startFrom);
 
-export { joinClasses, newFirebaseId, convertTimestamp, monthAndYear };
+export { joinClasses, newFirebaseId, convertTimestamp, monthAndYear, numberArray };
