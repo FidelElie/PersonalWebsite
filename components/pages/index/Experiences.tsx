@@ -2,18 +2,14 @@
 import { convertTimestamp, monthAndYear } from "../../../lib/utilities";
 
 // ! Components
-import Loading from "../../misc/Loading";
 import PageSection from "../../misc/PageSection"
+import Skeleton from "../../misc/Skeleton";
 
 const Experiences = (props: any) => {
   const { experiences, loading } = props;
   return (
     <PageSection title="Relevant Work Experience" alternate>
-      {
-        loading && (
-          <span className="text-tertiary my-5">Fetching Work Experience, Please Wait</span>
-        )
-      }
+      { loading && <Skeleton id="experience-skeleton" lines={6} className="mt-3"/> }
       {
         (experiences && !loading) && (
           experiences.length != 0 ? (

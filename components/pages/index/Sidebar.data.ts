@@ -78,12 +78,16 @@ const sidebarPoints: sidebarPointProps[] = [
         subPoints: [{ text: "Cakes, Cookies, Cheesecakes" }]
       },
       {
-        text: "Photography",
-        subPoints: [{ text: "Instagram" }]
+        text: "Technology",
+        subPoints: [{ text: "Computers, Photography" }]
       },
       {
         text: "Exercise",
         subPoints: [{ text: "Boxing, Skipping, Weight Lifting" }]
+      },
+      {
+        text: "Music",
+        subPoints: [{ text: "R'n'B, Hip Hop, Jazz, Classic Rock" }]
       }
     ]
   }

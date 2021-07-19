@@ -75,7 +75,7 @@ const ProjectEntry = (props: any) => {
   const { project, selectFieldForDeletion } = props;
 
   return (
-    <div className="flex flex-col justify-between my-2 md:flex-row md:justify-start">
+    <div className="w-full flex flex-col justify-between my-2 md:flex-row md:justify-start">
       <div className="flex flex-col flex-grow md:mr-10">
         <span className="text-lg text-secondary">{ project.title }</span>
         <div className="mb-3">
