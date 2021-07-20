@@ -114,6 +114,7 @@ export default function FrontPage() {
                 </div>
                 <Display
                   title="Skills & Expertise"
+                  className="flex flex-wrap"
                   EntryComponent={SkillEntry}
                   loading={skillsLoading}
                   data={cvData.skills}

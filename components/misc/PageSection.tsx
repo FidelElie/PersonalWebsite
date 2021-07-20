@@ -5,11 +5,12 @@ import { joinClasses } from "../../lib/utilities";
 type props = {
   title: string,
   alternate?: boolean,
+  className?: string,
   children: ReactNode
 }
 
 const PageSection = (props: props) => {
-  const { title, alternate, children } = props;
+  const { title, alternate, className, children } = props;
 
   return (
     <div className="section flex flex-col">
@@ -19,7 +20,11 @@ const PageSection = (props: props) => {
       })}>
         { title }
       </h2>
-      { children }
+      <div className={joinClasses("", {
+        [className!]: className
+      })}>
+        { children }
+      </div>
     </div>
   )
 }
