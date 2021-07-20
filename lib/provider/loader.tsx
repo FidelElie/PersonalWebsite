@@ -4,16 +4,16 @@ import React, { useState, createContext, useContext, ReactNode } from "react";
 // ! Components
 import Modal from "../../components/misc/Modal";
 
-type providerValue = {
+type contextType = {
   openLoader: Function,
   closeLoader: Function,
-  toggleLoader: Function
+  toggleLoader: Function,
 }
 
-const LoaderContext = createContext<providerValue>({
+const LoaderContext = createContext<contextType>({
   openLoader: () => {},
   closeLoader: () => {},
-  toggleLoader: () => {}
+  toggleLoader: () => {},
 });
 
 const LoaderProvider = ({ children }: { children: ReactNode }) => {
@@ -23,25 +23,41 @@ const LoaderProvider = ({ children }: { children: ReactNode }) => {
     <LoaderContext.Provider value={{
       openLoader: () => setLoaderVisible(true),
       closeLoader: () => setLoaderVisible(false),
-      toggleLoader: () => setLoaderVisible(!loaderVisible)
+      toggleLoader: () => setLoaderVisible(!loaderVisible),
     }}>
       <Modal
         id="loader-modal"
         isOpen={loaderVisible}
-        onClose={() => { }}
+        onClose={() => {}}
         disableClickOverlay
         elevation={40}
       >
-        <span className="text-7xl text-white opacity-90">
-          <i className="fas fa-spinner fa-spin" />
-        </span>
+        <div className="w-full flex flex-col items-center justify-center">
+          <span className="text-8xl text-white">
+            <i className="fas fa-spinner fa-spin"/>
+          </span>
+        </div>
       </Modal>
-      {children}
+      { children }
     </LoaderContext.Provider>
   )
 }
 
-const useLoader = () => useContext(LoaderContext);
+const useLoader = () => {
+  const { openLoader, closeLoader, toggleLoader } = useContext(LoaderContext);
+
+  const startClose = (autoClose: number = 0) => {
+    setTimeout(() => {
+      closeLoader()
+    }, autoClose);
+  }
+
+  return {
+    openLoader,
+    closeLoader: startClose,
+    toggleLoader
+  }
+};
 
 export default LoaderProvider;
 export { useLoader };

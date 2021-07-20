@@ -49,7 +49,7 @@ const SignOutButton = () => {
       router.push("/")
     }
 
-    closeLoader();
+    closeLoader(500);
   }
 
   return (
