@@ -11,12 +11,13 @@ import AppLayout from "../../../components/layout/app";
 import ProjectsForm from "../../../components/pages/admin/Projects.form";
 import ExperiencesForm from "../../../components/pages/admin/Experiences.form";
 import Loading from "../../../components/misc/Loading";
+import SkillsForm from "../../../components/pages/admin/Skills.form";
 
 const formMapping = [
   { collection: "projects", Component: ProjectsForm },
-  { collection: "experiences", Component: ExperiencesForm }
+  { collection: "experiences", Component: ExperiencesForm },
+  { collection: "skills", Component: SkillsForm }
 ]
-
 
 export default function MutateCollection() {
   const router = useRouter();
@@ -25,14 +26,14 @@ export default function MutateCollection() {
   return (
     <AppLayout signOutButton>
       <div className="flex-grow mx-auto p-5 container box-border flex flex-col items-center mx:p-10">
-        <div className="w-full mb-3">
-          <Link href="/admin/home">
-            <a>Back To Home</a>
-          </Link>
-        </div>
         <div className="flex flex-col w-full shadow-lg rounded-md overflow-hidden lg:w-2/3">
-          <div className="flex w-full items-center bg-primary p-5">
-            <span className="text-white text-2xl capitalize">{ mode } { collection }</span>
+          <div className="flex w-full items-center justify-between bg-primary p-5">
+            <span className="text-white text-2xl capitalize tracking-tighter">
+              { mode } { collection }
+            </span>
+            <Link href="/admin/home">
+              <a className="bg-white button text-primary">Back To Home</a>
+            </Link>
           </div>
           <div className="flex flex-col p-5">
             { mode == "add" && <AddMode collection={collection}/> }

@@ -8,30 +8,39 @@ import { joinClasses } from "../../lib/utilities";
 
 // ! Components
 import AppLayout from "../../components/layout/app";
-import ProjectsDisplay from "../../components/pages/admin/home/Projects.display";
-import ExperiencesDisplay from "../../components/pages/admin/home/Experiences.display";
+import DataDisplay, {
+  SkillsEntry,
+  ProjectEntry,
+  ExperienceEntry
+} from "../../components/pages/admin/home/DataDisplay";
 
 const displays = [
+  {
+    key: "skills",
+    text: "Skills",
+    addURL: "/admin/skills/add",
+    editURL: "/admin/skills/edit",
+    Component: SkillsEntry
+  },
   {
     key: "projects",
     text: "Projects",
     addURL: "/admin/projects/add",
     editURL: "/admin/projects/edit",
-    Component: ProjectsDisplay
+    Component: ProjectEntry
   },
   {
     key: "experiences",
     text: "Work Experiences",
     addURL: "/admin/experiences/add",
     editURL: "/admin/experiences/edit",
-    Component: ExperiencesDisplay
+    Component: ExperienceEntry
   }
 ]
 
 export default function AdminHome() {
   const [display, setDisplay] = useState<string>(displays[0].key);
   const currentDisplay = displays.find(data => data.key == display);
-  const DisplayComponent = currentDisplay!.Component;
 
   return (
     <AppLayout signOutButton>
@@ -61,7 +70,14 @@ export default function AdminHome() {
             </Link>
           </div>
           <div className="flex flex-col p-5">
-            <DisplayComponent/>
+            {
+              currentDisplay && (
+                <DataDisplay
+                  collection={currentDisplay.key}
+                  EntryComponent={currentDisplay.Component}
+                />
+              )
+            }
           </div>
         </div>
       </div>
