@@ -2,7 +2,12 @@ import { destroyCookie } from "nookies";
 
 import type { NextApiResponse } from "next";
 
-export default function logOut(_: null, res: NextApiResponse) {
-    destroyCookie({ res }, "session", { path: "/" });
-    res.status(200).json({ status: "success" });
+export default (_: null, res: NextApiResponse) => {
+    try {
+        destroyCookie({ res }, "session", { path: "/" });
+        return res.status(200).json({ status: "success", error: null });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ status: "error", error: "server"});
+    }
 }
