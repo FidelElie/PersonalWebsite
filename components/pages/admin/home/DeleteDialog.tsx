@@ -24,7 +24,7 @@ const DeleteDialog = (props: any) => {
           <i className="fas fa-exclamation-circle text-white text-2xl"/>
         </div>
         <div className="px-5 py-3">
-          <span className="text-secondary">{ text }</span>
+          <span className="text-secondary capitalize">{ text }</span>
         </div>
         <div className="flex justify-end space-x-2 px-5 py-3">
           <button className="button bg-tertiary text-white" onClick={closeDialog}>
