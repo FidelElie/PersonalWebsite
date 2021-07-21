@@ -81,9 +81,13 @@ const TagInput = (props: any) => {
       />
       {
         data && (
-          <datalist id="tags-list">
-            { data.tags.map((tag: string) => <option key={`dl-${tag}`}>{ tag }</option>)}
-          </datalist>
+          data.tags && (
+            <datalist id="tags-list">
+              {
+                data.tags.map((tag: string) => <option key={`dl-${tag}`}>{ tag }</option>)
+              }
+            </datalist>
+          )
         )
       }
       <button
