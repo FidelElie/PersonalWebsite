@@ -108,7 +108,7 @@ a { @apply underline text-primary; }
 
 @media print
 {
-  .page {
+  #page {
     @apply rounded-none border-none;
   }
   .no-print, .no-print * { display: none !important; }
