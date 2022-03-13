@@ -1,10 +1,12 @@
 module.exports = {
   reactStrictMode: true,
-  redirects() {
-    return [
-      process.env.MAINTENANCE_MODE === "1"
-        ? { source: "/((?!maintenance).*)", destination: "/maintenance.html", permanent: false }
-        : null,
-    ].filter(Boolean);
+  webpack(config) {
+    const fileLoaderRule = config.module.rules.find(rule => rule.test && rule.test.test('.svg'))
+    fileLoaderRule.exclude = /\.svg$/
+    config.module.rules.push({
+      test: /\.svg$/,
+      loader: require.resolve('@svgr/webpack')
+    })
+    return config
   }
 }

@@ -1,16 +1,18 @@
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-import "react-datepicker/dist/react-datepicker.css";
-import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
-import "../styles/_app.css";
+import "./_app.css";
 
-import LoaderProvider from "../lib/provider/loader";
+const queryClient = new QueryClient();
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
-    <LoaderProvider>
+    <QueryClientProvider client={queryClient}>
       <Component {...pageProps} />
-    </LoaderProvider>
+      <ReactQueryDevtools initialIsOpen={false}/>
+    </QueryClientProvider>
   )
 }
-export default MyApp;
+export default App;
