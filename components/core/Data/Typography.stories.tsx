@@ -1,7 +1,7 @@
 import Typography from "./Typography";
 
 export default {
-	title: "Core/Inputs/Typography",
+	title: "Core/Data/Typography",
 	component: Typography
 }
 

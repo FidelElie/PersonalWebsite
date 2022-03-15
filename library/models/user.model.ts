@@ -7,8 +7,9 @@ import type { User } from "../types";
 const SCHEMA_OPTIONS = { timestamps: true }
 
 const UserSchema = new Schema<User>({
-	forename: { type: String, trim: true, required: true },
-	surname: { type: String, required: true },
+	username: { type: String, trim: true, unique: true },
+	forename: { type: String, trim: true },
+	surname: { type: String },
 	email: { type: String, trim: true, lowercase: true, required: true, unique: true, index: true },
 	strategies: { password: { type: String }, code: { type: String } },
 	confirmed: { type: Boolean, default: false },

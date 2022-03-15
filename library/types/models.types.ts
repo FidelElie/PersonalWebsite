@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
 
 interface User {
-	forename: string,
-	surname: string,
+	username: string,
+	forename?: string,
+	surname?: string,
 	email: string,
 	strategies: {
 		password?: string,

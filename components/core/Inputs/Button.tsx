@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, MouseEventHandler } from "react";
 import classNames from "classnames";
 
 const Config = {
@@ -17,7 +17,8 @@ const Button = (props: ButtonProps) => {
 		theme = "primary",
 		size = "base",
 		type = "button",
-		children
+		children,
+		onClick
 	} = props;
 
 	return (
@@ -29,6 +30,7 @@ const Button = (props: ButtonProps) => {
 				size && Config.sizes[size],
 				className,
 			)}
+			onClick={onClick}
 		>
 			{ children }
 		</button>
@@ -40,7 +42,8 @@ interface ButtonProps {
 	theme?: keyof typeof Config.themes,
 	size?: keyof typeof Config.sizes,
 	type?: "button" | "submit",
-	children?: ReactNode
+	children?: ReactNode,
+	onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 export default Button;

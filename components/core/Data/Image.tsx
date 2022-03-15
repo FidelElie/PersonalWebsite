@@ -29,12 +29,12 @@ const Image = (props: ImageProps) => {
 }
 
 interface ImageProps {
-	src: string,
+	src: string | StaticImageData,
 	className?: string,
 	fit?: "fill" | "contain" | "cover" | "none" | "scale-down",
 	loading?: "lazy" | "eager",
 	onLoadingComplete?: (result: { naturalWidth: number; naturalHeight: number; }) => void,
-	unoptimized: boolean
+	unoptimized?: boolean
 }
 
 export default Image;
