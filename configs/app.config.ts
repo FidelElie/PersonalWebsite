@@ -29,7 +29,7 @@ const fetchEnvironmentVariables = (map: ({[key: string]: string } | string[] )) 
 
 const checkAllEnvironmentVariablesSet = (map: { [key: string]: any }) => {
 	if (Object.values(map).some(keyValue => !keyValue)) {
-		throw new Error("Invalid Configuration for firebase client, missing environment variables.");
+		throw new Error(`Invalid Configuration, config requires ${Object.values(map).join(", ")}`);
 	}
 }
 

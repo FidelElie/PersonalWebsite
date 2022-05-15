@@ -1,0 +1,19 @@
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import Flex from "./Flex";
+
+<Meta title="Core/Layouts/Flex" component={Flex}/>
+
+# Flex (FlexBox)
+Flexbox component for defining flex containers quickly with directional helper components baked in.
+
+## Components
+`<Flex/>` For general flex containers (use if you know directions will have to change for component).
+`<Flex.Row/>` For row aligned content.
+`<Flex.Col/>` For column aligned content.
+`<Flex.RowReverse/>` For row reverse aligned content.
+`<Flex.ColReverse/>` For column reverse aligned content.
+
+## Props
+`direction` props is omitted for all directional Components
+
+<ArgsTable of={Flex}/>
