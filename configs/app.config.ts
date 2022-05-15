@@ -16,7 +16,12 @@ type AppConfigType = {
 	// 	},
 	// 	databaseUrl: string
 	// },
-	mongodb: string
+	mongodb: string,
+	spotify: {
+		clientId: string,
+		clientSecret: string,
+		redirectUri: string
+	}
 }
 
 const fetchEnvironmentVariables = (map: ({[key: string]: string } | string[] )) => {
@@ -78,6 +83,19 @@ const AppConfig: AppConfigType = {
 			.replace("<MONGO_USERNAME>", mappedEnvironmentKeys.MONGO_USERNAME as string)
 			.replace("<MONGO_PASSWORD>", mappedEnvironmentKeys.MONGO_PASSWORD as string)
 			.replace("<MONGO_DATABASE>", mappedEnvironmentKeys.MONGO_DATABASE as string)
+	})(),
+	spotify: (() => {
+		const spotifyKeys = {
+			clientId: "SPOTIFY_CLIENT_ID",
+			clientSecret: "SPOTIFY_CLIENT_SECRET",
+			redirectUri: "SPOTIFY_REDIRECT_URI"
+		}
+
+		const mappedEnvironmentKeys = fetchEnvironmentVariables(spotifyKeys);
+
+		checkAllEnvironmentVariablesSet(mappedEnvironmentKeys);
+
+		return mappedEnvironmentKeys as AppConfigType["spotify"];
 	})()
 }
 

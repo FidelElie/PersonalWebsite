@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, ElementType } from "react";
 
 import { joinClasses } from "@/library/utilities";
 
@@ -70,7 +70,7 @@ const Flex = (props: FlexProps) => {
 }
 interface FlexProps {
 	className?: string,
-	as?: "div" | "span",
+	as?: ElementType,
 	direction?: keyof typeof FLEX_DIRECTIONS,
 	align?: keyof typeof FLEX_ALIGNMENTS,
 	justify?: keyof typeof FLEX_JUSTIFICATIONS,
