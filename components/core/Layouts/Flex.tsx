@@ -1,6 +1,6 @@
 import React, { ReactNode, ElementType } from "react";
 
-import { joinClasses } from "@/library/utilities";
+import classNames from "classnames";
 
 const FLEX_DIRECTIONS = {
 	row: "flex-row",
@@ -44,7 +44,7 @@ const Flex = (props: FlexProps) => {
 	} = props;
 	return (
 		<Tag
-			className={joinClasses(
+			className={classNames(
 				"flex",
 				{
 					[FLEX_DIRECTIONS[direction ?? "row"]]: !!direction,

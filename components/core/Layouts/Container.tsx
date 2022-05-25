@@ -1,8 +1,6 @@
 import { ElementType, ReactNode } from "react";
 
-import "./Container.scss";
-
-import { joinClasses } from "@/library/utilities";
+import classNames from "classnames";
 
 const Container = (props: ContainerProps ) => {
 	const {
@@ -13,7 +11,7 @@ const Container = (props: ContainerProps ) => {
 
 	return (
 		<Tag
-			className={joinClasses("container", {
+			className={classNames("container", {
 				[className as string]: className
 			})}
 		>

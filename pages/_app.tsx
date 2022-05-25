@@ -4,6 +4,10 @@ import { QueryClientProvider, QueryClient } from "react-query";
 
 import "./_app.css";
 
+import { theme } from "@/library/harmony";
+
+console.log(theme)
+
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = useRef((() => new QueryClient())());
 

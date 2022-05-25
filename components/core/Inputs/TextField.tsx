@@ -1,6 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler, forwardRef } from "react";
-
-import { joinClasses } from "@/library/utilities";
+import classNames from "classnames";
 
 const TextField = forwardRef<HTMLInputElement, { label: string } & ReturnType<any>>((props: TextFieldProps, ref) => {
 	const {
@@ -28,7 +27,7 @@ const TextField = forwardRef<HTMLInputElement, { label: string } & ReturnType<an
 			}
 			<input
 				ref={ref}
-				className={joinClasses("w-full py-2.5 px-2 focus:outline-primary shadow-lg", {
+				className={classNames("w-full py-2.5 px-2 focus:outline-primary shadow-lg", {
 					"rounded-r-md": Icon,
 					"rounded-md": !Icon
 				})}

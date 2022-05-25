@@ -8,6 +8,8 @@ export default {
 	component: Image
 } as Meta;
 
-const Template: Story<ImageProps> = (args) => <Image {...args}>Image</Image>;
+const Template: Story<Omit<ImageProps, "src">> = (args) => (
+	<Image src="" {...args}/>
+);
 
 export const Basic = Template.bind({});

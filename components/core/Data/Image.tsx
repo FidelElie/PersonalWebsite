@@ -1,6 +1,5 @@
 import NextImage, { StaticImageData } from "next/image";
-
-import { joinClasses } from "@/library/utilities";
+import classNames from "classnames";
 
 const Image = (props: ImageProps) => {
 	const {
@@ -13,9 +12,7 @@ const Image = (props: ImageProps) => {
 	} = props;
 	return (
 		<NextImage
-			className={joinClasses("Image", {
-				[className as string]: className
-			})}
+			className={classNames("Image", className)}
 			src={src}
 			objectFit={fit}
 			loading={loading}

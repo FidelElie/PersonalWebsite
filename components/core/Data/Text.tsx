@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { joinClasses } from "@/library/utilities";
+import classNames from "classnames";
 
 const Text = (props: TextProps) => {
 	const {
@@ -16,7 +16,7 @@ const Text = (props: TextProps) => {
 	} = props;
 
 	return (
-		<Tag className={joinClasses()}>
+		<Tag className={classNames(className)}>
 			{children}
 		</Tag>
 	)

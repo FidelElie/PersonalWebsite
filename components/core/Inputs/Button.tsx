@@ -1,6 +1,5 @@
 import React, { MouseEventHandler, ReactNode } from "react";
-
-import { joinClasses } from "@/library/utilities";
+import classNames from "classnames";
 
 import { LinkConfig } from "../Navigation/Link";
 
@@ -31,12 +30,10 @@ const Button = (props: ButtonProps) => {
 		<button
 			type={type}
 			onClick={onClick}
-			className={joinClasses(
+			className={classNames(
 				(!custom) && ButtonConfig.base,
 				(!custom && theme) && ButtonConfig.themes[theme],
-				{
-					[className as string]: className
-				}
+				className
 			)}
 			disabled={disabled}
 		>
@@ -52,14 +49,15 @@ const LinkButton = (props: ButtonProps & { alt?: boolean }) =>	{
 
 	return (
 		<Button
-			className={joinClasses(
+			className={classNames(
 				LinkConfig.base,
 				{
 					[LinkConfig.primary]: !alt,
 					[LinkConfig.alternate]: alt,
-					[className as string]: className
-				}
+				},
+				className
 			)}
+			custom
 			{...otherProps}
 		/>
 	)

@@ -5,9 +5,8 @@
 
 body {
   font-family: "Lato", sans-serif;
+  @apply bg-darkgray;
 }
-
-a { @apply underline text-primary; }
 
 @media print
 {

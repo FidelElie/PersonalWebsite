@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
 import NextLink from "next/link";
+import { ReactNode } from "react";
+import classNames from "classnames";
 
-import { joinClasses } from "@/library/utilities";
 
 const LinkConfig = {
 	base: "underline underline-offset-2 decoration-2 decoration-cyan-600",
@@ -13,7 +13,7 @@ const Link = (props: LinkProps) => {
 	const { href, as, alt, children } = props;
 	return (
 		<NextLink href={href} as={as}>
-			<a className={joinClasses(
+			<a className={classNames(
 				LinkConfig.base,
 				{
 					[LinkConfig.primary]: !alt,

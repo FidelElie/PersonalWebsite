@@ -1,5 +1,5 @@
 import { ElementType, ReactNode } from "react";
-import { joinClasses } from "@/library/utilities";
+import classNames from "classnames";
 
 const Box = (props: BoxProps) => {
 	const {
@@ -11,7 +11,7 @@ const Box = (props: BoxProps) => {
 	} = props;
 	return (
 		<Tag
-			className={joinClasses(
+			className={classNames(
 				{
 					"w-screen h-screen": screen,
 					"w-full h-full": parent,
