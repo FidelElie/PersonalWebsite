@@ -1,16 +1,17 @@
 module.exports = {
-  purge: [
+  content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./lib/**/*.{js,ts,jsx,tsx}"
+    "./library/**/*.{js,ts,jsx,tsx}"
   ],
-  darkMode: false,
   theme: {
     extend: {
       colors: {
         "primary": "#248cfb",
         "secondary": "#282C34",
-        "tertiary": "#7b869b"
+        "tertiary": "#7b869b",
+        "accent1": "#F46036",
+        "accent2": "#F9ADA0"
       },
     }
   },
@@ -19,6 +20,5 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/forms"),
-    require("tailwind-scrollbar"),
   ],
 }
