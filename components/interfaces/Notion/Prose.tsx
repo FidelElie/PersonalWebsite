@@ -14,16 +14,16 @@ const Prose = {
 	) => (
 		<Box.Section className={clsx(
 			"last:mb-0",
-			level === 1 && "mb-2",
-			level === 2 && "mb-1",
-			level === 3 && "mb-0.5"
+			level === 1 && "mb-5",
+			level === 2 && "mb-3",
+			level === 3 && "mb-1.5"
 		)}>
 			<Heading
 				className={clsx(
-					"tracking-tighter mb-1 text-white underline decoration-2 underline-offset-4",
-					level === 1 && "decoration-primary text-2xl md:text-3xl",
-					level === 2 && "decoration-accent1 text-xl md:text-2xl",
-					level === 3 && "decoration-accent2 text-lg md:text-xl"
+					"tracking-tighter text-white underline decoration-2 underline-offset-4",
+					level === 1 && "decoration-primary text-2xl md:text-3xl mb-2",
+					level === 2 && "decoration-accent1 text-xl md:text-2xl mb-1.5",
+					level === 3 && "decoration-accent2 text-lg md:text-xl mb-1"
 				)}
 				level={level + 1 as 2 | 3 | 4}
 			>
