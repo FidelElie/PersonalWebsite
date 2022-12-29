@@ -1,8 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
-
 body, html {
 	background-color: #282C34;
-	font-family: 'Fira Code', monospace;
 }
 
 @tailwind base;

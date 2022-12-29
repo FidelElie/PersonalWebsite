@@ -1,4 +1,5 @@
 import type { ElementType, ReactNode } from "react"
+import clsx from "clsx";
 
 const Heading = (props: HeadingProps) => {
 	const { className, level = 1, children  } = props;
@@ -6,7 +7,7 @@ const Heading = (props: HeadingProps) => {
 	const HeadingTag = `h${level}` as ElementType;
 
 	return (
-		<HeadingTag className={className}>
+		<HeadingTag className={clsx("tracking-tighter", className)}>
 			{ children }
 		</HeadingTag>
 	)

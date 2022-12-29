@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 
 const Page = (props: PageProps) => {
 	const {
+		className,
+		mainClassName,
 		title = "Home",
 		description,
 		keywords,
@@ -19,7 +21,7 @@ const Page = (props: PageProps) => {
 	const robotsContent = determineRobotsTagContent(index, follow);
 
 	return (
-		<div className="flex flex-col">
+		<div className={clsx("flex flex-col min-h-screen", className)}>
 			<Head>
 				<title>{pageTitle}</title>
 				{ description && <meta name="description" content={description}/> }
@@ -34,13 +36,15 @@ const Page = (props: PageProps) => {
 				{ !robotsContent && <meta name="robots" content={robotsContent}/> }
 			</Head>
 			{ header && <header>{header}</header> }
-			<main className={clsx(container && "px-5 container max-w-3xl pb-5 mx-auto md:px-0")}>
+			<main className={clsx(
+				container && "px-5 container max-w-3xl pb-5 mx-auto md:px-0",
+				mainClassName
+			)}>
 				{ children }
 			</main>
 		</div>
 	)
 }
-
 
 const determineRobotsTagContent = (index: boolean | undefined, follow: boolean | undefined) => {
 	const getIndexFlag = (indexProp: boolean) => indexProp ? "index" : "noindex";
@@ -54,6 +58,8 @@ const determineRobotsTagContent = (index: boolean | undefined, follow: boolean |
 }
 
 interface PageProps {
+	className?: string,
+	mainClassName?: string,
 	title?: string,
 	description?: string,
 	keywords?: string | string[],

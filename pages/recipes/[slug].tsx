@@ -29,25 +29,30 @@ const RecipePage: NextPage<RecipeWithContent> = (props) => {
 				<Text as="span" className="text-white text-sm">Recipes</Text>
 			</Link>
 			<Box as="article">
-				<Box.Section className="mb-5 space-y-2">
+				<Box.Section className="space-y-2">
 					<Heading className="font-bold text-white text-3xl tracking-tighter md:text-4xl">
 						{name}
 					</Heading>
-					<Flex align="center">
-						<Icon name="clock" className="mr-2 text-tertiary"/>
-						<Text as="span" className="text-tertiary text-xs md:text-sm">5min read</Text>
-					</Flex>
 					<Flex>
 						<Icon name="calendar" className="mr-2 text-tertiary" />
-						<Text as="span" className="text-tertiary text-xs md:text-sm">
+						<Text as="span" className="text-white text-xs md:text-sm">
 							{dayjs(createdAt).format("MMMM YYYY")}
 						</Text>
 					</Flex>
-					<Flex className="gap-1" wrap>
-						{ tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>) }
+					<Flex align="center">
+						<Icon name="tag" className="mr-2 text-tertiary" />
+						<Flex className="gap-1" wrap>
+							{ tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>) }
+						</Flex>
 					</Flex>
-					{ difficulty && <Tag bg="accent1">{difficulty}</Tag> }
+					{ difficulty && (
+						<Flex align="center">
+							<Icon name="chart-bar" className="mr-2 text-tertiary"/>
+							<Tag bg="accent1">{difficulty}</Tag>
+						</Flex>
+					) }
 				</Box.Section>
+				<hr className="mt-5 mb-4"></hr>
 				<Content nodes={parseNotionBlocks(content)}/>
 			</Box>
 		</Page>

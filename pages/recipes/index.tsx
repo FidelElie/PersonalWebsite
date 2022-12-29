@@ -5,16 +5,19 @@ import dayjs from "dayjs";
 import notion from "@/configs/notion";
 import { getPropertyValue, type PageObjectResponse } from "@/library/integrations/notion";
 
-import { Page, Navbar, Tag, Flex, Text, Box } from "@/components/core";
+import { Page, Navbar, Tag, Flex, Text, Box, Heading } from "@/components/core";
 
 const RecipesPage: NextPage<RecipesProps> = ({ recipes }) => {
+	const description = "All the recipes I can be bothered to remember and write about, in one easy to find place.";
+
 	return (
 		<Page
 			title="Recipes"
+			description={description}
 			header={<Navbar/>}
 			container
 		>
-			<Box className="grid gap-4 grid-cols-1 md:grid-cols-2 ">
+			<Box className="grid gap-5 grid-cols-1 md:grid-cols-2">
 				{
 					recipes.map((recipe) => {
 						return (
@@ -23,9 +26,9 @@ const RecipesPage: NextPage<RecipesProps> = ({ recipes }) => {
 								key={recipe.id}
 								className="flex flex-col bg-tertiary bg-opacity-20 p-3 space-y-1 shadow-sm cursor-pointer hover:bg-opacity-40 transition-all duration-200"
 							>
-								<Text className="text-white tracking-tighter font-semibold text-sm">
+								<Heading level={3} className="text-white text-sm">
 									{ recipe.name }
-								</Text>
+								</Heading>
 								<Text className="text-xs text-tertiary font-light tracking-tighter">
 									{dayjs(recipe.createdAt).format("DD/MM/YYYY")}
 								</Text>
@@ -43,7 +46,10 @@ const RecipesPage: NextPage<RecipesProps> = ({ recipes }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-	const { results } = await notion.databases.recipes.query();
+	const { results } = await notion.databases.recipes.query({
+		page_size: 12,
+		sorts: [{ timestamp: "created_time", direction: "ascending" }]
+	});
 
 	const recipes = (results as PageObjectResponse[]).map(recipe => {
 		return {

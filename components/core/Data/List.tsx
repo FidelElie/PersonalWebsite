@@ -9,7 +9,8 @@ const List = (props: ListProps) => {
 	return (
 		<ListTag
 			className={clsx(
-				// ordered ? "list-decimal" : "list-disc",
+				"ml-5",
+				ordered ? "list-decimal" : "list-disc",
 				className
 			)}
 		>
@@ -21,7 +22,7 @@ const List = (props: ListProps) => {
 const ListItem = (props: ListItemProps) => {
 	const { className, children } = props;
 
-	return <li className={className}>{children}</li>;
+	return <li className={clsx("font-text font-light", className)}>{children}</li>;
 }
 
 const OrderedList = (props: ListTypedProps) => <List {...props} ordered />;
