@@ -9,7 +9,7 @@ import {
 	BlockObjectResponse
 } from "@/library/integrations/notion";
 
-import { Navbar, Page, Icon, Link, Text, Box, Flex, Heading } from "@/components/core";
+import { Navbar, Page, Icon, Link, Text, Box, Flex, Heading, Tag } from "@/components/core";
 import { Content } from "@/components/interfaces";
 
 const RecipePage: NextPage<RecipeWithContent> = (props) => {
@@ -44,26 +44,9 @@ const RecipePage: NextPage<RecipeWithContent> = (props) => {
 						</Text>
 					</Flex>
 					<Flex className="gap-1" wrap>
-						{
-							tags.map((tag) => (
-								<div
-									key={tag.id}
-									className="px-2 py-1 whitespace-nowrap bg-opacity-40 bg-primary text-white font-light tracking-tighter text-xs"
-								>
-									{tag.name}
-								</div>
-							))
-						}
+						{ tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>) }
 					</Flex>
-					{
-						difficulty && (
-							<div
-								className="px-2 py-1 whitespace-nowrap bg-opacity-40 bg-accent1 text-white font-light tracking-tighter text-xs w-min"
-							>
-								{difficulty}
-							</div>
-						)
-					}
+					{ difficulty && <Tag bg="accent1">{difficulty}</Tag> }
 				</Box.Section>
 				<Content nodes={parseNotionBlocks(content)}/>
 			</Box>
@@ -81,7 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 				slug: getPropertyValue(recipe.properties.Slug, recipe.id) as string
 			}
 		})),
-		fallback: true
+		fallback: "blocking"
 	}
 }
 
@@ -96,27 +79,19 @@ export const getStaticProps: GetStaticProps<RecipeWithContent> = async (context)
 			createdAt: recipe.created_time,
 			name: getPropertyValue(recipe.properties.Name) as string,
 			description: getPropertyValue(recipe.properties.Description, null) as string,
-			tags: getPropertyValue(recipe.properties.Tags) as { id: string, name: string }[],
+			tags: getPropertyValue(recipe.properties.Tags, []) as { id: string, name: string }[],
 			difficulty: getPropertyValue(recipe.properties.Difficulty) as string,
 			content: contentResponse.results as BlockObjectResponse[]
 		}
 	}
 
-	let recipe = null;
-
 	const slugResponse = await notion.databases.recipes.query({
 		filter: { property: "Slug", rich_text: { equals: slug } }
 	});
 
-	if (!slugResponse.results.length) {
-		const pageResponse = await notion.pages.retrieve(slug);
+	if (!slugResponse.results.length) { return { notFound: true } }
 
-		if (pageResponse) { recipe = pageResponse; }
-	} else {
-		recipe = slugResponse.results[0];
-	}
-
-	const recipeWithContent = await transformRecipe(recipe as PageObjectResponse);
+	const recipeWithContent = await transformRecipe(slugResponse.results[0] as PageObjectResponse);
 
 	return { props: recipeWithContent }
 }
