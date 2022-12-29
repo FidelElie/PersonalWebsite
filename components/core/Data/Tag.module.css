@@ -1,0 +1,6 @@
+.Tag {
+	display: flex;
+	align-items: center;
+	white-space: nowrap;
+	@apply px-2 py-1 tracking-tighter font-light text-xs w-min text-white bg-opacity-40;
+}
