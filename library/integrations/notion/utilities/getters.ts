@@ -12,6 +12,8 @@ export const getPropertyValue = <ValueFallback extends any>(
 			return (
 				property.rich_text && property.rich_text.length ? property.rich_text : [{ plain_text: fallback }]
 			)[0].plain_text;
+		case "select":
+			return property.select ? property.select.name : fallback;
 		case "multi_select":
 			return property.multi_select;
 		default:
