@@ -16,6 +16,8 @@ export const getPropertyValue = <ValueFallback extends any>(
 			return property.select ? property.select.name : fallback;
 		case "multi_select":
 			return property.multi_select;
+		// case "files":
+		// 	return property.files && property.files.length ? property.files : [{ }]
 		default:
 			return property.toString();
 	}

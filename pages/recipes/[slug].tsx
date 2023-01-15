@@ -33,7 +33,7 @@ const RecipePage: NextPage<RecipeWithContent> = (props) => {
 					<Heading className="font-bold text-white text-3xl tracking-tighter md:text-4xl">
 						{name}
 					</Heading>
-					<Flex>
+					<Flex align="center">
 						<Icon name="calendar" className="mr-2 text-tertiary" />
 						<Text as="span" className="text-white text-xs md:text-sm">
 							{dayjs(createdAt).format("MMMM YYYY")}
