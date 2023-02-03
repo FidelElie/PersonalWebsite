@@ -1,0 +1,7 @@
+body {
+	@apply bg-slate-700;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

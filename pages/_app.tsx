@@ -1,16 +1,11 @@
 import type { AppProps } from "next/app";
 
-import "react-datepicker/dist/react-datepicker.css";
-import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
-import "../styles/_app.css";
+import "@/assets/styles.css";
 
-import LoaderProvider from "../lib/provider/loader";
-
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <LoaderProvider>
-      <Component {...pageProps} />
-    </LoaderProvider>
-  )
+const App = ({ Component, pageProps }: AppProps) => {
+	return (
+		<Component {...pageProps}/>
+	)
 }
-export default MyApp;
+
+export default App;
