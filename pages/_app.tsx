@@ -1,10 +1,26 @@
+import { useRef } from "react";
 import type { AppProps } from "next/app";
+import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "@/assets/styles.css";
+import "remixicon/fonts/remixicon.css";
 
-const App = ({ Component, pageProps }: AppProps) => {
+import supabaseClient from "@/environment/supabase.client";
+
+import { SupabaseProvider } from "@/library/providers";
+
+const App = (props: AppProps) => {
+	const { Component, pageProps } = props;
+	const queryClient = useRef(new QueryClient()).current;
+
 	return (
-		<Component {...pageProps}/>
+		<QueryClientProvider client={queryClient}>
+			<SupabaseProvider client={supabaseClient} initialSession={pageProps.initialSession}>
+				<Hydrate state={pageProps.dehydratedState}>
+					<Component {...pageProps}/>
+				</Hydrate>
+			</SupabaseProvider>
+		</QueryClientProvider>
 	)
 }
 

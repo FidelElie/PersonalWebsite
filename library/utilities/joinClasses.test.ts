@@ -34,7 +34,11 @@ describe("joinClasses", () => {
 		)).toBe("sy-2 l-4")
 	});
 
-	it("Will properly parse object", () => {
+	it("Can parse undefined and null values", () => {
+		expect(joinClasses(undefined)).toBe("");
+	});
 
+	it("Will return an empty string when passed nothing", () => {
+		expect(joinClasses()).toBe("");
 	});
 });

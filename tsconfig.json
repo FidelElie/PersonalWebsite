@@ -28,6 +28,9 @@
       ],
       "@/assets/*": [
         "./assets/*"
+      ],
+      "@/environment/*": [
+        "./environment/*"
       ]
     },
     "incremental": true
