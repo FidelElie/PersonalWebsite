@@ -12,10 +12,11 @@ const SupabaseProvider = (props: SupabaseProviderProps) => {
 	const [state, setState] = useState({ ...initialState, session: initialSession || null });
 
 	useEffect(() => {
-		const setSession = (session: Session | null, initialising?: boolean) => setState(
+		const setAuth = (session: Session | null, initialising?: boolean) => setState(
 			currentState => ({
 				...currentState,
 				session,
+				user: session ? session.user : null,
 				initialising: initialising !== undefined ? initialising : currentState.initialising
 			})
 		);
@@ -23,11 +24,11 @@ const SupabaseProvider = (props: SupabaseProviderProps) => {
 		const checkForCurrentSession = async () => {
 			const { data: { session } } = await client.auth.getSession();
 
-			setSession(session, false);
+			setAuth(session, false);
 		}
 
 		// Set the auth listener
-		client.auth.onAuthStateChange((_event, session) => setSession(session));
+		client.auth.onAuthStateChange((_event, session) => setAuth(session));
 
 		checkForCurrentSession();
 	}, []);
@@ -43,7 +44,7 @@ const SupabaseProvider = (props: SupabaseProviderProps) => {
 	)
 }
 
-export const useSupabase = () => useContext(SupabaseContext);
+export const useSupabaseContext = () => useContext(SupabaseContext);
 
 export type SupabaseContextType = {
 	session: Session | null,

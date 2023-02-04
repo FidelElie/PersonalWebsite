@@ -32,3 +32,13 @@ export const useContinueWithSocialProvider = (provider: Provider) => useMutation
 		return data;
 	}
 );
+
+export const useLogout = () => useMutation(
+	async () => {
+		const { error } = await supabase.auth.signOut();
+
+		if (error) { throw error; }
+
+		return;
+	}
+)
