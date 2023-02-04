@@ -2,8 +2,7 @@ import { useRef } from "react";
 import type { AppProps } from "next/app";
 import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import "@/assets/styles.css";
-import "remixicon/fonts/remixicon.css";
+import "@/assets/styles";
 
 import supabaseClient from "@/environment/supabase.client";
 
