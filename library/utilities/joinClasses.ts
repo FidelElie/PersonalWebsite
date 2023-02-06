@@ -20,7 +20,7 @@ const joinClasses = (...classes: Arguments): string => {
 	return parsedClasses.filter(_class => !!_class).join(" ");
 }
 
-type AllowedPrimitives = string | number | null | undefined;
+type AllowedPrimitives = string | number | null | boolean | undefined;
 type AllowedObject = { [key: string]: any }
 type AllowedArray = (AllowedPrimitives | AllowedObject | (AllowedPrimitives | AllowedObject)[])[]
 type Arguments = (AllowedPrimitives | AllowedObject | AllowedArray)[]

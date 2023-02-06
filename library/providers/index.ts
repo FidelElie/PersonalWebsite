@@ -8,3 +8,7 @@ export {
 	useSupabaseContext,
 	type SupabaseProviderProps
 } from "./Supabase.provider";
+export {
+	default as ThemeProvider,
+	useTheme
+} from "./Theme.Provider";

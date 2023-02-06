@@ -1,5 +1,8 @@
 import "@/assets/styles.css";
-import "remixicon/fonts/remixicon.css";
+
+export const globalTypes = {
+  darkMode: true,
+};
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
