@@ -26,9 +26,6 @@
       "@/library/*": [
         "./library/*"
       ],
-      "@/assets/*": [
-        "./assets/*"
-      ],
       "@/environment/*": [
         "./environment/*"
       ]
