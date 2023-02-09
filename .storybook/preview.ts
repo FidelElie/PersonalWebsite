@@ -1,4 +1,4 @@
-import "@/assets/styles.css";
+import "../pages/_app.css";
 
 export const globalTypes = {
   darkMode: true,

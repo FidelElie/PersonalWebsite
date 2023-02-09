@@ -1,5 +1,5 @@
 body {
-	@apply bg-opacity-10 bg-primary-dark dark:bg-gray dark:bg-opacity-100 transition-colors;
+	@apply bg-gray-lightest dark:bg-gray dark:bg-opacity-100 transition-colors;
 }
 
 @tailwind base;

@@ -1,7 +1,0 @@
-body {
-	@apply bg-opacity-10 bg-primary-dark dark:bg-gray dark:bg-opacity-100 transition-colors;
-}
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
