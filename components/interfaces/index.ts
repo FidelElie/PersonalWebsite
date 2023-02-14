@@ -1,1 +1,2 @@
-export { default as AuthComponent } from "./AuthComponent";
+export * from "./Assets";
+export * from "./Navigation";

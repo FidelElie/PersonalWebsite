@@ -1,0 +1,27 @@
+.Link {
+	@apply underline underline-offset-2 decoration-2 transition-all;
+}
+
+.LinkPrimary {
+	@apply text-primary decoration-primary hover:text-primary-light;
+}
+
+:global(.dark) .LinkPrimary {
+	@apply decoration-white;
+}
+
+.LinkNeutral {
+	@apply text-gray decoration-primary hover:text-gray-light;
+}
+
+:global(.dark) .LinkNeutral {
+	@apply text-white hover:text-primary;
+}
+
+.LinkAlternate {
+	@apply text-secondary decoration-secondary hover:text-secondary-light;
+}
+
+.LinkAlternate {
+	@apply decoration-white;
+}

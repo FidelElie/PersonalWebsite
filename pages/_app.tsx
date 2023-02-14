@@ -8,7 +8,7 @@ import supabaseClient from "@/environment/supabase.client";
 
 import { SupabaseProvider, QueryProvider, ThemeProvider } from "@/library/providers";
 
-import { AuthComponent } from "@/components/interfaces";
+import AuthRouter from "@/components/pages/AuthRouter";
 
 const App = (props: AppProps) => {
 	const { pageProps } = props;
@@ -19,7 +19,7 @@ const App = (props: AppProps) => {
 				<Hydrate state={pageProps.dehydratedState}>
 					<SupabaseProvider client={supabaseClient} initialSession={pageProps.initialSession}>
 						<ThemeProvider>
-							<AuthComponent {...props}/>
+							<AuthRouter {...props}/>
 						</ThemeProvider>
 					</SupabaseProvider>
 				</Hydrate>

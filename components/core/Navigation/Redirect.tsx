@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const Redirect = (props: RedirectProps) => {
+export const Redirect = (props: RedirectProps) => {
 	const { href } = props;
 	const router = useRouter();
 
@@ -15,5 +15,3 @@ const Redirect = (props: RedirectProps) => {
 export interface RedirectProps {
 	href: string
 }
-
-export default Redirect;

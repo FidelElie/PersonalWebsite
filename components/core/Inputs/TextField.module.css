@@ -1,0 +1,9 @@
+.TextField {
+	@apply transition-all flex items-center bg-white;
+}
+
+.TextFieldInput {
+	@apply bg-transparent py-2 px-3 w-full text-gray border-0 text-sm font-light;
+	@apply placeholder:text-gray-lighter placeholder:text-opacity-30;
+	@apply md:text-base;
+}

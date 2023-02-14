@@ -1,1 +1,2 @@
-export { default as Redirect, type RedirectProps } from "./Redirect";
+export * from "./Link";
+export * from "./Redirect";

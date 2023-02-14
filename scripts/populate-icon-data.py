@@ -2,69 +2,68 @@ import os
 import re
 from datetime import datetime
 
-ICON_FILE_PATH = "./node_modules/remixicon/fonts/remixicon.css"
+ICON_FILE_PATH = "./public/remixicon.symbol.svg"
 ICON_DESINATION_PATH = "./components/core/Data/Icon.data.ts"
 
-LINE_REXEXP = "^.ri-[\w\d-]+(:before){1}"
-TYPE_REGEXP = "(fill|line)"
-REPLACEMENT_REGEXP = "(.ri-|-fill|-line)"
+FIND_IDS_REGEXP = "id=\"[\w\d-]+\""
+TYPE_REGEXP = "(fill$|line$)"
+REPLACEMENT_REGEXP = "(id=|ri-|\"|-fill|-line)"
+
+def extract_types_from_identifiers(identifiers):
+	types = []
+
+	for _id in identifiers:
+		extracted_type = re.search(TYPE_REGEXP, _id)
+
+		if (extracted_type != None and extracted_type.group() not in types):
+			types.append(extracted_type.group())
+
+	return types
+
+def generate_icon_map(names, identifiers):
+	icon_map = {
+		name: extract_types_from_identifiers(
+			list(filter(lambda x: name in x, identifiers)
+		)) for name in names
+	}
+
+	return icon_map
+
 
 def populate_icon_data():
 	startime = datetime.now()
 	with open(ICON_FILE_PATH, "r") as icon_file:
-		icon_css = icon_file.readlines()
+		svg_file_contents = icon_file.read()
 
-	iconNames = {}
-	iconRules = []
-	skipped_icons = []
+	icon_matches = re.findall(FIND_IDS_REGEXP, svg_file_contents)
 
-	for line in icon_css:
-		if (":before" in line):
-			icon_rule = re.search(LINE_REXEXP, line)
+	clean_id_match = lambda match: re.sub("(id=|\")", "", match)
+	get_icon_name = lambda match: re.sub(REPLACEMENT_REGEXP, "", match)
 
-			if icon_rule == None:
-				skipped_icons.append(line)
-				continue
+	icon_identifiers = [clean_id_match(match) for match in icon_matches]
 
-			match = icon_rule.group()
+	icon_names = [get_icon_name(identifier) for identifier in icon_identifiers]
 
-			split_line = match.split(":before")
-			iconRules.append(split_line[0].replace(".", ""))
+	icon_map = generate_icon_map(icon_names, icon_identifiers)
 
-			name = re.sub(REPLACEMENT_REGEXP, "", split_line[0])
+	print("Total icons to parse to type: {}".format(len(icon_map)))
 
-			if (name not in iconNames):
-				iconNames[name] = []
-
-			iconType = re.search(TYPE_REGEXP, split_line[0])
-
-			if (iconType != None):
-				iconNames[name].append(iconType.group())
-
-	print("Total icon parse to type: {}".format(len(iconNames)))
-	print("Total iconNames skipped: {}".format(len(skipped_icons)))
-
-	if (len(skipped_icons) > 0):
-		print("Skipped rules:")
-		for line in skipped_icons:
-			print(line)
-
-	print(f"Writing iconNames to {ICON_DESINATION_PATH}")
+	print(f"Writing icon_identifiers to {ICON_DESINATION_PATH}")
 
 	with open(os.path.join(ICON_DESINATION_PATH), "w") as icon_file:
 		icon_file.write("\n".join([
 			"export const iconNames = [",
-			*[f"\t\"{icon}\"," for icon in iconNames],
+			*[f"\t\"{icon}\"," for icon in icon_map],
 			"] as const;",
 			"",
 			"export const iconsMap = {",
-			*[f"\t\"{x}\": {y}," for x, y in iconNames.items()],
+			*[f"\t\"{x}\": {y}," for x, y in icon_map.items()],
 			"} as {",
-			"\t[key in typeof iconNames[number]]: (\"fill\" | \"line\")[]"
+			"\t[key in typeof iconNames[number]]: (\"fill\" | \"line\")[]",
 			"};",
 			"",
 			"export const iconIdentifiers = [",
-			*[f"\t\"{icon}\"," for icon in iconRules],
+			*[f"\t\"{icon}\"," for icon in icon_identifiers],
 			"] as const;",
 			""
 		]))

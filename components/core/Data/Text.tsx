@@ -43,6 +43,4 @@ export interface TextProps {
 
 type ElementTextProps = Omit<TextProps, "as">;
 
-const Text = Object.assign({}, BaseText, TextTypes);
-
-export default Text;
+export const Text = Object.assign({}, BaseText, TextTypes);

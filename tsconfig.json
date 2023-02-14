@@ -9,7 +9,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -32,8 +31,11 @@
     },
     "incremental": true,
     "plugins": [
-      { "name": "typescript-plugin-css-modules" }
-    ]
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "next-env.d.ts",

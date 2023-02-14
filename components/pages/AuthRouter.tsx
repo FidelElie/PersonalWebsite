@@ -10,14 +10,14 @@ const AuthComponent = ({ Component, pageProps }: PageAuthHandler) => {
 
 	if (initialising) { return <AuthInitialising />; }
 
-	if (auth && auth.redirectOnSession && !!session) { return <Redirect href="/"/>; }
+	if (auth && auth.redirectOnSession && !!session) { return <Redirect href="/" />; }
 
 	return <Component {...pageProps} />;
 }
 
 const AuthInitialising = () => (
 	<div className="flex w-screen h-screen items-center justify-center">
-		<Icon name="loader-5" className="text-7xl animate-spin text-white"/>
+		<Icon name="loader-5" className="text-7xl animate-spin text-white" />
 	</div>
 )
 

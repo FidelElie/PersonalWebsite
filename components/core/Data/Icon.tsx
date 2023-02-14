@@ -25,7 +25,7 @@ const colors = {
 	inherit: "text-inherit"
 }
 
-const Icon = forwardRef<IconRef, IconProps>((props, ref) => {
+export const Icon = forwardRef<IconRef, IconProps>((props, ref) => {
 	const {
 		className,
 		name,
@@ -64,7 +64,7 @@ const Icon = forwardRef<IconRef, IconProps>((props, ref) => {
 	)
 });
 
-export type IconRef = HTMLElement;
+type IconRef = HTMLElement;
 
 export type IconNames = keyof typeof iconsMap;
 
@@ -84,6 +84,4 @@ interface IconWithIdentifier extends IconInterfaceProps {
 	identifier: typeof iconIdentifiers[number]
 }
 
-export type IconProps = IconWithName | IconWithIdentifier
-
-export default Icon;
+export type IconProps = IconWithName | IconWithIdentifier;
