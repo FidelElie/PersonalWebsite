@@ -14,7 +14,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const QueryContext = createContext<QueryContextType>({ configureDevtools: () => {} });
 
-const QueryProvider = (props: QueryProviderProps) => {
+export const QueryProvider = (props: QueryProviderProps) => {
 	const { client, children, initialPosition, initialPanelPosition } = props;
 
 	const router = useRouter();
@@ -70,5 +70,3 @@ export interface QueryProviderProps {
 	initialPosition?: DevtoolsPositions,
 	initialPanelPosition?: DevtoolsPanelPositions
 }
-
-export default QueryProvider;

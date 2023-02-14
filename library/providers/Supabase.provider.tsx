@@ -6,7 +6,7 @@ const initialState: SupabaseContextType = { session: null, user: null, initialis
 
 const SupabaseContext = createContext<SupabaseContextType>(initialState);
 
-const SupabaseProvider = (props: SupabaseProviderProps) => {
+export const SupabaseProvider = (props: SupabaseProviderProps) => {
 	const { client, initialSession, children } = props;
 
 	const [state, setState] = useState({ ...initialState, session: initialSession || null });
@@ -44,7 +44,13 @@ const SupabaseProvider = (props: SupabaseProviderProps) => {
 	)
 }
 
-export const useSupabaseContext = () => useContext(SupabaseContext);
+export const useSupabaseContext = () => {
+	const context = useContext(SupabaseContext);
+
+	if (!context) { throw new Error("useSupabaseContext hook must be used within QueryProvider"); }
+
+	return context;
+}
 
 export type SupabaseContextType = {
 	session: Session | null,
@@ -57,5 +63,3 @@ export interface SupabaseProviderProps {
 	initialSession?: Session,
 	children: ReactNode
 }
-
-export default SupabaseProvider;

@@ -8,7 +8,7 @@ const OS_PREFERENCE_QUERY = "(prefers-color-scheme: dark)";
 
 const ThemeContext = createContext<ThemeContextType>({ theme: null, setTheme: () => {} });
 
-const ThemeProvider = (props: ThemeProviderProps) => {
+export const ThemeProvider = (props: ThemeProviderProps) => {
 	const { children } = props;
 
 	const [theme, setTheme] = useLocalStorage<ThemeStateType>(THEME_STORAGE_KEY, null);
@@ -30,11 +30,11 @@ const ThemeProvider = (props: ThemeProviderProps) => {
 	)
 }
 
-export const useTheme = () => {
+export const useThemeContext = () => {
 	const themeContext = useContext(ThemeContext);
 
 	if (!themeContext) {
-		throw new Error("useTheme must be used within a ThemeProvider");
+		throw new Error("useThemContext must be used within a ThemeProvider");
 	}
 
 	return themeContext;
@@ -51,5 +51,3 @@ type ThemeContextType = {
 export interface ThemeProviderProps {
 	children: ReactNode
 }
-
-export default ThemeProvider;
