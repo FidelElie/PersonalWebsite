@@ -35,7 +35,9 @@
         "name": "typescript-plugin-css-modules"
       }
     ],
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "next-env.d.ts",

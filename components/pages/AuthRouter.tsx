@@ -1,10 +1,11 @@
 import AppConfig from "@/environment/app.config";
 
-import type { PageAuthHandler } from "@/library/types/next.types";
 import { useSupabaseContext } from "@/library/providers";
+import type { PageAuthHandler } from "@/library/types/next.types";
 
 import { Redirect, Icon, Flex, Text, Box, Link } from "@/components/core";
 import { Rocket } from "@/components/interfaces";
+
 
 const AuthComponent = ({ Component, pageProps }: PageAuthHandler) => {
 	const { auth } = Component;

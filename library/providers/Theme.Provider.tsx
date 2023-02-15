@@ -1,10 +1,13 @@
 import { createContext, useContext, useEffect, type ReactNode } from "react";
+import { Inter } from "@next/font/google";
 
 import useLocalStorage from "../hooks/useLocalStorage";
 
 export const THEME_STORAGE_KEY = "FI_THEME";
 const DARK_CLASS = "dark";
 const OS_PREFERENCE_QUERY = "(prefers-color-scheme: dark)";
+
+const inter = Inter({ subsets: ['latin'], variable: "--font-inter" });
 
 const ThemeContext = createContext<ThemeContextType>({ theme: null, setTheme: () => {} });
 
@@ -25,6 +28,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
 	return (
 		<ThemeContext.Provider value={{ theme, setTheme }}>
+			<style jsx global>{`html { font-family: ${inter.variable}; }`}</style>
 			{ children }
 		</ThemeContext.Provider>
 	)

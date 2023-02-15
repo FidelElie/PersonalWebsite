@@ -1,45 +1,64 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, useRef, type ReactNode } from "react";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import {
+	Session,
+	SupabaseClient,
+	useSession,
+	useSupabaseClient,
+	SessionContextProvider
+} from "@supabase/auth-helpers-react";
+import type { users } from "@prisma/client";
 
-import type { Session, SupabaseClient, User } from "@supabase/supabase-js";
 
-const initialState: SupabaseContextType = { session: null, user: null, initialising: true }
+import { useGetCurrentUser } from "../functions/auth";
+import { useQueryClient } from "@tanstack/react-query";
+
+const initialState: SupabaseContextType = {
+	session: null,
+	user: null,
+	initialising: true,
+	client: null
+}
 
 const SupabaseContext = createContext<SupabaseContextType>(initialState);
 
-export const SupabaseProvider = (props: SupabaseProviderProps) => {
-	const { client, initialSession, children } = props;
-
-	const [state, setState] = useState({ ...initialState, session: initialSession || null });
-
-	useEffect(() => {
-		const setAuth = (session: Session | null, initialising?: boolean) => setState(
-			currentState => ({
-				...currentState,
-				session,
-				user: session ? session.user : null,
-				initialising: initialising !== undefined ? initialising : currentState.initialising
-			})
-		);
-
-		const checkForCurrentSession = async () => {
-			const { data: { session } } = await client.auth.getSession();
-
-			setAuth(session, false);
-		}
-
-		// Set the auth listener
-		client.auth.onAuthStateChange((_event, session) => setAuth(session));
-
-		checkForCurrentSession();
-	}, []);
-
-	useEffect(() => {
-		if (initialSession) { setState(currentState => ({ ...currentState, initialising: false })); }
-	}, [initialSession]);
+export const SupabaseProvider = ({ initialSession, children }: SupabaseProviderProps) => {
+	const supabaseClient = useRef(createBrowserSupabaseClient()).current;
 
 	return (
-		<SupabaseContext.Provider value={state}>
-			{ children }
+		<SessionContextProvider supabaseClient={supabaseClient} initialSession={initialSession}>
+			<AuthProvider>
+				{ children }
+			</AuthProvider>
+		</SessionContextProvider>
+	)
+}
+
+const AuthProvider = (props: AuthProviderProps) => {
+	const { children } = props;
+
+	const queryClient = useQueryClient();
+	const supabaseClient = useSupabaseClient()
+	const session = useSession();
+
+	const [initialising, setInitialising] = useState(true);
+
+	const currentUserQuery = useGetCurrentUser({
+		onSettled: () => { setInitialising(false); }
+	});
+
+	useEffect(() => {
+		supabaseClient.auth.onAuthStateChange(() => { queryClient.invalidateQueries(["user"]); });
+	}, []);
+
+	return (
+		<SupabaseContext.Provider value={{
+			session,
+			initialising,
+			user: currentUserQuery.isSuccess ? currentUserQuery.data : null,
+			client: supabaseClient
+		}}>
+			{children}
 		</SupabaseContext.Provider>
 	)
 }
@@ -49,17 +68,23 @@ export const useSupabaseContext = () => {
 
 	if (!context) { throw new Error("useSupabaseContext hook must be used within QueryProvider"); }
 
-	return context;
+	return context as ContextWithClient;
 }
 
 export type SupabaseContextType = {
 	session: Session | null,
-	user:	User | null,
-	initialising: boolean
+	user: users | null,
+	initialising: boolean,
+	client: SupabaseClient | null
 }
 
-export interface SupabaseProviderProps {
-	client: SupabaseClient,
-	initialSession?: Session,
+export type ContextWithClient = SupabaseContextType & { client: SupabaseClient }
+
+interface SupabaseProviderProps {
+	initialSession?: Session | null,
+	children: ReactNode
+}
+
+export interface AuthProviderProps {
 	children: ReactNode
 }

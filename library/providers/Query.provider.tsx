@@ -9,13 +9,15 @@ import {
 	type ReactNode
 } from "react";
 import { useRouter } from "next/router";
-import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider, Hydrate, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const QueryContext = createContext<QueryContextType>({ configureDevtools: () => {} });
 
 export const QueryProvider = (props: QueryProviderProps) => {
-	const { client, children, initialPosition, initialPanelPosition } = props;
+	const {  dehydratedState, initialPosition, initialPanelPosition, children } = props;
+
+	const queryClient = useRef(new QueryClient()).current;
 
 	const router = useRouter();
 
@@ -37,10 +39,12 @@ export const QueryProvider = (props: QueryProviderProps) => {
 	}, [router.asPath, configureDevtools]);
 
 	return (
-		<QueryClientProvider client={client}>
+		<QueryClientProvider client={queryClient}>
 			<QueryContext.Provider value={{ configureDevtools }}>
-				{ children }
-				<ReactQueryDevtools initialIsOpen={false} {...state}/>
+				<Hydrate state={dehydratedState}>
+					{ children }
+					<ReactQueryDevtools initialIsOpen={false} {...state}/>
+				</Hydrate>
 			</QueryContext.Provider>
 		</QueryClientProvider>
 	)
@@ -65,8 +69,8 @@ type QueryProviderStateType = { position: DevtoolsPositions, panelPosition: Devt
 type QueryContextType = { configureDevtools: (config: Partial<QueryProviderStateType>) => void }
 
 export interface QueryProviderProps {
-	client: QueryClient,
-	children: ReactNode,
+	dehydratedState?: unknown,
 	initialPosition?: DevtoolsPositions,
 	initialPanelPosition?: DevtoolsPanelPositions
+	children: ReactNode
 }
