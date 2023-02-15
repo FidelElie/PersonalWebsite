@@ -1,1 +1,1 @@
-export { default as Rocket, type RocketProps } from "./Rocket";
+export * from "./Rocket";

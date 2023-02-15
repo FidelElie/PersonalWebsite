@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Rocket from "./Rocket";
+import { Rocket }from "./Rocket";
 
 export default {
 	title: 'Interfaces/Rocket',

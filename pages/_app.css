@@ -1,5 +1,6 @@
 body {
-	@apply bg-gray-lightest dark:bg-gray dark:bg-opacity-100 transition-colors;
+	font-family: 'Fira Sans', sans-serif;
+	@apply bg-gray-lightest dark:bg-gray-dark dark:bg-opacity-100 transition-colors;
 }
 
 @tailwind base;

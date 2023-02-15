@@ -1,7 +1,7 @@
 import { Box } from "@/components/core";
 import { joinClasses } from "@/library/utilities";
 
-const Footer = (props: FooterProps) => {
+export const Footer = (props: FooterProps) => {
 	const { className } = props;
 
 	return (
@@ -14,5 +14,3 @@ const Footer = (props: FooterProps) => {
 export interface FooterProps {
 	className?: string,
 }
-
-export default Footer;

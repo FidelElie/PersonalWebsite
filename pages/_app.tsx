@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Inter } from "@next/font/google";
 import type { AppProps } from "next/app";
 import { Hydrate, QueryClient } from "@tanstack/react-query";
 
@@ -10,6 +11,8 @@ import { SupabaseProvider, QueryProvider, ThemeProvider } from "@/library/provid
 
 import AuthRouter from "@/components/pages/AuthRouter";
 
+const inter = Inter({ subsets: ['latin'], variable: "--font-inter" });
+
 const App = (props: AppProps) => {
 	const { pageProps } = props;
 	const queryClient = useRef(new QueryClient()).current;
@@ -19,6 +22,7 @@ const App = (props: AppProps) => {
 				<Hydrate state={pageProps.dehydratedState}>
 					<SupabaseProvider client={supabaseClient} initialSession={pageProps.initialSession}>
 						<ThemeProvider>
+							<style jsx global>{`html { font-family: ${inter.variable}; }`}</style>
 							<AuthRouter {...props}/>
 						</ThemeProvider>
 					</SupabaseProvider>

@@ -1,4 +1,5 @@
 const colors = require("tailwindcss/colors");
+const { fontFamily } = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -37,6 +38,11 @@ module.exports = {
       transparent: "transparent",
       currentColor: "currentColor",
       inherit: "inherit"
+    },
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)', ...fontFamily.sans]
+      }
     }
   },
   plugins: [

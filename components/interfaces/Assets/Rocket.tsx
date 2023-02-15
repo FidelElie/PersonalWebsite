@@ -1,6 +1,6 @@
 // TODO Courtesy of https://www.iconpacks.net
 
-const Rocket = (props: RocketProps) => {
+export const Rocket = (props: RocketProps) => {
 	const { className } = props;
 
 	return (
@@ -65,5 +65,3 @@ const Rocket = (props: RocketProps) => {
 export interface RocketProps {
 	className?: string,
 }
-
-export default Rocket;
