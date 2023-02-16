@@ -2,15 +2,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createHandler } from "next-api-decorators";
 import { CONTROLLER_TOKEN } from "./decorators";
 
-import IndexController from "./controllers/index.controller";
-import UserController from "./controllers/user.controller";
+import AuthController from "./controllers/auth.controller";
 
 import { morganMiddleware } from "./middlewares/morgan.middleware";
 import { supabaseMiddleware } from "./middlewares/supabase.middleware";
 
 const controllers = [
-	IndexController,
-	UserController
+	AuthController
 ]
 
 export const createServerApi = () => {
@@ -24,10 +22,10 @@ export const createServerApi = () => {
 		return { basePath: normalisedPath, handler }
 	});
 
-	return (req: NextApiRequest, res: NextApiResponse) => {
+	return async (req: NextApiRequest, res: NextApiResponse) => {
 		const { url } = req;
 		morganMiddleware(req, res, () => {});
-		supabaseMiddleware(req, res, () => {});
+		await supabaseMiddleware(req, res, () => {});
 
 		if (!url) { return res.status(404).json({ statusCode: 404, url, message: "Not Found" }); }
 

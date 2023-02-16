@@ -8,7 +8,7 @@ export const useGetCurrentUser = (
 	return useQuery(
 		["user"],
 		async () => {
-			const response = await fetch("/api/user", { method: "GET" });
+			const response = await fetch("/api/auth", { method: "GET" });
 
 			if (response.status >= 400) { throw new Error(""); }
 
@@ -18,7 +18,7 @@ export const useGetCurrentUser = (
 
 			return data;
 		},
-		{ onSettled, retry: false }
+		{ onSettled, retry: false, staleTime: Infinity }
 	)
 }
 

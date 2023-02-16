@@ -5,22 +5,25 @@ import { Controller } from "../decorators";
 
 import prisma from "@/environment/prisma.client";
 
-const baseUrl = "/user";
+const baseUrl = "/auth";
 
 @Controller(baseUrl)
-export default class UserController {
+export default class AuthController {
 
 	@Get(`${baseUrl}`)
 	async getCurrentUser(@Req() req: ExtendedNextApiRequest) {
 		if (!req.user) { return null; }
 
-		const user = await prisma.users.findUnique({ where: { user_id: req.user.id } });
+		const user = await prisma.users.findUnique({
+			where: { user_id: req.user.id },
+			include: { roles: {
+				include: {
+					role: true
+				}
+			} }
+		});
 
 		return user;
 	}
 
-	@Get(`${baseUrl}/test`)
-	async getUserTest() {
-		return "hello World"
-	}
 }
