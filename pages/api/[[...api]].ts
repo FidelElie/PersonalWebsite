@@ -1,3 +1,3 @@
-import { createServerApi } from "@/library/server/app";
+import { createServerApi } from "@/library/server";
 
 export default createServerApi();

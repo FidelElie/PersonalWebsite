@@ -1,24 +1,12 @@
-import type { NextApiResponse } from "next";
-import { createMiddlewareDecorator, type NextFunction } from "next-api-decorators";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import type { ExtendedNextApiRequest } from "../types/next.types";
-
 export const CONTROLLER_TOKEN = Symbol('instant:next:controllers');
 
-export function Controller(route: string = "/"): ClassDecorator {
+/**
+ * Registers a new controller for the server. Method routes still have to contain path.
+ * @param baseUrl base url for the controller to act on.
+ * @returns Controller class
+ */
+export function Controller(baseUrl: string = "/"): ClassDecorator {
 	return (target: object): void => {
-		Reflect.defineMetadata(CONTROLLER_TOKEN,  route, target);
+		Reflect.defineMetadata(CONTROLLER_TOKEN, baseUrl, target);
 	}
 }
-
-export const ExposeSupabase = createMiddlewareDecorator(
-	async (req: ExtendedNextApiRequest, res: NextApiResponse, next: NextFunction) => {
-		const supabase = createServerSupabaseClient({ req, res });
-
-		const { data: { session } } = await supabase.auth.getSession();
-
-		req.user = session?.user;
-
-		next();
-	}
-)

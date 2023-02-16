@@ -1,19 +1,31 @@
-import { Get, Req, Res } from "next-api-decorators";
+import { Get, Req } from "next-api-decorators";
 import type { ExtendedNextApiRequest } from "@/library/types/next.types";
 
-import { Controller, ExposeSupabase } from "../decorators";
+import { Controller } from "../decorators";
 
 import prisma from "@/environment/prisma.client";
 
-@Controller("/user")
-@ExposeSupabase()
-class UserController {
-	@Get("/user")
+const baseUrl = "/user";
+
+@Controller(baseUrl)
+export default class UserController {
+
+	@Get(`${baseUrl}`)
 	async getCurrentUser(@Req() req: ExtendedNextApiRequest) {
 		if (!req.user) { return null; }
 
-		return await prisma.users.findUnique({ where: { user_id: req.user.id }});
+		const user = await prisma.users.findUnique({ where: { user_id: req.user.id } });
+
+		return user;
+	}
+
+	@Get(`${baseUrl}/test`)
+	async getUserTest() {
+		return "hello World"
 	}
 }
-
-export default UserController;
+/**
+ * Registers a new controller for the server. Method routes still have to contain path
+ * @param route
+ * @returns Decorated class
+ */
