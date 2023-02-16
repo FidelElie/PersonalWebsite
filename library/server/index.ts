@@ -8,8 +8,6 @@ import UserController from "./controllers/user.controller";
 import { morganMiddleware } from "./middlewares/morgan.middleware";
 import { supabaseMiddleware } from "./middlewares/supabase.middleware";
 
-export const HTTP_METHOD_TOKEN = Symbol('instant:next:httpMethod');
-
 const controllers = [
 	IndexController,
 	UserController
