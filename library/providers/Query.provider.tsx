@@ -15,9 +15,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const QueryContext = createContext<QueryContextType>({ configureDevtools: () => {} });
 
 export const QueryProvider = (props: QueryProviderProps) => {
-	const {  dehydratedState, initialPosition, initialPanelPosition, children } = props;
-
-	const queryClient = useRef(new QueryClient()).current;
+	const { client, dehydratedState, initialPosition, initialPanelPosition, children } = props;
 
 	const router = useRouter();
 
@@ -39,7 +37,7 @@ export const QueryProvider = (props: QueryProviderProps) => {
 	}, [router.asPath, configureDevtools]);
 
 	return (
-		<QueryClientProvider client={queryClient}>
+		<QueryClientProvider client={client}>
 			<QueryContext.Provider value={{ configureDevtools }}>
 				<Hydrate state={dehydratedState}>
 					{ children }
@@ -69,6 +67,7 @@ type QueryProviderStateType = { position: DevtoolsPositions, panelPosition: Devt
 type QueryContextType = { configureDevtools: (config: Partial<QueryProviderStateType>) => void }
 
 export interface QueryProviderProps {
+	client: QueryClient,
 	dehydratedState?: unknown,
 	initialPosition?: DevtoolsPositions,
 	initialPanelPosition?: DevtoolsPanelPositions

@@ -10,11 +10,11 @@ import { Rocket } from "@/components/interfaces";
 const AuthComponent = ({ Component, pageProps }: PageAuthHandler) => {
 	const { auth } = Component;
 
-	const { session, initialising } = useSupabaseContext();
+	const { user, initialising } = useSupabaseContext();
 
 	if (initialising) { return <AuthInitialising />; }
 
-	if (auth && auth.redirectOnSession && !!session) { return <Redirect href="/" />; }
+	if (auth && auth.redirectOnSession && !!user) { return <Redirect href="/" />; }
 
 	return <Component {...pageProps} />;
 }

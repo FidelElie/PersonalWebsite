@@ -1,5 +1,4 @@
-import { createContext, useContext, useEffect, useState, useRef, type ReactNode } from "react";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import {
 	Session,
 	SupabaseClient,
@@ -8,31 +7,21 @@ import {
 	SessionContextProvider
 } from "@supabase/auth-helpers-react";
 import type { users } from "@prisma/client";
-
-
-import { useGetCurrentUser } from "../functions/auth";
 import { useQueryClient } from "@tanstack/react-query";
 
-const initialState: SupabaseContextType = {
-	session: null,
-	user: null,
-	initialising: true,
-	client: null
-}
+import { useGetCurrentUser } from "../functions/auth";
+
+const initialState: SupabaseContextType = { user: null, initialising: true, client: null }
 
 const SupabaseContext = createContext<SupabaseContextType>(initialState);
 
-export const SupabaseProvider = ({ initialSession, children }: SupabaseProviderProps) => {
-	const supabaseClient = useRef(createBrowserSupabaseClient()).current;
-
-	return (
-		<SessionContextProvider supabaseClient={supabaseClient} initialSession={initialSession}>
-			<AuthProvider>
-				{ children }
-			</AuthProvider>
-		</SessionContextProvider>
-	)
-}
+export const SupabaseProvider = ({ client, initialSession, children }: SupabaseProviderProps) => (
+	<SessionContextProvider supabaseClient={client} initialSession={initialSession}>
+		<AuthProvider>
+			{children}
+		</AuthProvider>
+	</SessionContextProvider>
+)
 
 const AuthProvider = (props: AuthProviderProps) => {
 	const { children } = props;
@@ -48,14 +37,13 @@ const AuthProvider = (props: AuthProviderProps) => {
 	});
 
 	useEffect(() => {
-		supabaseClient.auth.onAuthStateChange(() => { queryClient.invalidateQueries(["user"]); });
-	}, []);
+		queryClient.invalidateQueries(["user"]);
+	}, [session]);
 
 	return (
 		<SupabaseContext.Provider value={{
-			session,
-			initialising,
 			user: currentUserQuery.isSuccess ? currentUserQuery.data : null,
+			initialising,
 			client: supabaseClient
 		}}>
 			{children}
@@ -72,7 +60,7 @@ export const useSupabaseContext = () => {
 }
 
 export type SupabaseContextType = {
-	session: Session | null,
+	// session: Session | null,
 	user: users | null,
 	initialising: boolean,
 	client: SupabaseClient | null
@@ -81,6 +69,7 @@ export type SupabaseContextType = {
 export type ContextWithClient = SupabaseContextType & { client: SupabaseClient }
 
 interface SupabaseProviderProps {
+	client: SupabaseClient,
 	initialSession?: Session | null,
 	children: ReactNode
 }

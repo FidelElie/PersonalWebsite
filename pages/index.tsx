@@ -5,12 +5,12 @@ import { Page } from "@/components/core";
 import { Navbar } from "@/components/interfaces";
 
 const Home = () => {
-	const { session } = useSupabaseContext();
+	const { user } = useSupabaseContext();
 	const logout = useLogout();
 
 	return (
 		<Page header={<Navbar/>}>
-			{ session && (
+			{ user && (
 				<button className="text-white" onClick={() => logout.mutate()}>Sign out</button>
 			)}
 
