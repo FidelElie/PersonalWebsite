@@ -24,8 +24,3 @@ export default class UserController {
 		return "hello World"
 	}
 }
-/**
- * Registers a new controller for the server. Method routes still have to contain path
- * @param route
- * @returns Decorated class
- */
