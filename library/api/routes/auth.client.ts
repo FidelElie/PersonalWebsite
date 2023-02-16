@@ -2,7 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import type { Provider } from "@supabase/supabase-js";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
-export const useGetCurrentUser = (
+import { FetchCurrentUserDTO } from "./auth.dtos";
+
+export const useFetchCurrentUser = (
 	{ onSettled }: { onSettled: () => void }
 ) => {
 	return useQuery(
@@ -16,7 +18,7 @@ export const useGetCurrentUser = (
 
 			const data = await response.json();
 
-			return data;
+			return FetchCurrentUserDTO.parse(data);
 		},
 		{ onSettled, retry: false, staleTime: Infinity }
 	)

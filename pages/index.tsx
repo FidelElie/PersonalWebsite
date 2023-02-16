@@ -1,4 +1,4 @@
-import { useLogout } from "@/library/functions/auth";
+import { useLogout } from "@/library/api/client";
 import { useSupabaseContext } from "@/library/providers";
 
 import { Page } from "@/components/core";

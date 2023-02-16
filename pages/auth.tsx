@@ -4,7 +4,7 @@ import {
 	useContinueWithMagicLink,
 	useContinueWithPassword,
 	useContinueWithSocialProvider
-} from "@/library/functions/auth";
+} from "@/library/api/client";
 import { useForm } from "@/library/hooks";
 import type { NextPage } from "@/library/types/next.types";
 import { joinClasses } from "@/library/utilities";

@@ -6,10 +6,10 @@ import {
 	useSupabaseClient,
 	SessionContextProvider
 } from "@supabase/auth-helpers-react";
-import type { users } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { useGetCurrentUser } from "../functions/auth";
+import { useFetchCurrentUser } from "../api/client";
+import type { FetchCurrentUserDTOType } from "../api/types";
 
 const initialState: SupabaseContextType = { user: null, initialising: true, client: null }
 
@@ -32,7 +32,7 @@ const AuthProvider = (props: AuthProviderProps) => {
 
 	const [initialising, setInitialising] = useState(true);
 
-	const currentUserQuery = useGetCurrentUser({
+	const currentUserQuery = useFetchCurrentUser({
 		onSettled: () => { setInitialising(false); }
 	});
 
@@ -60,8 +60,7 @@ export const useSupabaseContext = () => {
 }
 
 export type SupabaseContextType = {
-	// session: Session | null,
-	user: users | null,
+	user: FetchCurrentUserDTOType | null,
 	initialising: boolean,
 	client: SupabaseClient | null
 }

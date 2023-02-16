@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createHandler } from "next-api-decorators";
 import { CONTROLLER_TOKEN } from "./decorators";
 
-import AuthController from "./controllers/auth.controller";
+import AuthController from "./routes/auth.controller";
 
 import { morganMiddleware } from "./middlewares/morgan.middleware";
 import { supabaseMiddleware } from "./middlewares/supabase.middleware";

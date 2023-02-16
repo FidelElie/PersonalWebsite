@@ -25,5 +25,4 @@ export default class AuthController {
 
 		return user;
 	}
-
 }
