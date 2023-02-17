@@ -4,7 +4,8 @@ import type { User } from "@supabase/supabase-js";
 
 export type InitialPageProps = {
 	auth?: {
-		redirectOnSession?: true
+		redirectWithSession?: true | string,
+		redirectWithoutSession?: true | string
 	}
 }
 

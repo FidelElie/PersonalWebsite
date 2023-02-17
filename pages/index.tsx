@@ -1,19 +1,16 @@
-import { useLogout } from "@/library/api/client";
-import { useSupabaseContext } from "@/library/providers";
-
-import { Page } from "@/components/core";
-import { Navbar } from "@/components/interfaces";
+import { Container, Page } from "@/components/core";
+import { Footer, Navbar } from "@/components/interfaces";
 
 const Home = () => {
-	const { user } = useSupabaseContext();
-	const logout = useLogout();
-
 	return (
-		<Page header={<Navbar/>}>
-			{ user && (
-				<button className="text-white" onClick={() => logout.mutate()}>Sign out</button>
-			)}
-
+		<Page
+			mainClassName="pt-20"
+			headerClassName="fixed w-full"
+			header={<Navbar />}
+			footer={<Footer />}
+		>
+			<Container className="max-w-4xl mx-auto">
+			</Container>
 		</Page>
 	)
 }

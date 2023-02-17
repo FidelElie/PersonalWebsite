@@ -6,7 +6,6 @@ import type { PageAuthHandler } from "@/library/types/next.types";
 import { Redirect, Icon, Flex, Text, Box, Link } from "@/components/core";
 import { Rocket } from "@/components/interfaces";
 
-
 const AuthComponent = ({ Component, pageProps }: PageAuthHandler) => {
 	const { auth } = Component;
 
@@ -14,7 +13,13 @@ const AuthComponent = ({ Component, pageProps }: PageAuthHandler) => {
 
 	if (initialising) { return <AuthInitialising />; }
 
-	if (auth && auth.redirectOnSession && !!user) { return <Redirect href="/" />; }
+	if (auth && auth.redirectWithSession && !!user) {
+		return <Redirect href={generateRedirectionLink(auth.redirectWithSession)}/>;
+	}
+
+	if (auth && auth.redirectWithoutSession && !user) {
+		return <Redirect href={generateRedirectionLink(auth.redirectWithoutSession)}/>;
+	}
 
 	return <Component {...pageProps} />;
 }
@@ -29,5 +34,9 @@ const AuthInitialising = () => (
 		</Box>
 	</Flex>
 )
+
+const generateRedirectionLink = (redirection: true | string, fallback = "/") => {
+	return typeof redirection === "string" ? redirection : fallback;
+}
 
 export default AuthComponent;

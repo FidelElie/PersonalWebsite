@@ -23,7 +23,7 @@ import {
 	type IconNames
 } from "@/components/core";
 
-import { Rocket } from "@/components/interfaces";
+import { Footer, Rocket } from "@/components/interfaces";
 
 const AuthPage: NextPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -47,12 +47,13 @@ const AuthPage: NextPage = () => {
 	return (
 		<Page
 			title="Auth"
-			mainClassName="flex items-center"
+			mainClassName="flex items-center min-h-screen"
+			footer={<Footer hideLogin/>}
 		>
 			<Container className="px-5 max-w-sm mx-auto md:px-0 space-y-2">
-				<Rocket className="text-7xl"/>
+				<Rocket className="text-6xl -ml-2 md:text-7xl"/>
 				<Link href="/" className="inline-flex items-center" neutral>
-					<Text.Inline className="text-sm base:text-base">Back To Home</Text.Inline>
+					<Text.Inline className="text-xs base:text-base">Back To Home</Text.Inline>
 				</Link>
 				<Flex className="space-x-2">
 					<SocialButton onClick={continueWithSpotify.mutate} icon="spotify" />
@@ -78,7 +79,7 @@ const AuthPage: NextPage = () => {
 						type={showPassword ? "text" : "password"}
 						connect
 					/>
-					<Button.Submit theme="Primary" className="w-full" disabled={!fields.email} connect="top">
+					<Button.Submit theme="Primary" className="w-full py-2" disabled={!fields.email} connect="top">
 						<Show
 							when={!fields.password}
 							else={<ButtonContent text="Continue with Password" icon="lock"/>}
@@ -93,7 +94,7 @@ const AuthPage: NextPage = () => {
 }
 
 const SocialButton = ({ onClick, icon }: { onClick: () => void, icon: IconNames }) => (
-	<Button theme="Primary" onClick={onClick} className="rounded" alternate>
+	<Button theme="Primary" onClick={onClick} className="rounded py-2" alternate>
 		<Icon name={icon} className="text-primary text-2xl md:text-3xl"/>
 	</Button>
 )
@@ -106,7 +107,7 @@ const ButtonContent = ({ text, icon }: { text: string, icon: IconNames }) => (
 )
 
 AuthPage.auth = {
-	redirectOnSession: true
+	redirectWithSession: true
 }
 
 export default AuthPage;

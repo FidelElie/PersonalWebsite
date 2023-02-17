@@ -3,7 +3,7 @@
 }
 
 .ButtonBase {
-	@apply py-2 px-3 tracking-tight flex items-center justify-center;
+	@apply px-3 tracking-tight font-light flex items-center justify-center;
 }
 
 .Primary {
