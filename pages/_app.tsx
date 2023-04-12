@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 
 // import "react-datepicker/dist/react-datepicker.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-import "../styles/_app.css";
+import "./_app.css";
 
 
 function MyApp({ Component, pageProps }: AppProps) {
