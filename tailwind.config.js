@@ -1,10 +1,9 @@
 module.exports = {
-  purge: [
+  content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}"
   ],
-  darkMode: false,
   theme: {
     extend: {
       colors: {
@@ -18,7 +17,6 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require("@tailwindcss/forms"),
-    require("tailwind-scrollbar"),
+    require("@tailwindcss/forms")
   ],
 }

@@ -5,13 +5,20 @@
 
 body {
   font-family: "Lato", sans-serif;
-  @apply scrollbar scrollbar-thumb-primary scrollbar-track-gray-50 scrollbar-thin
+  /* @apply scrollbar scrollbar-thumb-primary scrollbar-track-gray-50 scrollbar-thin */
 }
 
 a { @apply underline text-primary; }
 
 #page {
   @apply overflow-hidden flex bg-white rounded-md border border-gray-200;
+  display: flex;
+  /* position: fixed; */
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+
   width: 21cm;
   height: 29.7cm;
 }

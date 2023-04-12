@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { joinClasses } from "../../lib/utilities";
+// import { joinClasses } from "../../lib/utilities";
 
 type props = {
   title: string,
@@ -14,7 +14,7 @@ const PageSection = (props: props) => {
 
   return (
     <div className="section flex flex-col">
-      <h2 className={joinClasses("py-1 uppercase font-medium", {
+      {/* <h2 className={joinClasses("py-1 uppercase font-medium", {
         "text-primary": alternate,
         "text-white": !alternate
       })}>
@@ -24,7 +24,7 @@ const PageSection = (props: props) => {
         [className!]: className
       })}>
         { children }
-      </div>
+      </div> */}
     </div>
   )
 }

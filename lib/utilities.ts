@@ -1,12 +1,3 @@
-// ! Library
-import { db } from "../config/firebase.client";
-
-// ! Types
-type timestamp = {
-    seconds: number,
-    nanoseconds: number
-}
-
 const joinClasses = (...classes : any) => {
     const classesArray = classes.map((x : any) => {
         if (typeof x == "string" || x instanceof String) {
@@ -31,9 +22,6 @@ const newFirebaseId = () => {
     return autoId;
 }
 
-const convertTimestamp = (dateObject: timestamp) =>
-    new db.Timestamp(dateObject.seconds, dateObject.nanoseconds).toDate();
-
 const monthAndYear = (date: Date, truncateMonth = false) => {
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -48,4 +36,4 @@ const monthAndYear = (date: Date, truncateMonth = false) => {
 const numberArray = (startFrom: number, maxNumber: number) =>
     Array.from({ length: maxNumber }, (_, i) => i + startFrom);
 
-export { joinClasses, newFirebaseId, convertTimestamp, monthAndYear, numberArray };
+export { joinClasses, newFirebaseId, monthAndYear, numberArray };
