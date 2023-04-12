@@ -14,15 +14,21 @@ export default class AuthController {
 	async getCurrentUser(@Req() req: ExtendedNextApiRequest) {
 		if (!req.user) { return null; }
 
-		const user = await prisma.users.findUnique({
-			where: { user_id: req.user.id },
-			include: { roles: {
-				include: {
-					role: true
-				}
-			} }
-		});
+		try {
+			const user = await prisma.users.findUnique({
+				where: { user_id: req.user.id },
+				include: { roles: {
+					include: {
+						role: true
+					}
+				} }
+			});
 
-		return user;
+			return user;
+		} catch (error) {
+			console.error(error);
+
+			return null;
+		}
 	}
 }

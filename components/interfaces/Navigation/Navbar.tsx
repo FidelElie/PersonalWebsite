@@ -4,7 +4,7 @@ import { joinClasses } from "@/library/utilities";
 import { useLogout } from "@/library/api/client";
 import { useSupabaseContext, useThemeContext } from "@/library/providers";
 
-import { Link, Box, Container, Flex, Icon, Button, Show, Text } from "@/components/core";
+import { Link, Box, Container, Flex, Icon, Button, Show, Text, Backdrop } from "@/components/core";
 
 import { Rocket } from "../Assets/Rocket";
 
@@ -27,7 +27,7 @@ export const Navbar = (props: NavbarProps) => {
 			)
 		}>
 			<Container
-				className="max-w-4xl py-3 px-5 mx-auto space-y-2 flex flex-col justify-between md:px-0"
+				className="max-w-4xl py-3 px-5 mx-auto space-y-2 flex flex-col items-center justify-between md:px-0"
 			>
 				<Flex className="items-center w-full justify-between">
 					<Link href="/" className="mr-2 flex items-center">
@@ -53,6 +53,7 @@ export const Navbar = (props: NavbarProps) => {
 					</Flex>
 				</Show>
 			</Container>
+			<Backdrop isOpen={logout.isLoading}/>
 		</Box>
 	)
 }

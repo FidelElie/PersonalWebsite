@@ -18,6 +18,7 @@
     "update:icons": "python3 ./scripts/populate-icon-data.py"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.11",
     "@next/font": "^13.1.6",
     "@prisma/client": "^4.10.1",
     "@supabase/auth-helpers-nextjs": "^0.5.4",

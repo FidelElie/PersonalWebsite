@@ -20,6 +20,7 @@ import {
 	Link,
 	Text,
 	Page,
+	Backdrop,
 	type IconNames
 } from "@/components/core";
 
@@ -33,6 +34,11 @@ const AuthPage: NextPage = () => {
 	const continueWithPassword = useContinueWithPassword();
 	const continueWithSpotify = useContinueWithSocialProvider("spotify");
 	const continueWithGithub = useContinueWithSocialProvider("github");
+
+	const isSubmitting = [
+		continueWithMagicLink, continueWithPassword, continueWithSpotify, continueWithGithub
+	]
+	.some(mutation => mutation.isLoading)
 
 	const handleSubmission = async () => {
 		try {
@@ -59,7 +65,7 @@ const AuthPage: NextPage = () => {
 					<SocialButton onClick={continueWithSpotify.mutate} icon="spotify" />
 					<SocialButton onClick={continueWithGithub.mutate} icon="github" />
 				</Flex>
-				<Form onSubmit={handleSubmission}>
+				<Form onSubmit={handleSubmission} className="flex flex-col">
 					<TextField.Email label="Email Address" {...register("email")} connect="bottom"/>
 					<TextField
 						{...register("password")}
@@ -79,7 +85,7 @@ const AuthPage: NextPage = () => {
 						type={showPassword ? "text" : "password"}
 						connect
 					/>
-					<Button.Submit theme="Primary" className="w-full py-2" disabled={!fields.email} connect="top">
+					<Button.Submit theme="Primary" className="py-2" disabled={!fields.email} connect="top">
 						<Show
 							when={!fields.password}
 							else={<ButtonContent text="Continue with Password" icon="lock"/>}
@@ -89,6 +95,7 @@ const AuthPage: NextPage = () => {
 					</Button.Submit>
 				</Form>
 			</Container>
+			<Backdrop isOpen={isSubmitting}/>
 		</Page>
 	)
 }
