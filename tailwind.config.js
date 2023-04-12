@@ -18,7 +18,6 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require("@tailwindcss/forms"),
-    require("tailwind-scrollbar"),
+    require("@tailwindcss/forms")
   ],
 }

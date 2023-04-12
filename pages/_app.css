@@ -5,7 +5,6 @@
 
 body {
   font-family: "Lato", sans-serif;
-  @apply scrollbar scrollbar-thumb-primary scrollbar-track-gray-50 scrollbar-thin
 }
 
 a { @apply underline text-primary; }
