@@ -2,7 +2,7 @@ module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./lib/**/*.{js,ts,jsx,tsx}"
+    "./library/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
@@ -12,9 +12,6 @@ module.exports = {
         "tertiary": "#7b869b"
       },
     }
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require("@tailwindcss/forms")

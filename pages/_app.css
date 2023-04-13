@@ -3,10 +3,7 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&display=swap');
 
-body {
-  font-family: "Lato", sans-serif;
-  /* @apply scrollbar scrollbar-thumb-primary scrollbar-track-gray-50 scrollbar-thin */
-}
+body { font-family: "Lato", sans-serif; }
 
 a { @apply underline text-primary; }
 
@@ -68,43 +65,6 @@ a { @apply underline text-primary; }
 
 .button {
   @apply px-8 py-2 text-base font-medium transition duration-500 ease-in-out transform rounded-md;
-}
-
-/* Starting Input */
-.datePicker input {
-  @apply rounded-md px-4 py-2 border border-primary;
-}
-
-.datePicker input:focus {
-  @apply focus:outline-none !important;
-}
-
-/* Datepicker Container */
-.react-datepicker__month-container {
-  @apply shadow border-none !important;
-}
-
-.react-datepicker__triangle {
-  @apply hidden !important;
-}
-
-/* Month Navigation Button */
-.react-datepicker__navigation {
-  top: 10px !important;
-}
-
-/* Month Navigation Icons */
-.react-datepicker__navigation-icon {
-  @apply border-white text-white bg-white !important;
-}
-
-/* Selected Date */
-.react-datepicker__day--selected {
-  @apply bg-primary !important;
-}
-
-.react-datepicker__header, .react-datepicker__header * {
-  @apply bg-primary text-white !important;
 }
 
 @media print

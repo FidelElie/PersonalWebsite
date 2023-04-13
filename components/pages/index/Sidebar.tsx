@@ -1,10 +1,9 @@
-import { joinClasses } from "../../../lib/utilities";
+import { clc } from "@/library/utilities";
 
-import sidebarPoints from "./Sidebar.data";
-import type { sidebarPointProps } from "./Sidebar.data";
+import sidebarPoints, { type sidebarPointProps } from "./Sidebar.data";
 
 // ! Components
-import PageSection from "../../misc/PageSection";
+import PageSection from "@/components/misc/PageSection";
 
 const SidebarPoint = (props: sidebarPointProps) => {
   const { title, points } = props;
@@ -18,7 +17,7 @@ const SidebarPoint = (props: sidebarPointProps) => {
               <span className="text-sm uppercase">{point.text}</span>
               {
                 point.subPoints.map(subPoint => (
-                  <span className={joinClasses("text-xs", {
+                  <span className={clc("text-xs", {
                     "text-white": subPoint.alternate,
                     "text-secondary": !(subPoint.alternate)
                   })}

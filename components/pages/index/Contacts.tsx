@@ -1,7 +1,6 @@
-import { joinClasses } from "../../../lib/utilities";
+import { clc } from "@/library/utilities";
 
-import contactTags from "./Contacts.data";
-import type { contactTagProps } from "./Contacts.data";
+import contactTags, { type contactTagProps } from "./Contacts.data";
 
 const ContactPoint = (props: contactTagProps) => {
   const { text, icon, href } = props;
@@ -11,7 +10,7 @@ const ContactPoint = (props: contactTagProps) => {
   return (
     <BaseTag href={href} className="tag">
       <span className="text-secondary mr-1">
-        <i className={joinClasses(icon, "text-base")}/>
+        <i className={clc(icon, "text-base")}/>
       </span>
       <span className="text-sm">{ text }</span>
     </BaseTag>
