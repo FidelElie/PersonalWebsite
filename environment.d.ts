@@ -2,6 +2,8 @@ declare global {
 	namespace NodeJS {
 		interface ProcessEnv {
 			NODE_ENV: "development" | "staging" | "production";
+			// App
+			MAINTENANCE_MODE?: string;
 			// Firebase Client
 			NEXT_PUBLIC_FIREBASE_API_KEY?: string;
 			NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN?: string;
