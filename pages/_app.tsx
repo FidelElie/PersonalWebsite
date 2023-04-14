@@ -8,7 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { getFirebaseClient } from "@/configs/firebase/client";
 
-import { FirebaseProvider } from "@/library/providers";
+import { FirebaseProvider, ThemeProvider } from "@/library/providers";
 
 function App({ Component, pageProps }: AppProps) {
   const queryClient = useRef(new QueryClient()).current;
@@ -17,7 +17,9 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <FirebaseProvider client={firebaseClient}>
-        <Component {...pageProps} />
+        <ThemeProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>
       </FirebaseProvider>
       <ReactQueryDevtools position="bottom-right"/>
     </QueryClientProvider>
