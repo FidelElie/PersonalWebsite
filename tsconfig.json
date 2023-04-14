@@ -20,16 +20,30 @@
     "incremental": true,
     "rootDir": "./",
     "paths": {
-      "@/components/*": ["./components/*"],
-      "@/library/*": ["./library/*"]
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/library/*": [
+        "./library/*"
+      ],
+      "@/configs/*": [
+        "./configs/*"
+      ]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "environment.d.ts"
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "ts-node": {
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }

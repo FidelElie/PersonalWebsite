@@ -1,12 +1,27 @@
-import type { AppProps } from "next/app";
-
-import "@fortawesome/fontawesome-free/css/all.css";
 import "./_app.css";
+import "@fortawesome/fontawesome-free/css/all.css";
 
+import { useRef } from "react";
+import type { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-function MyApp({ Component, pageProps }: AppProps) {
+import { getFirebaseClient } from "@/configs/firebase/client";
+
+import { FirebaseProvider } from "@/library/providers";
+
+function App({ Component, pageProps }: AppProps) {
+  const queryClient = useRef(new QueryClient()).current;
+  const firebaseClient = useRef(getFirebaseClient()).current;
+
   return (
-    <Component {...pageProps} />
+    <QueryClientProvider client={queryClient}>
+      <FirebaseProvider client={firebaseClient}>
+        <Component {...pageProps} />
+      </FirebaseProvider>
+      <ReactQueryDevtools position="bottom-right"/>
+    </QueryClientProvider>
   )
 }
-export default MyApp;
+
+export default App;

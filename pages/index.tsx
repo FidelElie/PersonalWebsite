@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useTouch, useEventHandler, useKeyboardEvent } from "@/library/hooks";
+import { useTouch, useEventHandler } from "@/library/hooks";
 
 import Navbar from "@/components/layout/app/Navbar";
 import Sidebar from "@/components/pages/index/Sidebar";
@@ -45,7 +45,7 @@ export default function FrontPage() {
     setPosition(currentPosition => ({ ...currentPosition, left: xMidpoint, top: yMidpoint }));
   });
 
-  const keys = useKeyboardEvent(["Space"]);
+  // const keys = useKeyboardEvent(["Space"]);
 
 
   const editPosition = useCallback((data: Partial<Position>) => setPosition(
@@ -110,12 +110,12 @@ export default function FrontPage() {
       <Navbar/>
       <div className={[
         "flex-grow overflow-hidden relative bg-gray-50 transition-all",
-        (mouseMoving || keys.Space) ? "cursor-grab select-none" : [],
+        (mouseMoving) ? "cursor-grab select-none" : [],
         (position.left && position.top && position.scale) ? "opacity-100" : "opacity-0"
       ].flat().join(" ")}
         ref={track}
         onMouseDown={(event) => {
-          if (event.target !== track.current && !keys.Space) { return; }
+          if (event.target !== track.current) { return; }
           setDragStarted(true);
         }}
         onMouseMove={(event) => {
