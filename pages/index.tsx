@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTouch, useEventHandler } from "@/library/hooks";
 
 import Navbar from "@/components/layout/app/Navbar";
+import Footer from "@/components/layout/app/Footer";
 import Sidebar from "@/components/pages/index/Sidebar";
 import Contacts from "@/components/pages/index/Contacts";
 
@@ -129,7 +130,7 @@ export default function FrontPage() {
             return requestAnimationFrame(() => editPosition({ scale: parseScale(event.deltaY) }));
           }
 
-          movePosition(event.deltaX, event.deltaY);
+          movePosition(-event.deltaX, -event.deltaY);
         }}
         onMouseUp={() => { setDragStarted(false); setMouseMoving(false); }}
        {...touchConfig.register()}
@@ -206,7 +207,7 @@ export default function FrontPage() {
           </div>
         </div>
       </div>
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   )
 }
