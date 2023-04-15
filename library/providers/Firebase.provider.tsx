@@ -1,14 +1,15 @@
-import { useState, createContext, useEffect, type ReactNode } from "react";
+import { useState, createContext, useEffect, type ReactNode, useContext } from "react";
 import type { FirebaseApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-const initialContext: FirebaseContextProps = { user: null, loading: true };
-const FirebaseContext = createContext(initialContext);
+const FirebaseContext = createContext<FirebaseContextProps | undefined>(undefined);
 
 export const FirebaseProvider = (props: FirebaseProviderProps) => {
 	const { client, children } = props;
 	const [user, setUser] = useState<User | null>(null);
-	const [loading, setLoading] = useState(initialContext.loading);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const auth = getAuth(client);
@@ -29,15 +30,42 @@ export const FirebaseProvider = (props: FirebaseProviderProps) => {
 	}, [client]);
 
 	return (
-		<FirebaseContext.Provider value={{ user, loading }}>
+		<FirebaseContext.Provider value={{ user, loading, client }}>
 			{ children }
 		</FirebaseContext.Provider>
 	)
 }
 
+export const useFirebaseContext = () => {
+	const context = useContext(FirebaseContext);
+
+	if (!context) { throw new Error("useFirebaseContext must be used within FirebaseProvider"); }
+
+	return context;
+};
+
+export const useFirebaseAuth = () => {
+	const { client } = useFirebaseContext();
+
+	return getAuth(client);
+}
+
+export const useFirestore = () => {
+	const { client } = useFirebaseContext();
+
+	return getFirestore(client);
+}
+
+export const useFirebaseStorage = () => {
+	const { client } = useFirebaseContext();
+
+	return getStorage(client);
+}
+
 export type FirebaseContextProps = {
 	user: User | null;
-	loading: boolean
+	loading: boolean,
+	client: FirebaseApp
 }
 
 export interface FirebaseProviderProps {
