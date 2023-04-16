@@ -1,6 +1,6 @@
-import { useState, createContext, useEffect, type ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 import type { FirebaseApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -8,29 +8,9 @@ const FirebaseContext = createContext<FirebaseContextProps | undefined>(undefine
 
 export const FirebaseProvider = (props: FirebaseProviderProps) => {
 	const { client, children } = props;
-	const [user, setUser] = useState<User | null>(null);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		const auth = getAuth(client);
-
-		return onAuthStateChanged(auth, async (user) => {
-			try {
-				if (user) {
-					setUser(user);
-				} else {
-					setUser(null);
-				}
-			} catch (error) {
-				// Connection error likely
-			} finally {
-				setLoading(false);
-			}
-		});
-	}, [client]);
 
 	return (
-		<FirebaseContext.Provider value={{ user, loading, client }}>
+		<FirebaseContext.Provider value={{ client }}>
 			{ children }
 		</FirebaseContext.Provider>
 	)
@@ -62,11 +42,7 @@ export const useFirebaseStorage = () => {
 	return getStorage(client);
 }
 
-export type FirebaseContextProps = {
-	user: User | null;
-	loading: boolean,
-	client: FirebaseApp
-}
+export type FirebaseContextProps = { client: FirebaseApp }
 
 export interface FirebaseProviderProps {
 	client: FirebaseApp,

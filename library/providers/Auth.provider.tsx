@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 
-import type { User } from "../models";
+import type { UserSchema } from "../models";
 import { useFirebaseAuth } from "./Firebase.provider";
 
 import { useFetchCurrentUser } from "../api";
@@ -26,6 +26,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
 			try {
 				setUid(user ? user.uid : null);
 			} catch (error) {
+				console.log(error);
 				// Connection error likely
 			} finally {
 				setInitialLoad(true);
@@ -48,7 +49,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
 export const useAuth = () => useContext(AuthContext);
 
 export type AuthContextType = {
-	user: User | null;
+	user: UserSchema | null;
 	loading: boolean;
 }
 

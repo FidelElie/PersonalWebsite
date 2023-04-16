@@ -2,15 +2,17 @@ import "./_app.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 import { useRef } from "react";
-import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { getFirebaseClient } from "@/configs/firebase/client";
 
+import type { ExtendedAppProps } from "@/library/types";
 import { FirebaseProvider, AuthProvider, ThemeProvider } from "@/library/providers";
 
-function App({ Component, pageProps }: AppProps) {
+import { AuthComponent } from "@/components/pages/AuthComponent";
+
+const App = (props: ExtendedAppProps) => {
   const queryClient = useRef(new QueryClient()).current;
   const firebaseClient = useRef(getFirebaseClient()).current;
 
@@ -19,7 +21,7 @@ function App({ Component, pageProps }: AppProps) {
       <FirebaseProvider client={firebaseClient}>
         <AuthProvider>
           <ThemeProvider>
-            <Component {...pageProps} />
+            <AuthComponent {...props}/>
           </ThemeProvider>
         </AuthProvider>
       </FirebaseProvider>
@@ -27,5 +29,7 @@ function App({ Component, pageProps }: AppProps) {
     </QueryClientProvider>
   )
 }
+
+
 
 export default App;

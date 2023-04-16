@@ -25,6 +25,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-query-kit:
+    specifier: ^1.4.1
+    version: 1.4.1(@tanstack/react-query@4.29.1)
   zod:
     specifier: ^3.21.4
     version: 3.21.4
@@ -2480,6 +2483,17 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-query-kit@1.4.1(@tanstack/react-query@4.29.1):
+    resolution: {integrity: sha512-xIBczviAj/PUSVYXfwfpwutADXu1U1/n+37cH2IRLHONWXmHlnTzIQdMmsh5txzBcp2Xe/N2kmAehG+/eBaoMA==}
+    peerDependencies:
+      '@tanstack/react-query': '*'
+    peerDependenciesMeta:
+      '@tanstack/react-query':
+        optional: true
+    dependencies:
+      '@tanstack/react-query': 4.29.1(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /react@18.2.0:

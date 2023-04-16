@@ -1,2 +1,2 @@
-export * from "./Info.model";
+export * from "./Detail.model";
 export * from "./User.model";
