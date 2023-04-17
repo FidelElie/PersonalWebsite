@@ -10,7 +10,7 @@ import { getFirebaseClient } from "@/configs/firebase/client";
 import type { ExtendedAppProps } from "@/library/types";
 import { FirebaseProvider, AuthProvider, ThemeProvider } from "@/library/providers";
 
-import { AuthComponent } from "@/components/pages/AuthComponent";
+import { ComponentRouter } from "@/components/pages/ComponentRouter";
 
 const App = (props: ExtendedAppProps) => {
   const queryClient = useRef(new QueryClient()).current;
@@ -21,7 +21,7 @@ const App = (props: ExtendedAppProps) => {
       <FirebaseProvider client={firebaseClient}>
         <AuthProvider>
           <ThemeProvider>
-            <AuthComponent {...props}/>
+            <ComponentRouter {...props}/>
           </ThemeProvider>
         </AuthProvider>
       </FirebaseProvider>
