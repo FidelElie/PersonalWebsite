@@ -3,12 +3,17 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&display=swap');
 
-body { font-family: "Lato", sans-serif; }
+body {
+  font-family: "Lato", sans-serif;
+  @apply bg-gray-50 dark:bg-gray-600
+}
+
+* { @apply transition-all; }
 
 a { @apply underline text-primary; }
 
 #page {
-  @apply overflow-hidden flex bg-white rounded-md border border-gray-200;
+  @apply overflow-hidden flex rounded-md;
   display: flex;
   width: 21cm;
   height: 29.7cm;

@@ -9,10 +9,12 @@ const ContactPoint = (props: contactTagProps) => {
 
   return (
     <BaseTag href={href} className="tag">
-      <span className="text-secondary mr-1">
+      <span className="text-secondary mr-2.5 dark:text-white">
         <i className={clc(icon, "text-base")}/>
       </span>
-      <span className="text-sm">{ text }</span>
+      <span className={clc("text-sm", BaseTag === "div" && "dark:text-white")}>
+        { text }
+      </span>
     </BaseTag>
   )
 }

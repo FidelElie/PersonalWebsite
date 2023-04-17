@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useTouch, useEventHandler } from "@/library/hooks";
 
-import Navbar from "@/components/layout/app/Navbar";
-import Footer from "@/components/layout/app/Footer";
+import { Page, Navbar, Footer  } from "@/components/core";
+
 import Sidebar from "@/components/pages/index/Sidebar";
 import Contacts from "@/components/pages/index/Contacts";
 
@@ -107,10 +107,14 @@ export default function FrontPage() {
 
 
   return (
-    <div className="flex flex-col h-screen">
-      <Navbar/>
+    <Page
+      className="h-screen"
+      mainClassName="flex-grow relative"
+      header={<Navbar/>}
+      footer={<Footer/>}
+    >
       <div className={[
-        "flex-grow overflow-hidden relative bg-gray-50 transition-all",
+        "w-full h-full overflow-hidden relative transition-all",
         (mouseMoving) ? "cursor-grab select-none" : [],
         (position.left && position.top && position.scale) ? "opacity-100" : "opacity-0"
       ].flat().join(" ")}
@@ -133,12 +137,12 @@ export default function FrontPage() {
           movePosition(-event.deltaX, -event.deltaY);
         }}
         onMouseUp={() => { setDragStarted(false); setMouseMoving(false); }}
-       {...touchConfig.register()}
+      {...touchConfig.register()}
       >
         {
           (initialScale.current && position.scale) && (
             <div
-              className="rounded-lg shadow bg-white px-3 py-2 absolute top-2.5 right-2.5 z-20 text-sm tracking-tighter font-light"
+              className="rounded-lg shadow bg-white px-3 py-2 absolute top-2.5 right-2.5 z-20 text-sm tracking-tighter font-light dark:bg-gray-700 dark:text-white"
             >
               <span>{Math.ceil((initialScale.current / position.scale) * 100)}%</span>
             </div>
@@ -154,23 +158,23 @@ export default function FrontPage() {
         >
           <div
             id="page"
-            className="shadow-lg"
+            className="shadow-lg border border-gray-200 bg-white dark:bg-gray-700 dark:border-gray-700"
             ref={page}
           >
             {/* <span
-                    className="z-10 flex items-center fixed justify-center bg-secondary text-2xl h-12 w-12 right-5 top-36 text-white rounded-full shadow-lg cursor-pointer no-print hover:bg-primary lg:absolute lg:right-5 lg:top-5 lg:p-5 lg:h-16 lg:w-16"
-                    // onClick={() => setCustomiserTab("settings")}
-                  >
-                    <i className="fas fa-pen"></i>
-                  </span> */}
+                className="z-10 flex items-center fixed justify-center bg-secondary text-2xl h-12 w-12 right-5 top-36 text-white rounded-full shadow-lg cursor-pointer no-print hover:bg-primary lg:absolute lg:right-5 lg:top-5 lg:p-5 lg:h-16 lg:w-16"
+                // onClick={() => setCustomiserTab("settings")}
+              >
+                <i className="fas fa-pen"></i>
+              </span> */}
             <Sidebar
             // showReactTag={checkSetting("showReactTag")}
             />
             <div className="flex flex-col w-2/3 relative" id="main">
               <div className="w-full mb-4">
-                <h1 className="text-4xl tracking-tighter text-secondary font-bold">Fidel Pierre Elie</h1>
+                <h1 className="text-4xl tracking-tighter text-secondary font-bold dark:text-white">Fidel Pierre Elie</h1>
                 <span className="text-lg text-primary">Developer</span>
-                <div className="w-full flex flex-wrap">
+                <div className="w-full flex flex-wrap mt-1.5">
                   <Contacts />
                 </div>
               </div>
@@ -207,7 +211,6 @@ export default function FrontPage() {
           </div>
         </div>
       </div>
-      <Footer/>
-    </div>
+    </Page>
   )
 }

@@ -12,7 +12,7 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>((props, ref) =
 			id={id}
 			ref={ref}
 			className={clc(
-				"bg-blue-500 text-white rounded-sm px-3 py-2 font-light flex shadow-sm",
+				"bg-blue-500 text-white rounded px-3 py-2 font-light flex shadow-sm",
 				className
 			)}
 			disabled={disabled}
@@ -33,7 +33,7 @@ const ResetButton = forwardRef<HTMLButtonElement, TypedButtonProps>(
 )
 
 export interface BaseButtonProps {
-	id?: string,
+	id?: string;
 	className?: string;
 	disabled?: boolean;
 	children?: ReactNode;

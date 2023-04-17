@@ -13,7 +13,8 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 		id,
 		placeholder,
 		onChange,
-		disabled
+		disabled,
+		required
 	} = props;
 
 	const dispatchOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -28,7 +29,8 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 			<input
 				id={id}
 				className={clc(
-					"border rounded-sm text-sm border-gray-200 w-full font-light tracking-tight",
+					"border rounded text-sm border-gray-200 w-full font-light tracking-tight py-2 px-3",
+					"dark:bg-gray-700 dark:text-white dark:border-gray-50",
 					inputClassName
 				)}
 				ref={ref}
@@ -37,6 +39,7 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 				placeholder={placeholder}
 				onChange={dispatchOnChange}
 				disabled={disabled}
+				required={required}
 			/>
 		</div>
 	)
@@ -50,16 +53,17 @@ const PasswordField = forwardRef<HTMLInputElement, TypedTextFieldProps>(
 );
 
 export interface BaseTextFieldProps {
-	label: string,
-	id: string,
-	className?: string,
-	labelClassName?: string,
-	inputClassName?: string,
-	type?: "text" | "email" | "password",
-	value?: string,
-	onChange?: (text: string) => void,
-	placeholder?: string,
-	disabled?: boolean
+	label: string;
+	id: string;
+	className?: string;
+	labelClassName?: string;
+	inputClassName?: string;
+	type?: "text" | "email" | "password";
+	value?: string;
+	onChange?: (text: string) => void;
+	placeholder?: string;
+	disabled?: boolean;
+	required?: boolean;
 }
 
 export interface TypedTextFieldProps extends Omit<BaseTextFieldProps, "type"> {}

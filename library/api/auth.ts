@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 import { useFirebaseAuth } from "../providers";
 
-export const useLoginUser = () => {
+export const useLoginUser = (config: { onSuccess: () => void }) => {
 	const auth = useFirebaseAuth();
 
 	return useMutation(
@@ -15,6 +15,16 @@ export const useLoginUser = () => {
 			);
 
 			return userCredential;
-		}
+		},
+		config
 	);
+}
+
+export const useLogoutUser = (config: { onSuccess: () => void }) => {
+	const auth = useFirebaseAuth();
+
+	return useMutation(
+		async () => { return await signOut(auth); },
+		config
+	)
 }
