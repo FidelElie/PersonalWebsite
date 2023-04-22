@@ -68,6 +68,6 @@ export interface SelectProps<T extends string, Option extends unknown> {
 	valueDisplay: (value?: T | null) => ReactNode;
 	value?: T;
 	onChange?: (value: T) => void;
-	options: Option[],
+	options: Option[] | readonly Option[],
 	optionDisplay: (option: Option) => ReactNode
 }

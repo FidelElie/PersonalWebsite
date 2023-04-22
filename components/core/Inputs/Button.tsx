@@ -12,7 +12,7 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>((props, ref) =
 			id={id}
 			ref={ref}
 			className={clc(
-				"bg-blue-500 text-white rounded px-3 py-2 font-light flex shadow-sm",
+				"bg-blue-500 text-white rounded px-2.5 py-1.5 font-light flex shadow-sm",
 				className
 			)}
 			disabled={disabled}

@@ -2,9 +2,13 @@ import { z } from "zod";
 
 import { registerModel } from "@/configs/firebase";
 
+export const DetailTypes = [
+	"education", "contact", "activity", "language", "interest"
+] as const;
+
 // Education
 const EducationDetail = z.object({
-	type: z.literal("education"),
+	type: z.literal(DetailTypes[0]),
 	qualification: z.string(),
 	organisation: z.string(),
 	startDate: z.coerce.date().transform(date => date.toISOString()),
@@ -14,9 +18,13 @@ const EducationDetail = z.object({
 type EducationDetail = z.infer<typeof EducationDetail>;
 
 // Contact
+export const ContactMediums = [
+	"phone", "linkedin", "instagram", "facebook", "github", "location", "email"
+] as const;
+
 const ContactDetail = z.object({
-	type: z.literal("contact"),
-	medium: z.enum(["phone", "linkedin", "instagram", "facebook", "github", "location"]),
+	type: z.literal(DetailTypes[1]),
+	medium: z.enum(ContactMediums),
 	value: z.string()
 });
 
@@ -24,22 +32,25 @@ type ContactDetail = z.infer<typeof ContactDetail>;
 
 // Activities
 const ActivityDetail = z.object({
-	type: z.literal("activity")
+	type: z.literal(DetailTypes[2]),
+	detail: z.string()
 });
 
 type ActivityDetail =  z.infer<typeof ActivityDetail>;
 
 // Languages
+export const LanguageProficiencies = ["Native", "Fluent", "Basic"] as const;
+
 const LanguageDetail = z.object({
-	type: z.literal("language"),
-	proficiency: z.enum(["Native", "Fluent", "Basic"])
+	type: z.literal(DetailTypes[3]),
+	proficiency: z.enum(LanguageProficiencies)
 });
 
 type LanguageDetail = z.infer<typeof LanguageDetail>;
 
 // Interests
 const InterestDetail = z.object({
-	type: z.literal("interest"),
+	type: z.literal(DetailTypes[4]),
 	detail: z.string()
 });
 

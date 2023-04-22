@@ -10,7 +10,7 @@ body {
 
 * { @apply transition-all; }
 
-a { @apply underline text-primary; }
+a { @apply text-primary; }
 
 #page {
   @apply overflow-hidden flex rounded-md;

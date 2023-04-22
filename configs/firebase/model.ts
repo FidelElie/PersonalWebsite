@@ -1,4 +1,4 @@
-import { AnyZodObject, z } from "zod";
+import { AnyZodObject, ZodType, z } from "zod";
 import {
 	getDoc,
 	doc,
@@ -6,11 +6,11 @@ import {
 	Timestamp,
 	DocumentData,
 	getDocs,
-	writeBatch,
 	deleteDoc,
 	serverTimestamp,
 	updateDoc,
-	getFirestore
+	getFirestore,
+	setDoc
 } from "firebase/firestore";
 
 import { getFirebaseClient } from "./client";
@@ -23,6 +23,8 @@ export const ModelSchema = z.object({
 });
 
 export type ModelSchema = z.infer<typeof ModelSchema>;
+
+export type MergedModelSchema<Schema> = ModelSchema & Schema;
 
 export class Model<Schema extends AnyZodObject>{
 	name: string;
@@ -37,16 +39,12 @@ export class Model<Schema extends AnyZodObject>{
 	create = async (data: z.infer<Schema> | z.infer<Schema>[]) => {
 		const entries = Array.isArray(data) ? data : [data];
 
-		const batch = writeBatch(this.db);
+		const collectionReference = this.getCollectionReference();
 
-		entries.forEach(entry => {
-			batch.set(this.getDocumentReference(entry.id), {
-				...this.cleanEntry(entry),
-				createdAt: serverTimestamp()
-			})
-		});
-
-		await batch.commit();
+		await Promise.all(entries.map(entry => setDoc(doc(collectionReference), {
+			...this.cleanEntry(entry),
+			createdAt: serverTimestamp()
+		})));
 	}
 
 	find = async () => {
@@ -66,13 +64,16 @@ export class Model<Schema extends AnyZodObject>{
 		const snapshot = await getDoc(this.getDocumentReference(id));
 
 		if (snapshot.exists()) {
-			return this.modelIncomingData(snapshot.id, snapshot.data());
+			return this.modelIncomingData(
+				snapshot.id,
+				snapshot.data()
+			) as MergedModelSchema<z.infer<Schema>>;
 		} else {
 			return null;
 		}
 	}
 
-	findByIdAndUpdate = async (id: string, data: Partial<z.infer<Schema>>) => {
+	findByIdAndUpdate = async (id: string, data: Partial<MergedModelSchema<z.infer<Schema>>>) => {
 		await updateDoc(this.getDocumentReference(id), {
 			...this.cleanEntry(data),
 			updatedAt: serverTimestamp()
@@ -93,7 +94,7 @@ export class Model<Schema extends AnyZodObject>{
 			return [key, value]
 		}));
 
-		return this.schema.parse({ ...moddedData, id }) as z.infer<Schema>;
+		return this.schema.parse({ ...moddedData, id }) as MergedModelSchema<z.infer<Schema>>
 	}
 
 	private cleanEntry = (data: any) => {

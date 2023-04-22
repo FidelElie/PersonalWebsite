@@ -6,7 +6,7 @@ const DashboardPage: ExtendedNextPage = () => {
 	return <></>;
 }
 
-DashboardPage.redirect = "/dashboard/info";
+DashboardPage.redirect = "/dashboard/details";
 DashboardPage.getLayout = (page) => (
 	<DashboardLayout title="Dashboard | Fidel Elie">
 		{page}
