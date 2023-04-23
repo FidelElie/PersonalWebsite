@@ -6,7 +6,7 @@ import { useFetchDetails } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
 import type { DetailSchema } from "@/library/models";
 
-import { Button, Show } from "@/components/core";
+import { Button, Icon, Show } from "@/components/core";
 import { DashboardLayout } from "@/components/interfaces";
 
 import { DetailSections } from "@/components/pages/dashboard/details/DetailSections";
@@ -36,8 +36,14 @@ const DashboardDetailsPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Dashboard | Fidel Elie"
-			headerOptions={<Button onClick={() => setModal("details")}>New Detail</Button>}
+			title="Details Dashboard | Fi Dev"
+			headerTitle="Details"
+			headerOptions={(
+				<Button onClick={() => setModal("details")} className="flex items-center">
+					<Icon name="add-circle-fill" className="text-white mr-1"/>
+					New Detail
+				</Button>
+			)}
 		>
 			<Show if={detailsQuery.isSuccess}>
 				<DetailSections

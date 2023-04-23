@@ -13,6 +13,9 @@ module.exports = {
         "secondary": "#282C34",
         "tertiary": "#7b869b"
       },
+      borderWidth: {
+        DEFAULT: '0.5px',
+      }
     }
   },
   plugins: [
