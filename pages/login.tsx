@@ -38,7 +38,7 @@ const LoginPage: ExtendedNextPage = () => {
 	}
 
 	return (
-		<AuthLayout>
+		<AuthLayout title="Login | Fi Dev">
 			<div className="container rounded shadow mx-auto max-w-sm px-2 md:px-0">
 				<div className="bg-blue-500 rounded-t px-4 py-3 text-center">
 					<h1 className="text-white text-2xl font-light tracking-tight uppercase">Login</h1>
