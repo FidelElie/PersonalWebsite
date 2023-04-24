@@ -12,11 +12,12 @@ body {
 
 a { @apply text-primary; }
 
-#page {
-  @apply overflow-hidden flex rounded-md;
-  display: flex;
-  width: 21cm;
-  height: 29.7cm;
+.lato {
+  font-family: "Lato", sans-serif;
+}
+
+.open-sans {
+  font-family: "Open Sans", sans-serif;
 }
 
 #sidebar { @apply shadow-lg; }
@@ -26,13 +27,7 @@ a { @apply text-primary; }
   padding: 4% 2.5%
 }
 
-.lato {
-  font-family: "Lato", sans-serif;
-}
 
-.open-sans {
-  font-family: "Open Sans", sans-serif;
-}
 
 .section { margin-bottom: 1rem; }
 #sidebar .section { margin-bottom: 0.25rem; }
@@ -57,29 +52,6 @@ a { @apply text-primary; }
   padding-bottom: 0.1rem;
 }
 
-.field {
-  @apply flex flex-col mb-3 space-y-1 z-0;
-}
-
-.input {
-  @apply w-full px-4 py-2 text-base text-black transition duration-500 ease-in-out transform rounded-md border border-primary;
-}
-
-.label {
-  @apply text-base capitalize;
-}
-
-.button {
-  @apply px-8 py-2 text-base font-medium transition duration-500 ease-in-out transform rounded-md;
-}
-
-@media print
-{
-  #page {
-    @apply rounded-none border-none;
-  }
+@media print {
   .no-print, .no-print * { display: none !important; }
-  .wrapper {
-    @apply p-0 w-min flex-none;
-  }
 }

@@ -25,7 +25,11 @@ const App = (props: ExtendedAppProps) => {
           </ThemeProvider>
         </AuthProvider>
       </FirebaseProvider>
-      <ReactQueryDevtools position="bottom-right"/>
+      <ReactQueryDevtools
+        position="bottom-right"
+        panelProps={{ className: "no-print" }}
+        toggleButtonProps={{ className: "no-print" }}
+      />
     </QueryClientProvider>
   )
 }
