@@ -18,9 +18,9 @@
     "firebase": "^9.19.1",
     "firebase-admin": "^11.6.0",
     "next": "13.3.0",
+    "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-query-kit": "^1.4.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
