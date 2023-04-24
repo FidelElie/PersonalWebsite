@@ -50,13 +50,13 @@ const Detail = (props: DetailProps) => {
 										className="opacity-0 group-hover:opacity-100"
 										onClick={() => startEditing(detail)}
 									>
-										<Icon name="edit-line" className="text-lg"/>
+										<Icon name="edit-line" className="text-lg dark:text-white"/>
 									</button>
 									<button
 										className="opacity-0 group-hover:opacity-100"
 										onClick={() => startDeletion(detail)}
 									>
-										<Icon name="delete-bin-line" className="text-lg"/>
+										<Icon name="delete-bin-line" className="text-lg dark:text-white"/>
 									</button>
 								</Flex>
 							</Flex>

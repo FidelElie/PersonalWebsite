@@ -1,9 +1,13 @@
 import Link from "next/link";
 
-export const Footer = () => {
+import { clc } from "@/library/utilities";
+
+export const Footer = (props: FooterProps) => {
+  const { className } = props;
+
   return (
     <footer
-      className="w-full flex flex-col no-print border-t px-5 py-2.5 bg-white dark:bg-gray-700 dark:border-white dark:border-0 md:px-0"
+      className={clc("w-full flex flex-col no-print border-t px-5 py-2.5 bg-white dark:bg-gray-700 dark:border-white dark:border-0 md:px-0", className)}
     >
       <div className="container mx-auto max-w-4xl">
         <div className="w-full flex items-center justify-between">
@@ -23,4 +27,8 @@ export const Footer = () => {
       </div>
     </footer>
   )
+}
+
+export interface FooterProps {
+  className?: string
 }

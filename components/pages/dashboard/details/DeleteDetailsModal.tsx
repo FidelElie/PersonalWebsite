@@ -29,7 +29,7 @@ export const DeleteDetailsModal = (props: DeleteDetailsModalProps) => {
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<Modal.Header className="text-2xl dark:text-white">Delete Detail?</Modal.Header>
 			<hr className="my-2"/>
-			<p className="mb-3 font-light">
+			<p className="mb-3 font-light dark:text-white">
 				Are you sure you would like to delete detail <b >{detail.title}</b>? Confirm your choice below.
 			</p>
 			<Flex className="items-center justify-between">
