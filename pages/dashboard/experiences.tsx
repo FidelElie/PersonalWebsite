@@ -6,7 +6,7 @@ import { ExperienceSchema } from "@/library/models";
 import { useFetchExperiences } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
 
-import { Button, Flex, For, Icon, Copy, Heading } from "@/components/core";
+import { Button, Flex, For, Icon, Copy, Heading, Link, Show, Divider } from "@/components/core";
 import { DashboardLayout, QueryHandler } from "@/components/interfaces";
 import { ExperiencesModal } from "@/components/pages/dashboard/experiences/ExperiencesModal";
 import {
@@ -57,7 +57,7 @@ const DashboardExperiencesPage: ExtendedNextPage = () => {
 									key={experience.id}
 									className="group border bg-white dark:bg-gray-700 rounded px-3 py-2 dark:border-transparent"
 								>
-									<Flex.Row className="justify-between mb-2">
+									<Flex.Row className="justify-between">
 										<Flex.Column className="justify-start">
 											<Heading.Three className="text-xl mb-1.5" underline>
 												{experience.title}
@@ -91,6 +91,10 @@ const DashboardExperiencesPage: ExtendedNextPage = () => {
 											</button>
 										</Flex.Row>
 									</Flex.Row>
+									<Show if={experience.link}>
+										<Link className="text-sm" href={experience.link!}>{experience.link}</Link>
+									</Show>
+									<Divider className="my-2"/>
 									<Copy className="text-sm">{experience.description}</Copy>
 								</div>
 							)

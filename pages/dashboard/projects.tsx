@@ -6,7 +6,7 @@ import { useFetchProjects } from "@/library/api";
 import { ProjectSchema } from "@/library/models";
 import type { ExtendedNextPage } from "@/library/types";
 
-import { Button, Flex, For, Icon, Copy, Heading } from "@/components/core";
+import { Button, Flex, For, Icon, Copy, Heading, Divider } from "@/components/core";
 import { DashboardLayout, QueryHandler } from "@/components/interfaces";
 import { ProjectsModal } from "@/components/pages/dashboard/projects/ProjectsModal";
 import { DeleteProjectsModal } from "@/components/pages/dashboard/projects/DeleteProjectsModal";
@@ -72,6 +72,7 @@ const DashboardProjectsPage: ExtendedNextPage = () => {
 											</button>
 										</Flex.Row>
 									</Flex.Row>
+									<Divider className="my-2"/>
 									<Copy className="text-sm">{project.description}</Copy>
 								</div>
 							)
