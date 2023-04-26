@@ -17,9 +17,9 @@ import { getFirebaseClient } from "./client";
 
 export const ModelSchema = z.object({
 	id: z.string(),
-	createdAt: z.coerce.date().transform(date => date.toISOString()),
-	updatedAt: z.coerce.date().transform(date => date.toISOString()).nullable().optional(),
-	deletedAt: z.coerce.date().transform(date => date.toISOString()).nullable().optional()
+	createdAt: z.coerce.date(),
+	updatedAt: z.coerce.date().nullable().optional(),
+	deletedAt: z.coerce.date().nullable().optional()
 });
 
 export type ModelSchema = z.infer<typeof ModelSchema>;
