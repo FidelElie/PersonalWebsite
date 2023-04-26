@@ -24,7 +24,7 @@ export const DeleteTagsModal = (props: DeleteTagsModalProps) => {
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header className="text-2xl dark:text-white">Delete Detail?</Modal.Header>
+			<Modal.Header>Delete Detail?</Modal.Header>
 			<Divider className="my-2"/>
 			<Copy className="mb-3">
 				Are you sure you would like to <Copy.Bold>{selected.length} tags</Copy.Bold>? Confirm your choice below.

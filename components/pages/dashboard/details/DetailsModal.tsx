@@ -62,9 +62,7 @@ export const DetailsModal = (props: DetailsModalProps) => {
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header className="text-2xl dark:text-white">
-				{ !detail ? "Create new detail" : `Edit detail` }
-			</Modal.Header>
+			<Modal.Header>{!detail ? "Create new detail" : `Edit detail`}</Modal.Header>
 			<Divider className="my-2"/>
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">

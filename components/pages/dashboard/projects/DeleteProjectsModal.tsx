@@ -28,7 +28,7 @@ export const DeleteProjectsModal = (props: DeleteProjectsModalProps) => {
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header className="text-2xl dark:text-white">Delete Project?</Modal.Header>
+			<Modal.Header>Delete Project?</Modal.Header>
 			<Divider className="my-2"/>
 			<Copy className="mb-3">
 				Are you sure you would like to delete project <Copy.Bold>{project.title}</Copy.Bold>? Confirm your choice below.

@@ -29,8 +29,8 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 			<input
 				id={id}
 				className={clc(
-					"border rounded text-sm border-gray-200 w-full font-light tracking-tight py-2 px-3",
-					"dark:bg-gray-700 dark:text-white dark:border-gray-50",
+					"border rounded text-sm border-gray-300 w-full font-light tracking-tight py-2 px-3",
+					"dark:bg-gray-700 dark:text-white dark:border-gray-100",
 					inputClassName
 				)}
 				ref={ref}

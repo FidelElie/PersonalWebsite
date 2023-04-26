@@ -52,10 +52,8 @@ export const ProjectsModal = (props: ProjectsModalProps) => {
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header className="text-2xl dark:text-white">
-				{!project ? "Create new project" : `Edit project`}
-			</Modal.Header>
-			<Divider/>
+			<Modal.Header>{!project ? "Create new project" : `Edit project`}</Modal.Header>
+			<Divider className="my-2"/>
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">
 					<TextField

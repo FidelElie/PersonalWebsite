@@ -58,9 +58,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header className="text-2xl dark:text-white">
-				{!experience ? "Create new experience" : `Edit experience`}
-			</Modal.Header>
+			<Modal.Header>{!experience ? "Create new experience" : `Edit experience`}</Modal.Header>
 			<Divider className="my-2"/>
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">

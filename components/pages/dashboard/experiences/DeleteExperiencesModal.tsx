@@ -28,7 +28,7 @@ export const DeleteExperiencesModal = (props: DeleteExperiencesModalProps) => {
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header className="text-2xl dark:text-white">Delete Experience?</Modal.Header>
+			<Modal.Header>Delete Experience?</Modal.Header>
 			<Divider/>
 			<Copy className="mb-3">
 				Are you sure you would like to delete experience <Copy.Bold>{experience.title}</Copy.Bold>? Confirm your choice below.

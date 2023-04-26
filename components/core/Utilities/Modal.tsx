@@ -1,5 +1,6 @@
 import { Fragment, ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { clc } from "@/library/utilities";
 
 const BaseModal = <T extends unknown>(props: ModalProps<T>) => {
 	const { isOpen, onClose, children } = props;
@@ -42,7 +43,10 @@ const BaseModal = <T extends unknown>(props: ModalProps<T>) => {
 }
 
 const ModalHeader = ({ className, as, children }: ModalHeaderProps) => (
-	<Dialog.Title as={as} className={className}>
+	<Dialog.Title
+		as={as}
+		className={clc("text-2xl uppercase tracking-tight font-medium dark:text-white", className)}
+	>
 		{children}
 	</Dialog.Title>
 )

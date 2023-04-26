@@ -25,7 +25,7 @@ export const LongTextField = forwardRef<HTMLTextAreaElement, LongTextFieldProps>
 				value={value}
 				placeholder={placeholder}
 				rows={rows}
-				className="w-full rounded border text-sm border-gray-200 font-light tracking-tight py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-gray-50"
+				className="w-full rounded border text-sm border-gray-300 font-light tracking-tight py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-gray-100"
 				onChange={dispatchOnChange}
 				required={required}
 			/>
