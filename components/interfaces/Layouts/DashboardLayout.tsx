@@ -41,10 +41,10 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 						</Flex>
 					</Flex>
 					<Flex.Column className="items-center flex-grow w-full overflow-y-auto py-1">
-						<SidebarLink href="/dashboard/details" icon="information-line" text="Details" />
 						<SidebarLink href="/dashboard/projects" icon="tools-line" text="Projects"/>
 						<SidebarLink href="/dashboard/experiences" icon="file-list-line" text="Experiences"/>
 						<SidebarLink href="/dashboard/tags" icon="bookmark-line" text="Tags"/>
+						<SidebarLink href="/dashboard/details" icon="information-line" text="Details" />
 					</Flex.Column>
 					<Flex.Column className="items-center border-t w-full dark:border-gray-500">
 						<button className="flex items-center py-2.5 px-3">
