@@ -87,10 +87,10 @@ const LoginPage: ExtendedNextPage = () => {
 						/>
 						<div className="flex justify-end">
 							<Link
-								href="/recovery"
+								href="#"
 								className="text-tertiary text-xs whitespace-nowrap font-light tracking-wide dark:text-gray-50"
 							>
-								Forgot Password?
+								Forgot Password? Contact An Administrator
 							</Link>
 						</div>
 					</div>
