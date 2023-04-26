@@ -16,7 +16,9 @@ import {
 	DateField,
 	Show,
 	Heading,
-	type ModalConfiguredProps
+	type ModalConfiguredProps,
+	Divider,
+	Copy
 } from "@/components/core";
 
 export const ExperiencesModal = (props: ExperiencesModalProps) => {
@@ -59,7 +61,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 			<Modal.Header className="text-2xl dark:text-white">
 				{!experience ? "Create new experience" : `Edit experience`}
 			</Modal.Header>
-			<hr className="my-2"></hr>
+			<Divider className="my-2"/>
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">
 					<TextField
@@ -97,14 +99,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 					<Flex className="items-center">
 						<Show
 							if={fields.endDate}
-							else={
-								<label
-									htmlFor="present"
-									className="text-sm font-light text-gray-500 dark:text-white"
-								>
-									Experience until present
-								</label>
-							}
+							else={<Copy.Label htmlFor="present">Experience until present</Copy.Label>}
 						>
 							<DateField
 								id="end-date"

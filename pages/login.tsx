@@ -6,7 +6,18 @@ import { clc } from "@/library/utilities";
 import { useLoginUser } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
 
-import { TextField, Form, Icon, Button } from "@/components/core";
+import {
+	TextField,
+	Form,
+	Icon,
+	Button,
+	Box,
+	Flex,
+	Heading,
+	Show,
+	Copy,
+	Container
+} from "@/components/core";
 import { AuthLayout } from "@/components/interfaces";
 
 const SUBMISSION_ERRORS = {
@@ -39,36 +50,32 @@ const LoginPage: ExtendedNextPage = () => {
 
 	return (
 		<AuthLayout title="Login | Fi Dev">
-			<div className="container rounded shadow mx-auto max-w-sm px-2 md:px-0">
-				<div className="bg-blue-500 rounded-t px-4 py-3 text-center">
-					<h1 className="text-white text-2xl font-light tracking-tight uppercase">Login</h1>
-				</div>
+			<Container className="shadow mx-auto max-w-sm px-2 md:px-0">
+				<Box className="bg-blue-500 rounded-t px-4 py-3 text-center">
+					<Heading.One className="text-2xl font-light uppercase">Login</Heading.One>
+				</Box>
 				{
 					Object.values(submissionErrors).some(error => error === true) && (
-						<div className="px-3 py-2 bg-gray-400 text-white font-light text-sm dark:">
-							{
-								submissionErrors["auth/wrong-password"] && (
-									<span>Wrong username / password provided</span>
-								)
-							}
-							{
-								submissionErrors["auth/user-not-found"] || submissionErrors["auth/invalid-email"] && (
-									<span>User not found</span>
-								)
-							}
-							{
-								submissionErrors.generic && (
-									<span>Oops something went wrong, please try again later</span>
-								)
-							}
-						</div>
+						<Box className="px-3 py-2 bg-gray-400 text-sm">
+							<Show if={submissionErrors["auth/wrong-password"]}>
+								<Copy>Wrong username / password provided</Copy>
+							</Show>
+							<Show
+								if={submissionErrors["auth/user-not-found"] || submissionErrors["auth/invalid-email"]}
+							>
+								<Copy>User Not Found</Copy>
+							</Show>
+							<Show if={submissionErrors.generic}>
+								<Copy>Oops something went wrong, please try again later</Copy>
+							</Show>
+						</Box>
 					)
 				}
 				<Form
 					className="bg-white rounded-b space-y-4 p-4 dark:bg-gray-700"
 					onSubmit={handleSubmission}
 				>
-					<div className="space-y-2">
+					<Box className="space-y-2">
 						<TextField.Email
 							id="email"
 							label="Email"
@@ -85,15 +92,15 @@ const LoginPage: ExtendedNextPage = () => {
 							onChange={value => editFields({ password: value })}
 							required
 						/>
-						<div className="flex justify-end">
+						<Flex.Row className="justify-end">
 							<Link
 								href="#"
 								className="text-tertiary text-xs whitespace-nowrap font-light tracking-wide dark:text-gray-50"
 							>
 								Forgot Password? Contact An Administrator
 							</Link>
-						</div>
-					</div>
+						</Flex.Row>
+					</Box>
 					<Button.Submit
 						className="w-full flex items-center justify-between disabled:opacity-75"
 						disabled={loginUser.isLoading || !fields.email || !fields.password}
@@ -105,7 +112,7 @@ const LoginPage: ExtendedNextPage = () => {
 						/>
 					</Button.Submit>
 				</Form>
-			</div>
+			</Container>
 		</AuthLayout>
 	)
 }

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { registerModel } from "@/configs/firebase";
+import { registerModel, timestamp } from "@/configs/firebase";
 
 export const DetailTypes = [
 	"education", "contact", "activity", "language", "interest"
@@ -11,8 +11,8 @@ const EducationDetail = z.object({
 	type: z.literal(DetailTypes[0]),
 	qualification: z.string(),
 	organisation: z.string(),
-	startDate: z.coerce.date().transform(date => date.toISOString()),
-	endDate: z.coerce.date().transform(date => date.toISOString()).nullable().optional()
+	startDate: timestamp(),
+	endDate: timestamp().nullable().optional()
 });
 
 type EducationDetail = z.infer<typeof EducationDetail>;

@@ -5,7 +5,7 @@ import { ProjectSchema } from "@/library/models";
 
 import { MergedModelSchema } from "@/configs/firebase";
 
-import { Button, Flex, Modal, type ModalConfiguredProps } from "@/components/core";
+import { Button, Copy, Divider, Flex, Modal, type ModalConfiguredProps } from "@/components/core";
 
 export const DeleteProjectsModal = (props: DeleteProjectsModalProps) => {
 	const { isOpen, onClose, project } = props;
@@ -29,10 +29,10 @@ export const DeleteProjectsModal = (props: DeleteProjectsModalProps) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<Modal.Header className="text-2xl dark:text-white">Delete Project?</Modal.Header>
-			<hr className="my-2"/>
-			<p className="mb-3 font-light dark:text-white">
-				Are you sure you would like to delete project <b >{project.title}</b>? Confirm your choice below.
-			</p>
+			<Divider className="my-2"/>
+			<Copy className="mb-3">
+				Are you sure you would like to delete project <Copy.Bold>{project.title}</Copy.Bold>? Confirm your choice below.
+			</Copy>
 			<Flex className="items-center justify-between">
 				<button
 					type="button"

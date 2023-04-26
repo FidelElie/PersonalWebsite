@@ -13,7 +13,10 @@ import {
 	Select,
 	Button,
 	Modal,
-	type ModalConfiguredProps
+	type ModalConfiguredProps,
+	Divider,
+	Heading,
+	Copy
 } from "@/components/core";
 
 import { EducationFields } from "./_DetailsModal/EducationFields";
@@ -62,12 +65,10 @@ export const DetailsModal = (props: DetailsModalProps) => {
 			<Modal.Header className="text-2xl dark:text-white">
 				{ !detail ? "Create new detail" : `Edit detail` }
 			</Modal.Header>
-			<hr className="my-2"></hr>
+			<Divider className="my-2"/>
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">
-					<h3 className="text-lg font-light text-gray-700 tracking-tight dark:text-gray-300">
-						Detail Information
-					</h3>
+					<Heading.Three className="text-lg">Detail Information</Heading.Three>
 					<TextField
 						id="title"
 						label="Title"
@@ -76,20 +77,14 @@ export const DetailsModal = (props: DetailsModalProps) => {
 						onChange={title => editFields({ title })}
 						required
 					/>
-					<h3 className="text-lg font-light text-gray-700 tracking-tight dark:text-gray-300">
-						Type Information
-					</h3>
+					<Heading.Three className="text-lg">Type Information</Heading.Three>
 					<Select
 						value={fields.data.type}
 						options={DetailTypes}
 						onChange={value => editFields({ data: populateDataField(value) })}
-						valueDisplay={value => (<span className="capitalize font-light">{value}</span>)}
+						valueDisplay={value => <Copy.Inline className="capitalize">{value}</Copy.Inline>}
 						optionDisplay={option => (
-							<p
-								className="text-gray-700 dark:text-white px-3 py-2 capitalize text-sm font-light w-full"
-							>
-								{option}
-							</p>
+							<Copy className="px-3 py-2 capitalize text-sm w-full">{option}</Copy>
 						)}
 					/>
 					<EducationFields fields={fields} editDataFields={editDataFields}/>
@@ -129,7 +124,7 @@ const populateDataField = (type: DetailSchema["data"]["type"]): DetailSchema["da
 				type: "education",
 				qualification: "",
 				organisation: "",
-				startDate: (new Date).toString(),
+				startDate: new Date(),
 				endDate: null
 			}
 		case "contact":

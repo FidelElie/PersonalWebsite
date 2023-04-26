@@ -18,7 +18,7 @@ export const BaseHeading = forwardRef<HTMLHeadingElement, HeadingProps>((props, 
 			id={id}
 			ref={ref}
 			className={clc(
-				"dark:text-white",
+				"tracking-tight dark:text-white",
 				underline && "underline decoration-primary underline-offset-4",
 				className,
 			)}

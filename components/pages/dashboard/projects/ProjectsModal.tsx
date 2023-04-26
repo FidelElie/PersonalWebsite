@@ -14,6 +14,7 @@ import {
 	Button,
 	Modal,
 	Heading,
+	Divider,
 	type ModalConfiguredProps
 } from "@/components/core";
 
@@ -54,7 +55,7 @@ export const ProjectsModal = (props: ProjectsModalProps) => {
 			<Modal.Header className="text-2xl dark:text-white">
 				{!project ? "Create new project" : `Edit project`}
 			</Modal.Header>
-			<hr className="my-2"></hr>
+			<Divider/>
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">
 					<TextField

@@ -1,6 +1,6 @@
 import { useTheme } from "@/library/providers";
 
-import { Icon, Menu, MenuProps } from "@/components/core";
+import { Divider, Icon, Menu, MenuProps } from "@/components/core";
 
 export const ThemeToggle = (props: ThemeToggleProps) => {
 	const { initialPlacement = "bottom-start" } = props;
@@ -31,9 +31,9 @@ export const ThemeToggle = (props: ThemeToggleProps) => {
 			offset={7.5}
 		>
 			<ThemeToggleOption text="Light Theme" icon="sun-line" onClick={() => setTheme("light")}/>
-			<hr className="dark:border-gray-500"/>
+			<Divider className="dark:border-gray-500"/>
 			<ThemeToggleOption text="Dark Theme" icon="moon-line" onClick={() => setTheme("dark")}/>
-			<hr className="dark:border-gray-500"/>
+			<Divider className="dark:border-gray-500" />
 			<ThemeToggleOption
 				text="System Preference"
 				icon="computer-line"

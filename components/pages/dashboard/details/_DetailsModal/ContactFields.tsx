@@ -1,6 +1,8 @@
+import { ContactMediums } from "@/library/models";
+
 import type { DetailsFormFieldsInterface } from "../DetailsModal.data";
 
-import { Select, TextField } from "@/components/core";
+import { Copy, Select, TextField } from "@/components/core";
 
 export const ContactFields = (props: DetailsFormContactFieldsProps) => {
 	const { fields, editDataFields } = props;
@@ -13,15 +15,11 @@ export const ContactFields = (props: DetailsFormContactFieldsProps) => {
 		<>
 			<Select
 				value={data.medium}
-				options={["phone", "linkedin", "instagram", "facebook", "github", "location", "email"]}
+				options={ContactMediums}
 				onChange={medium => editDataFields({ medium })}
-				valueDisplay={value => (<span className="capitalize font-light">{value}</span>)}
+				valueDisplay={value => (<Copy.Inline className="capitalize">{value}</Copy.Inline>)}
 				optionDisplay={option => (
-					<p
-						className="text-gray-700 dark:text-white px-3 py-2 capitalize text-sm font-light w-full"
-					>
-						{option}
-					</p>
+					<Copy className="px-3 py-2 capitalize text-sm w-full">{option}</Copy>
 				)}
 			/>
 			<TextField

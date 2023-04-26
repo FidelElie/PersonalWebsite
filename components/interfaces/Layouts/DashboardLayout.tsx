@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 import { useAuth } from "@/library/providers";
 
-import { Flex, Icon, Link, Page, type PageConfiguredProps } from "@/components/core";
+import { Copy, Flex, Icon, Link, Page, type PageConfiguredProps } from "@/components/core";
 
 import { ThemeToggle } from "../Theme";
 
@@ -40,34 +40,32 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 							<ThemeToggle/>
 						</Flex>
 					</Flex>
-					<div className="flex flex-col items-center flex-grow w-full overflow-y-auto">
-						<div className="w-full py-1">
-							<SidebarLink href="/dashboard/details" icon="information-line" text="Details" />
-							<SidebarLink href="/dashboard/projects" icon="tools-line" text="Projects"/>
-							<SidebarLink href="/dashboard/experiences" icon="file-list-line" text="Experiences"/>
-							<SidebarLink href="/dashboard/tags" icon="bookmark-line" text="Tags"/>
-						</div>
-					</div>
-					<Flex className="flex-col items-center border-t w-full dark:border-gray-500">
+					<Flex.Column className="items-center flex-grow w-full overflow-y-auto py-1">
+						<SidebarLink href="/dashboard/details" icon="information-line" text="Details" />
+						<SidebarLink href="/dashboard/projects" icon="tools-line" text="Projects"/>
+						<SidebarLink href="/dashboard/experiences" icon="file-list-line" text="Experiences"/>
+						<SidebarLink href="/dashboard/tags" icon="bookmark-line" text="Tags"/>
+					</Flex.Column>
+					<Flex.Column className="items-center border-t w-full dark:border-gray-500">
 						<button className="flex items-center py-2.5 px-3">
-							<div
-								className="flex-shrink-0 w-10 h-10 flex justify-center items-center rounded-full bg-blue-500 mr-2"
+							<Flex.Row
+								className="flex-shrink-0 w-10 h-10 justify-center items-center rounded-full bg-blue-500 mr-2"
 							>
 								<Icon
 									name="user-3-line"
 									className="text-2xl text-white dark:text-gray-100"
 								/>
-							</div>
+							</Flex.Row>
 							<Flex className="flex-col justify-start">
-								<span className="text-sm text-left uppercase tracking-tight dark:text-white">
+								<Copy className="text-sm text-left uppercase tracking-tight">
 									{user?.forename} {user?.surname}
-								</span>
-								<span className="text-blue-500 tracking-tight font-light no-underline text-xs dark:text-gray-400">
+								</Copy>
+								<Copy className="text-blue-500 tracking-tight font-light no-underline text-xs">
 									{user?.email}
-								</span>
+								</Copy>
 							</Flex>
 						</button>
-					</Flex>
+					</Flex.Column>
 				</Flex>
 			)}
 			{ ...pageProps }
