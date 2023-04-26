@@ -1,9 +1,8 @@
-import { DetailSchema } from "@/library/models";
+import { MergedModelSchema } from "@/configs/firebase";
+
+import { DetailSchema, DetailTypes } from "@/library/models";
 
 import { Flex, Icon } from "@/components/core";
-
-import { DetailTypes } from "@/library/models";
-import { MergedModelSchema } from "@/configs/firebase";
 
 export const DetailSections = (props: DetailsSectionProps) => {
 	const { details, startEditing, startDeletion } = props;

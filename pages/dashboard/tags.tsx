@@ -1,7 +1,8 @@
 import type { ExtendedNextPage } from "@/library/types";
 import { useFetchTags } from "@/library/api";
 
-import { DashboardLayout } from "@/components/interfaces";
+import { Copy, For } from "@/components/core";
+import { DashboardLayout, QueryHandler } from "@/components/interfaces";
 
 const DashboardTagsPage: ExtendedNextPage = () => {
 	const tagsQuery = useFetchTags();
@@ -11,7 +12,14 @@ const DashboardTagsPage: ExtendedNextPage = () => {
 			title="Projects Dashboard | Fi Dev"
 			headerTitle="Tags"
 		>
-
+			<QueryHandler resource="tags" query={tagsQuery}>
+				<For
+					each={tagsQuery.data!}
+					else={<Copy>No tags have been created</Copy>}
+				>
+					{ tags => (<></>)}
+				</For>
+			</QueryHandler>
 		</DashboardLayout>
 	)
 }

@@ -1,7 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
 import { Project, ProjectSchema } from "../models";
 
 export const useFetchProjects = () => useQuery(
@@ -18,7 +16,7 @@ export const useCreateProjects = () => useMutation(
 );
 
 export const useEditProject = () => useMutation(
-	async (project: MergedModelSchema<ProjectSchema>) => {
+	async (project: ProjectSchema & { id: string }) => {
 		return await Project.findByIdAndUpdate(project.id, project);
 	}
 );

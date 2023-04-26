@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest",
     "@env": "ts-node ./scripts/env.ts"
   },
   "dependencies": {
@@ -33,7 +34,8 @@
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1",
     "ts-node": "^10.9.1",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "vitest": "^0.30.1"
   },
   "engines": {
     "node": ">=16.x"

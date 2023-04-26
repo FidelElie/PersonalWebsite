@@ -1,11 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
 import { Experience, ExperienceSchema } from "../models";
 
 export const useFetchExperiences = () => useQuery(
-	["projects"],
+	["experiences"],
 	async () => {
 		return await Experience.find();
 	}
@@ -18,7 +16,7 @@ export const useCreateExperiences = () => useMutation(
 );
 
 export const useEditExperience = () => useMutation(
-	async (project: MergedModelSchema<ExperienceSchema>) => {
+	async (project: ExperienceSchema & { id: string }) => {
 		return await Experience.findByIdAndUpdate(project.id, project);
 	}
 );

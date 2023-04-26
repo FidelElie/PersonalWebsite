@@ -5,7 +5,7 @@ import { DetailSchema } from "@/library/models";
 
 import { MergedModelSchema } from "@/configs/firebase";
 
-import { Button, Flex, Modal, ModalConfiguredProps } from "@/components/core";
+import { Button, Copy, Divider, Flex, Modal, type ModalConfiguredProps } from "@/components/core";
 
 export const DeleteDetailsModal = (props: DeleteDetailsModalProps) => {
 	const { isOpen, onClose, detail } = props;
@@ -28,10 +28,10 @@ export const DeleteDetailsModal = (props: DeleteDetailsModalProps) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<Modal.Header className="text-2xl dark:text-white">Delete Detail?</Modal.Header>
-			<hr className="my-2"/>
-			<p className="mb-3 font-light dark:text-white">
+			<Divider className="my-2"/>
+			<Copy className="mb-3">
 				Are you sure you would like to delete detail <b >{detail.title}</b>? Confirm your choice below.
-			</p>
+			</Copy>
 			<Flex className="items-center justify-between">
 				<button
 					type="button"

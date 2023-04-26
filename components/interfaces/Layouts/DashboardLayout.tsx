@@ -18,12 +18,12 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 				<Flex
 					className="h-12 bg-white border-b px-3 dark:bg-gray-700 items-center justify-between dark:border-gray-500"
 				>
-					<Flex className="items-center space-x-2">
+					<Flex.Row className="items-center space-x-2">
 						<button className="md:hidden">
 							<Icon name="menu-5-line" className="text-gray-800 text-xl dark:text-gray-50" />
 						</button>
 						{ headerTitle && <h1 className="uppercase dark:text-white">{ headerTitle }</h1> }
-					</Flex>
+					</Flex.Row>
 					{ headerOptions }
 				</Flex>
 			)}

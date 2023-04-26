@@ -6,8 +6,8 @@ import { useFetchDetails } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
 import type { DetailSchema } from "@/library/models";
 
-import { Button, Icon, Show } from "@/components/core";
-import { DashboardLayout } from "@/components/interfaces";
+import { Button, Icon } from "@/components/core";
+import { DashboardLayout, QueryHandler } from "@/components/interfaces";
 
 import { DetailSections } from "@/components/pages/dashboard/details/DetailSections";
 import { DetailsModal } from "@/components/pages/dashboard/details/DetailsModal";
@@ -45,7 +45,7 @@ const DashboardDetailsPage: ExtendedNextPage = () => {
 				</Button>
 			)}
 		>
-			<Show if={detailsQuery.isSuccess}>
+			<QueryHandler resource="details" query={detailsQuery}>
 				<DetailSections
 					details={detailsQuery.data!}
 					startEditing={startEditing}
@@ -61,13 +61,7 @@ const DashboardDetailsPage: ExtendedNextPage = () => {
 					detail={selected!}
 					onClose={closeModal}
 				/>
-			</Show>
-			<Show if={detailsQuery.isLoading}>
-				<span>Loading Details Please Wait</span>
-			</Show>
-			<Show if={detailsQuery.isError}>
-				<span>Error fetching details</span>
-			</Show>
+			</QueryHandler>
 		</DashboardLayout>
 	)
 }

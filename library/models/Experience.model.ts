@@ -4,7 +4,7 @@ import { registerModel, timestamp } from "@/configs/firebase";
 
 export const ExperienceSchema = z.object({
 	title: z.string(),
-	position: z.string(),
+	organisation: z.string(),
 	description: z.string(),
 	link: z.string().optional(),
 	startDate: timestamp(),
