@@ -8,7 +8,7 @@ import { Button, Flex, Form, Icon, TextField } from "@/components/core"
 import { MergedModelSchema } from "@/configs/firebase";
 
 export const TagInput = (props: TagInputProps) => {
-	const { tag, onCancel } = props;
+	const { tag, onClose } = props;
 
 	const queryClient = useQueryClient();
 	const [fields, setFields] = useState(populateFields(tag));
@@ -30,7 +30,7 @@ export const TagInput = (props: TagInputProps) => {
 
 			queryClient.invalidateQueries(["tags"]);
 
-			if (tag) { return onCancel(); }
+			if (tag) { return onClose(); }
 
 			setFields(populateFields());
 		} catch (error) {
@@ -62,10 +62,10 @@ export const TagInput = (props: TagInputProps) => {
 				</Flex.Column>
 				<Flex.Row className="items-center justify-between w-full">
 					<button
-						onClick={onCancel}
+						onClick={onClose}
 						className="text-secondary underline text-sm decoration-primary underline-offset-2 decoration-2"
 					>
-						Cancel
+						Close
 					</button>
 					<Button.Submit
 						className="flex items-center h-8"
@@ -92,5 +92,5 @@ type MergedTagSchema = MergedModelSchema<TagSchema>;
 
 export interface TagInputProps {
 	tag?: MergedTagSchema,
-	onCancel: () => void
+	onClose: () => void
 }

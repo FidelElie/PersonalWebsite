@@ -19,7 +19,7 @@ export const AddTagsButton = () => {
 			)}
 		>
 			<Flex.Row className="p-5 border bg-white dark:bg-gray-700 rounded dark:border-transparent">
-				<TagInput onCancel={() => setShowInput(false)}/>
+				<TagInput onClose={() => setShowInput(false)}/>
 			</Flex.Row>
 		</Show>
 	)

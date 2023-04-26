@@ -61,7 +61,7 @@ export const TagCard = (props: TagCardProps) => {
 					</>
 				)}
 			>
-				<TagInput tag={tag} onCancel={() => setShowInput(false)}/>
+				<TagInput tag={tag} onClose={() => setShowInput(false)}/>
 			</Show>
 		</Flex.Column>
 	)
