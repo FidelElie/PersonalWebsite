@@ -1,9 +1,8 @@
-import { AnyZodObject, ZodType, z } from "zod";
+import { AnyZodObject, z } from "zod";
 import {
 	getDoc,
 	doc,
 	collection,
-	Timestamp,
 	DocumentData,
 	getDocs,
 	deleteDoc,
@@ -14,12 +13,13 @@ import {
 } from "firebase/firestore";
 
 import { getFirebaseClient } from "./client";
+import { timestampToDate, timestamp } from "./timestamp";
 
 export const ModelSchema = z.object({
 	id: z.string(),
-	createdAt: z.coerce.date(),
-	updatedAt: z.coerce.date().nullable().optional(),
-	deletedAt: z.coerce.date().nullable().optional()
+	createdAt: timestamp(),
+	updatedAt: timestamp().nullable().optional(),
+	deletedAt: timestamp().nullable().optional()
 });
 
 export type ModelSchema = z.infer<typeof ModelSchema>;
@@ -86,10 +86,6 @@ export class Model<Schema extends AnyZodObject>{
 	private modelIncomingData = (id: string, data: DocumentData) => {
 		const moddedData = Object.fromEntries(Object.entries(data).map(([key, value]) => {
 			if (!value) { return [key, value]; }
-
-			if (typeof value === "object" && value.seconds && value.nanoseconds) {
-				return [key, new Timestamp(value.seconds, value.nanoseconds).toDate()]
-			}
 
 			return [key, value]
 		}));
