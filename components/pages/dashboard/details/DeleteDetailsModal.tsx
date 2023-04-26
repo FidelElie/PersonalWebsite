@@ -20,6 +20,7 @@ export const DeleteDetailsModal = (props: DeleteDetailsModalProps) => {
 			await deleteDetail.mutateAsync(detail.id);
 
 			queryClient.invalidateQueries(["details"]);
+			onClose();
 		} catch (error) {
 			console.error(error);
 		}
