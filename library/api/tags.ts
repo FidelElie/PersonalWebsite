@@ -1,7 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
 import { Tag, TagSchema } from "../models";
 
 export const useFetchTags = () => useQuery(
@@ -16,7 +14,7 @@ export const useCreateTags = () => useMutation(
 );
 
 export const useEditTag = () => useMutation(
-	async (tag: MergedModelSchema<TagSchema>) => {
+	async (tag: TagSchema & { id: string }) => {
 		return await Tag.findByIdAndUpdate(tag.id, tag);
 	}
 );
@@ -26,3 +24,9 @@ export const useDeleteTag = () => useMutation(
 		return await Tag.findByIdAndDelete(id);
 	}
 );
+
+export const useDeleteTags = () => useMutation(
+	async (ids: string[]) => {
+		await Promise.all(ids.map(id => Tag.findByIdAndDelete(id)));
+	}
+)

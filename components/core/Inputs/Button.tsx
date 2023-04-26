@@ -12,7 +12,7 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>((props, ref) =
 			id={id}
 			ref={ref}
 			className={clc(
-				"bg-blue-500 text-white text-sm rounded px-2.5 py-1.5 font-light flex shadow-sm",
+				"bg-blue-500 text-white text-sm rounded px-2.5 py-1.5 font-light flex shadow-sm tracking-tight disabled:opacity-50",
 				className
 			)}
 			disabled={disabled}
