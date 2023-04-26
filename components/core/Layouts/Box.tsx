@@ -15,5 +15,5 @@ export interface BoxProps {
 	as?: ElementType;
 	style?: CSSProperties;
 	className?: string;
-	children: ReactNode;
+	children?: ReactNode;
 }

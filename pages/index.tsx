@@ -1,5 +1,5 @@
-import { Page, Navbar, Footer } from "@/components/core";
-
+import { Page } from "@/components/core";
+import { Navbar, Footer } from "@/components/interfaces/Navigation";
 import { ResumeBuilderProvider } from "@/components/pages/index/Resume.provider";
 import { Resume } from "@/components/pages/index/Resume";
 

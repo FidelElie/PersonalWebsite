@@ -1,6 +1,7 @@
 import { useTheme } from "@/library/providers";
 
 import { Divider, Icon, Menu, MenuProps } from "@/components/core";
+import { MouseEventHandler } from "react";
 
 export const ThemeToggle = (props: ThemeToggleProps) => {
 	const { initialPlacement = "bottom-start" } = props;
@@ -46,9 +47,16 @@ export const ThemeToggle = (props: ThemeToggleProps) => {
 const ThemeToggleOption = (props: ThemeToggleOptionProps) => {
 	const { text, icon, onClick } = props;
 
+	const dispatchOnClick: MouseEventHandler = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		onClick();
+	}
+
 	return (
 		<Menu.Item>
-			<button className="flex items-center py-2 px-2" onClick={onClick}>
+			<button className="flex items-center py-2 px-2" onClick={dispatchOnClick}>
 				<Icon name={icon} className="text-xl mr-1 dark:text-white"/>
 				<span className="font-light text-sm dark:text-white">{text}</span>
 			</button>

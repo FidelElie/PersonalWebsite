@@ -1,4 +1,5 @@
-import { Page, PageConfiguredProps, Navbar, Footer } from "@/components/core";
+import { Page, PageConfiguredProps } from "@/components/core";
+import { Navbar, Footer } from "../Navigation";
 
 export const AuthLayout = (props: AuthLayoutProps) => {
 	const { children, ...pageProps } = props;

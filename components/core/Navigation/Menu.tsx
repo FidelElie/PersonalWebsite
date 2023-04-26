@@ -1,6 +1,6 @@
 import { Fragment, ReactNode } from "react";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
-import { Placement, offset, useFloating } from "@floating-ui/react";
+import { FloatingPortal, Placement, offset, useFloating } from "@floating-ui/react";
 
 const BaseMenu = (props: MenuProps) => {
 	const {
@@ -28,28 +28,30 @@ const BaseMenu = (props: MenuProps) => {
 			>
 				{ button }
 			</HeadlessMenu.Button>
-			<Transition
-				as={Fragment}
-				enter="transition ease-out duration-100"
-				enterFrom="transform opacity-0 scale-95"
-				enterTo="transform opacity-100 scale-100"
-				leave="transition ease-in duration-75"
-				leaveFrom="transform opacity-100 scale-100"
-				leaveTo="transform opacity-0 scale-95"
-			>
-				<HeadlessMenu.Items
-					className={menuClassName}
-					ref={refs.setFloating}
-					style={{
-						position: strategy,
-						top: y ?? 0,
-						left: x ?? 0,
-						width: 'max-content'
-					}}
+			<FloatingPortal>
+				<Transition
+					as={Fragment}
+					enter="transition ease-out duration-100"
+					enterFrom="transform opacity-0 scale-95"
+					enterTo="transform opacity-100 scale-100"
+					leave="transition ease-in duration-75"
+					leaveFrom="transform opacity-100 scale-100"
+					leaveTo="transform opacity-0 scale-95"
 				>
-					{ children }
-				</HeadlessMenu.Items>
-			</Transition>
+					<HeadlessMenu.Items
+						className={menuClassName}
+						ref={refs.setFloating}
+						style={{
+							position: strategy,
+							top: y ?? 0,
+							left: x ?? 0,
+							width: 'max-content'
+						}}
+					>
+						{ children }
+					</HeadlessMenu.Items>
+				</Transition>
+			</FloatingPortal>
 		</HeadlessMenu>
 	)
 }
