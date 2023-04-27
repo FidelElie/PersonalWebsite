@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import { Command } from "commander";
 
+import { indentLine } from "../library/utilities";
+
 const program = new Command();
 
 program.command("init").action(() => {
@@ -75,9 +77,6 @@ program.command("types").action(() => {
 	console.log("Environment types were generated successfully");
 });
 
-const indentLine = (text: string, numberOfTabs = 0) => {
-	return `${(new Array(numberOfTabs).fill("\t")).join("")}${text}`;
-}
 
 program.parse(process.argv);
 

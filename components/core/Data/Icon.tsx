@@ -1,5 +1,7 @@
 import { forwardRef } from "react";
 
+import { IconNames } from "./Icon.data";
+
 export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
 	const { className, name } = props;
 
@@ -12,5 +14,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
 
 export interface IconProps {
 	className?: string,
-	name: string
+	name: typeof IconNames[number]
 }
+
+export { IconNames }
