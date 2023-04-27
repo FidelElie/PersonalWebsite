@@ -1,6 +1,7 @@
 import { Fragment, ReactNode } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { useFloating, FloatingPortal, size, offset, flip, autoUpdate } from "@floating-ui/react";
+import { ViewportList } from 'react-viewport-list';
 
 import { clc } from "@/library/utilities";
 
@@ -24,8 +25,10 @@ export function Select<Value extends string | string[], Option extends unknown>(
 		multiple,
 		className,
 		selectClassName,
-		optionsClassName
+		optionsClassName,
+		virtualize,
 	} = props;
+
 
 	const { x, y, strategy, refs } = useFloating({
 		placement: "bottom-start",
@@ -50,10 +53,12 @@ export function Select<Value extends string | string[], Option extends unknown>(
 	const getAccessedOptions = () => {
 		if (!accessor) {
 			// Assumes that value and options are in a form that can be compared directly string - string
-			return options.filter(
+			const filteredOptions =  options.filter(
 				option => multiple ?
 					(value as string[] | undefined)?.some(entry => entry === option) : value === option
 			);
+
+			return multiple ? filteredOptions : filteredOptions[0];
 		}
 
 		const filteredOptions = options.filter(
@@ -110,18 +115,39 @@ export function Select<Value extends string | string[], Option extends unknown>(
 								width: 'max-content'
 							}}
 						>
-							{options.map((option, optionIndex) => (
-								<Listbox.Option
-									key={optionIndex}
-									value={accessor ? accessor(option) : option}
-								>
-									{
-										({ selected }) => (
-											<>{optionDisplay(option, selected)}</>
-										)
-									}
-								</Listbox.Option>
-							))}
+							{
+								virtualize ? (
+									<ViewportList items={options} itemSize={options.length}>
+										{
+											(option, optionIndex) => (
+												<Listbox.Option
+													key={optionIndex}
+													value={accessor ? accessor(option) : option}
+												>
+													{
+														({ selected }) => (
+															<>{optionDisplay(option, selected)}</>
+														)
+													}
+												</Listbox.Option>
+											)
+										}
+									</ViewportList>
+								) : (
+									options.map((option, optionIndex) => (
+										<Listbox.Option
+											key={optionIndex}
+											value={accessor ? accessor(option) : option}
+										>
+											{
+												({ selected }) => (
+													<>{optionDisplay(option, selected)}</>
+												)
+											}
+										</Listbox.Option>
+									))
+								)
+							}
 						</Listbox.Options>
 					</Transition>
 				</FloatingPortal>
@@ -138,10 +164,11 @@ export interface SelectProps<Value extends string | string[], Option extends unk
 	value?: Value;
 	accessor?: (value: Option) => string;
 	onChange?: (value: Value) => void;
-	options: Option[] | readonly Option[];
+	options: Option[];
 	placeholder?: string;
 	optionDisplay: (option: Option, selected: boolean) => ReactNode;
 	className?: string;
 	selectClassName?: string;
 	optionsClassName?: string;
+	virtualize?: boolean;
 }

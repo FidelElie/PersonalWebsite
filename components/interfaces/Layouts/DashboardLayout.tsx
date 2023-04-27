@@ -74,13 +74,14 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 								<Link href="/">
 									<Icon name="home-4-line" className="text-black dark:text-white text-xl"/>
 								</Link>
-								<ThemeToggle/>
+								<ThemeToggle initialPlacement="bottom-end"/>
 							</Flex>
 						</Flex>
 						<Flex.Column className="items-center flex-grow w-full overflow-y-auto py-1">
 							<SidebarLink href="/dashboard/projects" icon="tools-line" text="Projects"/>
 							<SidebarLink href="/dashboard/experiences" icon="file-list-line" text="Experiences"/>
 							<SidebarLink href="/dashboard/tags" icon="bookmark-line" text="Tags"/>
+							<SidebarLink href="/dashboard/skills" icon="collage-line" text="Skills"/>
 							<SidebarLink href="/dashboard/details" icon="information-line" text="Details" />
 						</Flex.Column>
 						<Flex.Column className="items-center border-t w-full dark:border-gray-500">
@@ -119,7 +120,7 @@ export const SidebarLink = ({ href, icon, text }: { icon: string, href: string, 
 		<Link href={href} className="flex items-center w-full py-2 px-1 border rounded dark:border-gray-500">
 			<Icon name={icon} className="text-lg mr-1.5 text-black dark:text-white" />
 			<span
-				className="font-light uppercase no-underline text-sm"
+				className="font-light uppercase underline text-sm text-black underline-offset-4 decoration-primary decoration-1 dark:text-white mt-[-1.5px]"
 			>
 					{text}
 			</span>

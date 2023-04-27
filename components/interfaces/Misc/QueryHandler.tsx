@@ -17,7 +17,7 @@ export const QueryHandler = <T extends any>(props: QueryHandlerProps<T>) => {
 			<Show if={query.isLoading}>
 				<Copy>Loading {pluralisedResource}... Please Wait</Copy>
 			</Show>
-			<Show if={query.isLoading}>
+			<Show if={query.isError}>
 				<Copy>Error fetching {pluralisedResource}</Copy>
 			</Show>
 		</>

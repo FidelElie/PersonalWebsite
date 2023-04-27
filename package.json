@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "@env": "ts-node ./scripts/env.ts"
+    "@env": "ts-node ./scripts/env.ts",
+    "@icons": "ts-node ./scripts/icon.ts"
   },
   "dependencies": {
     "@floating-ui/react": "^0.23.0",
@@ -22,6 +23,7 @@
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-viewport-list": "^7.1.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
