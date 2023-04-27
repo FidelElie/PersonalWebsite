@@ -4,7 +4,7 @@ import { Transition } from "@headlessui/react";
 import { useAuth, useDashboard } from "@/library/providers";
 import { clc } from "@/library/utilities";
 
-import { Copy, Flex, Icon, Link, Page, type PageConfiguredProps } from "@/components/core";
+import { Copy, Flex, Icon, IconNames, Link, Page, type PageConfiguredProps } from "@/components/core";
 
 import { ThemeToggle } from "../Theme";
 
@@ -26,7 +26,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 					className="h-12 bg-white border-b px-3 dark:bg-gray-700 items-center justify-between dark:border-gray-500"
 				>
 					<Flex.Row className="items-center space-x-2">
-						<button onClick={() => setShowSidebar(state => !state)}>
+						<button onClick={() => setShowSidebar(!showSidebar)}>
 							<Icon
 								name="menu-5-line"
 								className="text-gray-800 text-xl dark:text-gray-50 md:hidden"
@@ -77,7 +77,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 								<ThemeToggle initialPlacement="bottom-end"/>
 							</Flex>
 						</Flex>
-						<Flex.Column className="items-center flex-grow w-full overflow-y-auto py-1">
+						<Flex.Column className="items-center flex-grow w-full overflow-y-auto py-1" as="nav">
 							<SidebarLink href="/dashboard/projects" icon="tools-line" text="Projects"/>
 							<SidebarLink href="/dashboard/experiences" icon="file-list-line" text="Experiences"/>
 							<SidebarLink href="/dashboard/tags" icon="bookmark-line" text="Tags"/>
@@ -115,7 +115,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 	)
 }
 
-export const SidebarLink = ({ href, icon, text }: { icon: string, href: string, text: string }) => (
+export const SidebarLink = ({ href, icon, text }: SidebarLinkProps) => (
 	<div className="w-full py-1 px-2">
 		<Link href={href} className="flex items-center w-full py-2 px-1 border rounded dark:border-gray-500">
 			<Icon name={icon} className="text-lg mr-1.5 text-black dark:text-white" />
@@ -131,4 +131,10 @@ export const SidebarLink = ({ href, icon, text }: { icon: string, href: string, 
 export interface DashboardLayoutProps extends PageConfiguredProps {
 	headerTitle?: string;
 	headerOptions?: ReactNode;
+}
+
+interface SidebarLinkProps {
+	icon: typeof IconNames[number],
+	href: string,
+	text: string
 }
