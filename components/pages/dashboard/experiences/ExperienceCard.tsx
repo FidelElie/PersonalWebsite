@@ -10,9 +10,11 @@ export const ExperienceCard = (props: ExperienceCardProps) => {
 
 	return (
 		<Card
-			className="group border bg-white dark:bg-gray-700 rounded px-3 py-2 dark:border-transparent"
+			className="group border bg-white dark:bg-gray-700 rounded p-3 dark:border-transparent"
 		>
-			<Flex.Row className="justify-between">
+			<Flex
+				className="flex-col-reverse mb-2 md:items-center md:mb-0 md:justify-between md:flex-row"
+			>
 				<Flex.Column className="justify-start">
 					<Heading.Three className="text-xl mb-1.5" underline>
 						{experience.title}
@@ -45,9 +47,14 @@ export const ExperienceCard = (props: ExperienceCardProps) => {
 						<Icon name="delete-bin-line" className="text-lg dark:text-white" />
 					</button>
 				</Flex.Row>
-			</Flex.Row>
+			</Flex>
 			<Show if={experience.link}>
-				<Link className="text-sm" href={experience.link!}>{experience.link}</Link>
+				<Flex.Row className="items-center overflow-hidden">
+					<Icon name="link" className="text-lg mr-2 flex-shrink-0 dark:text-white" />
+					<Link className="text-sm text-ellipsis whitespace-nowrap" href={experience.link!}>
+						{experience.link}
+					</Link>
+				</Flex.Row>
 			</Show>
 			<Show
 				if={experience.tags.length}

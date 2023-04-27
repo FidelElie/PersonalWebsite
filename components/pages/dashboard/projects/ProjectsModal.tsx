@@ -15,6 +15,7 @@ import {
 	Modal,
 	Heading,
 	Divider,
+	Icon,
 	type ModalConfiguredProps
 } from "@/components/core";
 import { TagsSelector } from "@/components/interfaces";
@@ -85,15 +86,19 @@ export const ProjectsModal = (props: ProjectsModalProps) => {
 						id="link"
 						label="Link"
 						placeholder="Link"
+						className="flex items-center space-x-1 pl-2"
 						value={fields.link}
 						onChange={link => editFields({ link })}
+						left={<Icon name="link" className="text-xl dark:text-white" />}
 					/>
 					<TextField
 						id="repo"
 						label="Repository"
 						placeholder="Repository"
+						className="flex items-center space-x-1 pl-2"
 						value={fields.repo}
 						onChange={repo => editFields({ repo })}
+						left={<Icon name="github-fill" className="text-xl dark:text-white"/>}
 					/>
 				</Flex>
 				<Flex className="items-center justify-between">

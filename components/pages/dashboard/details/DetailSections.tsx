@@ -36,17 +36,17 @@ const Detail = (props: DetailProps) => {
 						key={detail.id}
 						className="group border bg-white dark:bg-gray-700 rounded px-3 py-1.5 dark:border-transparent"
 					>
-						<Flex.Row className="items-center justify-between">
+						<Flex.Row className="items-center justify-between md:mb-0">
 							<Heading.Three className="text-lg">{detail.title}</Heading.Three>
 							<Flex.Row className="items-center space-x-2">
 								<button
-									className="opacity-0 group-hover:opacity-100"
+									className="opacity-100 md:opacity-0 group-hover:opacity-100"
 									onClick={() => startEditing(detail)}
 								>
 									<Icon name="edit-line" className="text-lg dark:text-white" />
 								</button>
 								<button
-									className="opacity-0 group-hover:opacity-100"
+									className="opacity-100 md:opacity-0 group-hover:opacity-100"
 									onClick={() => startDeletion(detail)}
 								>
 									<Icon name="delete-bin-line" className="text-lg dark:text-white" />
@@ -72,7 +72,6 @@ const Detail = (props: DetailProps) => {
 										</Flex.Row>
 									</Flex.Column>
 								)}
-
 							</Show>
 							<Show if={detail.data.type === "contact" ? detail.data : null}>
 								{ contact => <Copy className="text-sm">{contact.value}</Copy> }

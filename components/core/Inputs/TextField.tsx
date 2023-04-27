@@ -1,4 +1,4 @@
-import { ChangeEventHandler, forwardRef } from "react";
+import { ChangeEventHandler, ReactNode, forwardRef } from "react";
 
 import { clc } from "@/library/utilities";
 
@@ -14,7 +14,9 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 		placeholder,
 		onChange,
 		disabled,
-		required
+		required,
+		left,
+		right
 	} = props;
 
 	const dispatchOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -22,15 +24,21 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 	}
 
 	return (
-		<div className={className}>
+		<div className={clc(
+			"border rounded border-gray-300 overflow-hidden",
+			"dark:bg-gray-700 dark:border-gray-100",
+			className,
+		)}>
+			{ left }
 			<label className={clc("sr-only", labelClassName)} htmlFor={id}>
 				{label}
 			</label>
 			<input
 				id={id}
 				className={clc(
-					"border rounded text-sm border-gray-300 w-full font-light tracking-tight py-2 px-3",
-					"dark:bg-gray-700 dark:text-white dark:border-gray-100",
+					"w-full font-light tracking-tight text-sm",
+					"dark:text-white",
+					"border-transparent focus:border-transparent focus:ring-0",
 					inputClassName
 				)}
 				ref={ref}
@@ -41,6 +49,7 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 				disabled={disabled}
 				required={required}
 			/>
+			{ right }
 		</div>
 	)
 });
@@ -64,6 +73,8 @@ export interface BaseTextFieldProps {
 	placeholder?: string;
 	disabled?: boolean;
 	required?: boolean;
+	left?: ReactNode;
+	right?: ReactNode;
 }
 
 export interface TypedTextFieldProps extends Omit<BaseTextFieldProps, "type"> {}

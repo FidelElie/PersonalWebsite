@@ -8,7 +8,12 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getFirebaseClient } from "@/configs/firebase/client";
 
 import type { ExtendedAppProps } from "@/library/types";
-import { FirebaseProvider, AuthProvider, ThemeProvider } from "@/library/providers";
+import {
+  FirebaseProvider,
+  AuthProvider,
+  ThemeProvider,
+  DashboardProvider
+} from "@/library/providers";
 
 import { ComponentRouter } from "@/components/pages/ComponentRouter";
 
@@ -29,7 +34,9 @@ const App = (props: ExtendedAppProps) => {
       <FirebaseProvider client={firebaseClient}>
         <AuthProvider>
           <ThemeProvider>
-            <ComponentRouter {...props}/>
+            <DashboardProvider>
+              <ComponentRouter {...props}/>
+            </DashboardProvider>
           </ThemeProvider>
         </AuthProvider>
       </FirebaseProvider>

@@ -28,7 +28,7 @@ export const ThemeToggle = (props: ThemeToggleProps) => {
 				/>
 			)}
 			buttonClassName="flex w-full items-center justify-center rounded text-sm font-medium hover:bg-opacity-30"
-			menuClassName="bg-white rounded flex flex-col border shadow dark:border-gray-500 dark:bg-gray-700"
+			menuClassName="bg-white z-50 rounded flex flex-col border shadow dark:border-gray-500 dark:bg-gray-700"
 			offset={7.5}
 		>
 			<ThemeToggleOption text="Light Theme" icon="sun-line" onClick={() => setTheme("light")}/>
