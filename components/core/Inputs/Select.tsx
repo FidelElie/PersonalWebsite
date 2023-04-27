@@ -1,14 +1,39 @@
 import { Fragment, ReactNode } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { useFloating, FloatingPortal, size, offset, flip } from "@floating-ui/react"
+import { useFloating, FloatingPortal, size, offset, flip, autoUpdate } from "@floating-ui/react";
 
-export const Select = <Value extends string, Option extends unknown>(
-	props: SelectProps<Value, Option>
-) => {
-	const { valueDisplay, value, onChange, options, optionDisplay } = props;
+import { clc } from "@/library/utilities";
+
+export function Select<Value extends string[], Option extends unknown>(
+	props: SelectProps<Value, Option> & { multiple: true, valueDisplay: (option?: Option[]) => ReactNode; }
+): JSX.Element;
+export function Select<Value extends string, Option extends unknown>(
+	props: SelectProps<Value, Option> & { valueDisplay: (option?: Option) => ReactNode }
+): JSX.Element
+export function Select<Value extends string | string[], Option extends unknown>(
+	props: SelectProps<Value, Option> & { multiple?: true, valueDisplay: (option?: Option | Option[]) => ReactNode; }
+): JSX.Element {
+	const {
+		valueDisplay,
+		value,
+		accessor,
+		onChange,
+		options,
+		optionDisplay,
+		placeholder,
+		multiple,
+		className,
+		selectClassName,
+		optionsClassName
+	} = props;
 
 	const { x, y, strategy, refs } = useFloating({
 		placement: "bottom-start",
+		whileElementsMounted(...args) {
+			const cleanup = autoUpdate(...args, { animationFrame: true });
+			// Important! Always return the cleanup function.
+			return cleanup;
+		},
 		middleware: [
 			size({
 				apply({ rects, elements }) {
@@ -22,14 +47,47 @@ export const Select = <Value extends string, Option extends unknown>(
 		]
 	});
 
+	const getAccessedOptions = () => {
+		if (!accessor) {
+			// Assumes that value and options are in a form that can be compared directly string - string
+			return options.filter(
+				option => multiple ?
+					(value as string[] | undefined)?.some(entry => entry === option) : value === option
+			);
+		}
+
+		const filteredOptions = options.filter(
+			option => multiple ? (value as string[] || []).some(string => string === accessor(option)) : value === accessor(option)
+		);
+
+		return multiple ? filteredOptions : filteredOptions[0]
+	}
+
+
+	const dispatchOnChange = (value: Value) => {
+		if (!onChange) { return; }
+
+		onChange(value);
+	}
+
 	return (
-		<Listbox value={value} onChange={onChange}>
-			<div className="relative mt-1">
+		<Listbox value={value} onChange={dispatchOnChange} multiple={multiple}>
+			<div className={clc("relative mt-1", className)}>
 				<Listbox.Button
 					ref={refs.setReference}
-					className="relative py-2 px-3 rounded bg-white w-full border text-sm border-gray-200 dark:text-white dark:border-gray-50 dark:bg-gray-700 text-left"
+					className={clc(
+						"relative py-2 px-3 rounded bg-white w-full border text-sm border-gray-200 text-left",
+						"dark:text-white dark:border-gray-100 dark:bg-gray-700",
+						selectClassName
+					)}
 				>
-					{valueDisplay(value)}
+					{
+						(!value || !value.length) ? (
+							<SelectPlaceholder placeholder={placeholder}/>
+						) : (
+							valueDisplay(getAccessedOptions())
+						)
+					}
 				</Listbox.Button>
 				<FloatingPortal>
 					<Transition
@@ -40,7 +98,11 @@ export const Select = <Value extends string, Option extends unknown>(
 					>
 						<Listbox.Options
 							ref={refs.setFloating}
-							className="max-h-60 border-gray-200 border rounded shadow overflow-y-auto bg-white  dark:bg-gray-700 z-50"
+							className={clc(
+								"max-h-60 border-gray-200 border rounded shadow overflow-y-auto bg-white z-50",
+								"dark:bg-gray-700",
+								optionsClassName
+							)}
 							style={{
 								position: strategy,
 								top: y ?? 0,
@@ -51,9 +113,13 @@ export const Select = <Value extends string, Option extends unknown>(
 							{options.map((option, optionIndex) => (
 								<Listbox.Option
 									key={optionIndex}
-									value={option}
+									value={accessor ? accessor(option) : option}
 								>
-									{optionDisplay(option)}
+									{
+										({ selected }) => (
+											<>{optionDisplay(option, selected)}</>
+										)
+									}
 								</Listbox.Option>
 							))}
 						</Listbox.Options>
@@ -64,10 +130,18 @@ export const Select = <Value extends string, Option extends unknown>(
 	)
 }
 
-export interface SelectProps<T extends string, Option extends unknown> {
-	valueDisplay: (value?: T | null) => ReactNode;
-	value?: T;
-	onChange?: (value: T) => void;
-	options: Option[] | readonly Option[],
-	optionDisplay: (option: Option) => ReactNode
+const SelectPlaceholder = ({ placeholder }: { placeholder?: string, }) => (
+	<span className="text-gray-500 tracking-tight font-light">{placeholder}</span>
+)
+
+export interface SelectProps<Value extends string | string[], Option extends unknown> {
+	value?: Value;
+	accessor?: (value: Option) => string;
+	onChange?: (value: Value) => void;
+	options: Option[] | readonly Option[];
+	placeholder?: string;
+	optionDisplay: (option: Option, selected: boolean) => ReactNode;
+	className?: string;
+	selectClassName?: string;
+	optionsClassName?: string;
 }

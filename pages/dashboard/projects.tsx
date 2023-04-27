@@ -2,17 +2,19 @@ import { useState } from "react";
 
 import { MergedModelSchema } from "@/configs/firebase";
 
-import { useFetchProjects } from "@/library/api";
+import { useFetchProjects, useFetchTags } from "@/library/api";
 import { ProjectSchema } from "@/library/models";
 import type { ExtendedNextPage } from "@/library/types";
 
-import { Button, Flex, For, Icon, Copy, Heading, Divider } from "@/components/core";
+import { Button, Flex, For, Icon, Copy } from "@/components/core";
 import { DashboardLayout, QueryHandler } from "@/components/interfaces";
+import { ProjectCard } from "@/components/pages/dashboard/projects/ProjectCard";
 import { ProjectsModal } from "@/components/pages/dashboard/projects/ProjectsModal";
 import { DeleteProjectsModal } from "@/components/pages/dashboard/projects/DeleteProjectsModal";
 
 const DashboardProjectsPage: ExtendedNextPage = () => {
 	const projectsQuery = useFetchProjects();
+	const tagsQuery = useFetchTags();
 
 	const [modal, setModal] = useState<string | null>(null);
 	const [selected, setSelected] = useState<MergedModelSchema<ProjectSchema> | null>(null);
@@ -51,30 +53,13 @@ const DashboardProjectsPage: ExtendedNextPage = () => {
 					>
 						{
 							project => (
-								<div
+								<ProjectCard
 									key={project.id}
-									className="group border bg-white dark:bg-gray-700 rounded px-3 py-2 dark:border-transparent"
-								>
-									<Flex.Row className="items-center justify-between mb-2">
-										<Heading.Three className="text-xl" underline>{project.title}</Heading.Three>
-										<Flex.Row className="items-center space-x-2">
-											<button
-												className="opacity-0 group-hover:opacity-100"
-												onClick={() => startEditing(project)}
-											>
-												<Icon name="edit-line" className="text-lg dark:text-white" />
-											</button>
-											<button
-												className="opacity-0 group-hover:opacity-100"
-												onClick={() => startDeletion(project)}
-											>
-												<Icon name="delete-bin-line" className="text-lg dark:text-white" />
-											</button>
-										</Flex.Row>
-									</Flex.Row>
-									<Divider className="my-2"/>
-									<Copy className="text-sm">{project.description}</Copy>
-								</div>
+									project={project}
+									tags={tagsQuery.isSuccess ? tagsQuery.data : []}
+									onEdit={startEditing}
+									onDelete={startDeletion}
+								/>
 							)
 						}
 					</For>
@@ -82,6 +67,7 @@ const DashboardProjectsPage: ExtendedNextPage = () => {
 				<ProjectsModal
 					isOpen={modal === "projects"}
 					project={selected}
+					tags={tagsQuery.isSuccess ? tagsQuery.data : []}
 					onClose={closeModal}
 				/>
 				<DeleteProjectsModal

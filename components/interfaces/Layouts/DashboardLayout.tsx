@@ -28,7 +28,7 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 				</Flex>
 			)}
 			mainClassName="p-5 overflow-y-auto"
-			asideClassName="fixed w-48 h-screen bg-white border-r dark:bg-gray-700 dark:border-gray-500 md:static"
+			asideClassName="fixed w-48 z-50 h-screen bg-white border-r dark:bg-gray-700 dark:border-gray-500 md:static"
 			aside={(
 				<Flex className="flex-col justify-center items-center h-full">
 					<Flex className="h-12 w-full flex justify-between items-center border-b px-3 dark:border-gray-500">

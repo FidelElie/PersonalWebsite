@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { MergedModelSchema } from "@/configs/firebase";
 
 import { useCreateExperiences, useEditExperience } from "@/library/api";
-import { ExperienceSchema } from "@/library/models";
+import { ExperienceSchema, TagSchema } from "@/library/models";
 
 import {
 	Form,
@@ -20,9 +20,10 @@ import {
 	Divider,
 	Copy
 } from "@/components/core";
+import { TagsSelector } from "@/components/interfaces";
 
 export const ExperiencesModal = (props: ExperiencesModalProps) => {
-	const { isOpen, onClose, experience } = props;
+	const { isOpen, onClose, experience, tags } = props;
 
 	const queryClient = useQueryClient();
 	const createExperiences = useCreateExperiences();
@@ -114,6 +115,12 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 							onChange={event => updateHasEndDate(event.target.checked)}
 						/>
 					</Flex>
+					<Heading.Three className="text-lg tracking-tight">Tags Information</Heading.Three>
+					<TagsSelector
+						value={fields.tags}
+						tags={tags}
+						onChange={value => editFields({ tags: value })}
+					/>
 					<Heading.Three className="text-lg tracking-tight">Optional Information</Heading.Three>
 					<TextField
 						id="link"
@@ -148,7 +155,8 @@ const populateFields = (
 		description: experience?.description ?? "",
 		link: experience?.link ?? "",
 		startDate: experience?.startDate ?? (new Date()),
-		endDate: experience?.endDate ?? null
+		endDate: experience?.endDate ?? null,
+		tags: experience?.tags ?? []
 	}
 }
 
@@ -156,4 +164,5 @@ type MergedExperienceSchema = MergedModelSchema<ExperienceSchema>;
 
 export interface ExperiencesModalProps extends ModalConfiguredProps {
 	experience?: MergedExperienceSchema | null;
+	tags: MergedModelSchema<TagSchema>[];
 }

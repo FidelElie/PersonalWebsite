@@ -8,7 +8,8 @@ export const ExperienceSchema = z.object({
 	description: z.string(),
 	link: z.string().optional(),
 	startDate: timestamp(),
-	endDate: timestamp().nullable().optional()
+	endDate: timestamp().nullable().optional(),
+	tags: z.array(z.string()).default([])
 });
 
 export type ExperienceSchema = z.infer<typeof ExperienceSchema>;

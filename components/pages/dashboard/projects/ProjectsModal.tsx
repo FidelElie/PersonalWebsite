@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { MergedModelSchema } from "@/configs/firebase";
 
 import { useCreateProjects, useEditProject } from "@/library/api";
-import { ProjectSchema } from "@/library/models";
+import { ProjectSchema, TagSchema } from "@/library/models";
 
 import {
 	Form,
@@ -17,9 +17,10 @@ import {
 	Divider,
 	type ModalConfiguredProps
 } from "@/components/core";
+import { TagsSelector } from "@/components/interfaces";
 
 export const ProjectsModal = (props: ProjectsModalProps) => {
-	const { isOpen, onClose, project } = props;
+	const { isOpen, onClose, project, tags } = props;
 
 	const queryClient = useQueryClient();
 	const createProjects = useCreateProjects();
@@ -73,6 +74,12 @@ export const ProjectsModal = (props: ProjectsModalProps) => {
 						rows={5}
 						required
 					/>
+					<Heading.Three className="text-lg tracking-tight">Tags Information</Heading.Three>
+					<TagsSelector
+						value={fields.tags}
+						tags={tags}
+						onChange={value => editFields({ tags: value })}
+					/>
 					<Heading.Three className="text-lg tracking-tight">Optional Information</Heading.Three>
 					<TextField
 						id="link"
@@ -112,7 +119,8 @@ const populateFields = (
 		title: project?.title ?? "",
 		description: project?.description ?? "",
 		link: project?.link ?? "",
-		repo: project?.repo ?? ""
+		repo: project?.repo ?? "",
+		tags: project?.tags ?? []
 	}
 }
 
@@ -120,4 +128,5 @@ type MergedProjectSchema = MergedModelSchema<ProjectSchema>;
 
 export interface ProjectsModalProps extends ModalConfiguredProps {
 	project?: MergedProjectSchema | null;
+	tags: MergedModelSchema<TagSchema>[];
 }
