@@ -30,12 +30,6 @@ export const SkillsModal = (props: ProjectsModalProps) => {
 	const editProject = useEditSkill();
 	const [fields, setFields] = useState(populateFields(skill));
 
-	const usedTags = skills.filter(
-		entry => skill ? skill.id !== entry.id : true
-	).map(skill => skill.tags).flat();
-
-	const usableTags = tags.filter(tag => !usedTags.includes(tag.id));
-
 	const usedIcons = skills.filter(
 		entry => skill ? skill.id !== entry.id : true
 	).map(skill => skill.icon);
@@ -91,7 +85,7 @@ export const SkillsModal = (props: ProjectsModalProps) => {
 					<Heading.Three className="text-lg tracking-tight">Tags Information</Heading.Three>
 					<TagsSelector
 						value={fields.tags}
-						tags={usableTags}
+						tags={tags}
 						onChange={value => editFields({ tags: value })}
 					/>
 				</Flex>

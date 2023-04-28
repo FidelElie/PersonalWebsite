@@ -6,10 +6,11 @@ import { useFetchSkills, useFetchTags } from "@/library/api";
 import { SkillSchema } from "@/library/models";
 import type { ExtendedNextPage } from "@/library/types";
 
-import { Button, Flex, For, Icon, Copy } from "@/components/core";
+import { Button, For, Icon, Copy, Grid } from "@/components/core";
 import { DashboardLayout, QueryHandler } from "@/components/interfaces";
 import { SkillsModal } from "@/components/pages/dashboard/skills/SkillsModal";
 import { DeleteSkillsModal } from "@/components/pages/dashboard/skills/DeleteSkillsModal";
+import { SkillCard } from "@/components/pages/dashboard/skills/SkillCard";
 
 const DashboardSkillsPage: ExtendedNextPage = () => {
 	const skillsQuery = useFetchSkills();
@@ -45,18 +46,24 @@ const DashboardSkillsPage: ExtendedNextPage = () => {
 			)}
 		>
 			<QueryHandler resource="skills" query={skillsQuery}>
-				<Flex className="flex-col space-y-4">
+				<Grid className="gap-3 grid-cols-1 md:grid-cols-2">
 					<For
 						each={skillsQuery.data!}
 						else={<Copy>No skills created</Copy>}
 					>
 						{
 							skill => (
-								<></>
+								<SkillCard
+									key={skill.id}
+									skill={skill}
+									tags={tagsQuery.isSuccess ? tagsQuery.data : []}
+									onEdit={startEditing}
+									onDelete={startDeletion}
+								/>
 							)
 						}
 					</For>
-				</Flex>
+				</Grid>
 				<SkillsModal
 					isOpen={modal === "skills"}
 					skill={selected}

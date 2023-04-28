@@ -7,6 +7,8 @@ import { Box, Card, Copy, Flex, For, Icon, Select, Show } from "@/components/cor
 export const TagsSelector = (props: TagsSelectorProps) => {
 	const { value, tags, onChange } = props;
 
+	tags.sort((a, b) => a.name.localeCompare(b.name))
+
 	const removeTag = (event: MouseEvent<HTMLElement>, idToRemove: string) => {
 		event.stopPropagation();
 		onChange(value.filter(tagId => tagId !== idToRemove));

@@ -4,7 +4,7 @@ import { Transition } from "@headlessui/react";
 import { useAuth, useDashboard } from "@/library/providers";
 import { clc } from "@/library/utilities";
 
-import { Copy, Flex, Icon, IconNames, Link, Page, type PageConfiguredProps } from "@/components/core";
+import { Copy, Flex, Icon, IconNames, Link, Page, Show, type PageConfiguredProps, Heading } from "@/components/core";
 
 import { ThemeToggle } from "../Theme";
 
@@ -36,7 +36,9 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 								className="hidden text-gray-800 text-xl dark:text-gray-50 md:block"
 							/>
 						</button>
-						{ headerTitle && <h1 className="uppercase dark:text-white">{ headerTitle }</h1> }
+						<Show if={headerTitle}>
+							<Heading className="uppercase font-light">{ headerTitle }</Heading>
+						</Show>
 					</Flex.Row>
 					{ headerOptions }
 				</Flex>
@@ -80,8 +82,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 						<Flex.Column className="items-center flex-grow w-full overflow-y-auto py-1" as="nav">
 							<SidebarLink href="/dashboard/projects" icon="tools-line" text="Projects"/>
 							<SidebarLink href="/dashboard/experiences" icon="file-list-line" text="Experiences"/>
-							<SidebarLink href="/dashboard/tags" icon="bookmark-line" text="Tags"/>
 							<SidebarLink href="/dashboard/skills" icon="collage-line" text="Skills"/>
+							<SidebarLink href="/dashboard/tags" icon="bookmark-line" text="Tags"/>
 							<SidebarLink href="/dashboard/details" icon="information-line" text="Details" />
 						</Flex.Column>
 						<Flex.Column className="items-center border-t w-full dark:border-gray-500">

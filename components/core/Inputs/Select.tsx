@@ -105,7 +105,7 @@ export function Select<Value extends string | string[], Option extends unknown>(
 							ref={refs.setFloating}
 							className={clc(
 								"max-h-60 border-gray-200 border rounded shadow overflow-y-auto bg-white z-50",
-								"dark:bg-gray-700",
+								"dark:bg-gray-700 will-change-transform",
 								optionsClassName
 							)}
 							style={{
@@ -117,7 +117,7 @@ export function Select<Value extends string | string[], Option extends unknown>(
 						>
 							{
 								virtualize ? (
-									<ViewportList items={options} itemSize={options.length}>
+									<ViewportList items={options}>
 										{
 											(option, optionIndex) => (
 												<Listbox.Option
