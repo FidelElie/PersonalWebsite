@@ -1,6 +1,6 @@
 import { useTheme } from "@/library/providers";
 
-import { Divider, Icon, Menu, MenuProps } from "@/components/core";
+import { Divider, Icon, IconProps, Menu, MenuProps } from "@/components/core";
 import { MouseEventHandler } from "react";
 
 export const ThemeToggle = (props: ThemeToggleProps) => {
@@ -66,7 +66,7 @@ const ThemeToggleOption = (props: ThemeToggleOptionProps) => {
 
 export interface ThemeToggleOptionProps {
 	text: string,
-	icon: string,
+	icon: IconProps["name"],
 	onClick: () => void
 }
 
