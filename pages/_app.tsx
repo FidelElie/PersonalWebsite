@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import { useRef } from "react";
 import { QueryClient, QueryClientConfig, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Analytics } from "@vercel/analytics/react";
 
 import { getFirebaseClient } from "@/configs/firebase/client";
 
@@ -36,6 +37,7 @@ const App = (props: ExtendedAppProps) => {
           <ThemeProvider>
             <DashboardProvider>
               <ComponentRouter {...props}/>
+              <Analytics/>
             </DashboardProvider>
           </ThemeProvider>
         </AuthProvider>
