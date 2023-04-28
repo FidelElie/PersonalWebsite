@@ -2,12 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { Detail, DetailSchema } from "../models";
 
-export const useFetchDetails = () => useQuery({
-	queryKey: ["details"],
-	queryFn: async () => {
-		return await Detail.find();
-	}
-});
+export const fetchDetails = () => Detail.find()
+
+export const useFetchDetails = () => useQuery(["details"], fetchDetails);
 
 export const useCreateDetails = () => useMutation(
 	async (details: DetailSchema[]) => {

@@ -2,10 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { Tag, TagSchema } from "../models";
 
-export const useFetchTags = () => useQuery(
-	["tags"],
-	() => Tag.find()
-);
+export const fetchTags = () => Tag.find();
+
+export const useFetchTags = () => useQuery(["tags"], fetchTags);
 
 export const useCreateTags = () => useMutation(
 	async (entries: TagSchema[]) => {

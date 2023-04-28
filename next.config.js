@@ -1,4 +1,7 @@
-module.exports = {
+const { withSuperjson } = require('next-superjson');
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   redirects() {
@@ -9,3 +12,5 @@ module.exports = {
     ].filter(Boolean);
   }
 }
+
+module.exports = withSuperjson(nextConfig)({});

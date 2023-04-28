@@ -2,12 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { Project, ProjectSchema } from "../models";
 
-export const useFetchProjects = () => useQuery(
-	["projects"],
-	async () => {
-		return await Project.find();
-	}
-)
+export const fetchProjects = () => Project.find();
+
+export const useFetchProjects = () => useQuery(["projects"], fetchProjects);
 
 export const useCreateProjects = () => useMutation(
 	async (entries: ProjectSchema[]) => {

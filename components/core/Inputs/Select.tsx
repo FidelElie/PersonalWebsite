@@ -117,9 +117,9 @@ export function Select<Value extends string | string[], Option extends unknown>(
 						>
 							{
 								virtualize ? (
-									<ViewportList items={options}>
+									<ViewportList items={options as any}>
 										{
-											(option, optionIndex) => (
+											(option: Option, optionIndex) => (
 												<Listbox.Option
 													key={optionIndex}
 													value={accessor ? accessor(option) : option}
@@ -164,7 +164,7 @@ export interface SelectProps<Value extends string | string[], Option extends unk
 	value?: Value;
 	accessor?: (value: Option) => string;
 	onChange?: (value: Value) => void;
-	options: Option[];
+	options: Option[] | readonly Option[];
 	placeholder?: string;
 	optionDisplay: (option: Option, selected: boolean) => ReactNode;
 	className?: string;

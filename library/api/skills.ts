@@ -2,12 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { Skill, SkillSchema } from "../models";
 
-export const useFetchSkills = () => useQuery(
-	["skills"],
-	async () => {
-		return await Skill.find();
-	}
-);
+export const fetchSkills = () => Skill.find();
+
+export const useFetchSkills = () => useQuery(["skills"], fetchSkills);
 
 export const useCreateSkills = () => useMutation(
 	async (entries: SkillSchema[]) => {

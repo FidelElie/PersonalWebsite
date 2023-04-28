@@ -2,7 +2,7 @@ import "./_app.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 import { useRef } from "react";
-import { QueryClient, QueryClientConfig, QueryClientProvider } from "@tanstack/react-query";
+import { Hydrate, QueryClient, QueryClientConfig, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -31,26 +31,26 @@ const App = (props: ExtendedAppProps) => {
   const firebaseClient = useRef(getFirebaseClient()).current;
 
   return (
-    <QueryClientProvider client={queryClient} >
-      <FirebaseProvider client={firebaseClient}>
-        <AuthProvider>
-          <ThemeProvider>
-            <DashboardProvider>
-              <ComponentRouter {...props}/>
-              <Analytics/>
-            </DashboardProvider>
-          </ThemeProvider>
-        </AuthProvider>
-      </FirebaseProvider>
-      <ReactQueryDevtools
-        position="bottom-right"
-        panelProps={{ className: "no-print" }}
-        toggleButtonProps={{ className: "no-print" }}
-      />
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={props.pageProps.dehydratedState}>
+        <FirebaseProvider client={firebaseClient}>
+          <AuthProvider>
+            <ThemeProvider>
+              <DashboardProvider>
+                <ComponentRouter {...props}/>
+                <Analytics/>
+              </DashboardProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </FirebaseProvider>
+        <ReactQueryDevtools
+          position="bottom-right"
+          panelProps={{ className: "no-print" }}
+          toggleButtonProps={{ className: "no-print" }}
+        />
+      </Hydrate>
     </QueryClientProvider>
   )
 }
-
-
 
 export default App;

@@ -5,7 +5,8 @@ import {
 	useFetchDetails,
 	useFetchProjects,
 	useFetchExperiences,
-	useFetchTags
+	useFetchTags,
+	useFetchSkills
 } from "@/library/api";
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextType | null>(null);
@@ -17,11 +18,13 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 	const projectsQuery = useFetchProjects();
 	const experiencesQuery = useFetchExperiences();
 	const tagsQuery = useFetchTags();
+	const skillsQuery = useFetchSkills();
 	const { isLoading, isSuccess, isError } = useQueryStatuses([
 		detailsQuery,
 		projectsQuery,
 		experiencesQuery,
-		tagsQuery
+		tagsQuery,
+		skillsQuery
 	]);
 	const [settings, setSettings] = useState({ reactTag: false, showWebsiteTag: false });
 

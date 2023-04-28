@@ -2,12 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { Experience, ExperienceSchema } from "../models";
 
-export const useFetchExperiences = () => useQuery(
-	["experiences"],
-	async () => {
-		return await Experience.find();
-	}
-)
+export const fetchExperiences = () => Experience.find();
+
+export const useFetchExperiences = () => useQuery(["experiences"], fetchExperiences);
 
 export const useCreateExperiences = () => useMutation(
 	async (entries: ExperienceSchema[]) => {
