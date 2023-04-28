@@ -1130,6 +1130,8 @@ export const IconNames = [
 	"invision-fill",
 	"invision-line",
 	"italic",
+	"javascript-fill",
+	"javascript-line",
 	"kakao-talk-fill",
 	"kakao-talk-line",
 	"key-2-fill",
