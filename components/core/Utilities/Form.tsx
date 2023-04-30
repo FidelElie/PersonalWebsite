@@ -17,6 +17,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
 	)
 });
 
+Form.displayName = "Form";
+
 export interface FormProps {
 	className?: string,
 	onSubmit?: () => void,

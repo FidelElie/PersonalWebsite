@@ -11,6 +11,8 @@ export const Container = forwardRef<HTMLElement, ContainerProps>((props, ref) =>
 	)
 });
 
+Container.displayName = "Container";
+
 export interface ContainerProps {
 	as?: ElementType,
 	className?: string,

@@ -19,7 +19,7 @@ const MaintenancePage = () => {
 	)
 }
 
-export const getSeverSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 	if (process.env.MAINTENANCE_MODE !== "1" && process.env.NODE_ENV !== "development") {
 		return { redirect: { destination: "/", permanent: false } }
 	}

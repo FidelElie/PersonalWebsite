@@ -46,6 +46,8 @@ const PageFooter = ({ footerClassName, footer }: PageFooterProps) => {
 	return <>{footer}</>;
 }
 
+Page.displayName = "Page";
+
 export interface PageProps {
 	title?: string,
 	className?: string;

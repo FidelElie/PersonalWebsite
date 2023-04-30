@@ -12,6 +12,8 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
 	)
 });
 
+Icon.displayName = "Icon";
+
 export interface IconProps {
 	className?: string,
 	name: typeof IconNames[number]

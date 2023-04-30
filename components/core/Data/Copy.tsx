@@ -24,6 +24,8 @@ const BaseCopy = forwardRef<AsElements, BaseCopyProps>((props, ref) => {
 	)
 });
 
+BaseCopy.displayName = "Copy";
+
 const InlineText = (props: TypedCopyProps) => <BaseCopy {...props} as="span"/>;
 const BoldText = (props: TypedCopyProps) => <BaseCopy {...props} as="b"/>;
 const ItalicText = (props: TypedCopyProps) => <BaseCopy {...props} as="b"/>;

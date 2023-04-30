@@ -11,6 +11,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
 	)
 });
 
+Link.displayName = "Link";
+
 export interface LinkProps extends ComponentProps<typeof NextLink> {
 
 }

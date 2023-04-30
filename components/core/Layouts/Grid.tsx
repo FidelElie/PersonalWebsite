@@ -12,6 +12,8 @@ export const Grid = forwardRef<HTMLElement, GridProps>((props, ref) => {
 	)
 });
 
+Grid.displayName = "Grid";
+
 export interface GridProps {
 	as?: ElementType;
 	className?: string;

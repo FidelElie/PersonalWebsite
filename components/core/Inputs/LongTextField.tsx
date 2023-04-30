@@ -33,6 +33,8 @@ export const LongTextField = forwardRef<HTMLTextAreaElement, LongTextFieldProps>
 	)
 });
 
+LongTextField.displayName = "LongTextField";
+
 export interface LongTextFieldProps {
 	id: string,
 	label: string,

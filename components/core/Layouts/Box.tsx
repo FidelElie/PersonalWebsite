@@ -24,6 +24,7 @@ export const Box = forwardRef<HTMLElement, BoxProps>((props, ref) => {
 	)
 });
 
+Box.displayName = "Box";
 
 export interface BoxProps {
 	as?: ElementType;

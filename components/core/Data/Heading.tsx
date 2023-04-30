@@ -28,6 +28,8 @@ export const BaseHeading = forwardRef<HTMLHeadingElement, HeadingProps>((props, 
 	)
 });
 
+BaseHeading.displayName = "Heading";
+
 export interface HeadingProps {
 	className?: string,
 	id?: string,

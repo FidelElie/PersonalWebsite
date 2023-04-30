@@ -22,6 +22,8 @@ export const BaseFlex = forwardRef<HTMLElement, FlexProps>((props, ref) => {
 	)
 });
 
+BaseFlex.displayName = "Flex";
+
 export interface FlexProps {
 	as?: ElementType;
 	className?: string;

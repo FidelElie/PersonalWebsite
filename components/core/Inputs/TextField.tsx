@@ -61,6 +61,11 @@ const PasswordField = forwardRef<HTMLInputElement, TypedTextFieldProps>(
 	(props, ref) => <BaseTextField {...props} type="password" ref={ref}/>
 );
 
+
+BaseTextField.displayName = "TextField";
+EmailField.displayName = "TextField";
+PasswordField.displayName = "TextField";
+
 export interface BaseTextFieldProps {
 	label: string;
 	id: string;

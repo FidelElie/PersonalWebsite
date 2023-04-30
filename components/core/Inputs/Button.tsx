@@ -24,13 +24,19 @@ const BaseButton = forwardRef<HTMLButtonElement, BaseButtonProps>((props, ref) =
 	)
 });
 
+
+
 const SubmitButton = forwardRef<HTMLButtonElement, TypedButtonProps>(
 	(props, ref) => <BaseButton {...props} type="submit" ref={ref}/>
 );
 
 const ResetButton = forwardRef<HTMLButtonElement, TypedButtonProps>(
 	(props, ref) => <BaseButton {...props} type="reset" ref={ref}/>
-)
+);
+
+BaseButton.displayName = "Button";
+SubmitButton.displayName = "Button";
+ResetButton.displayName = "Button";
 
 export interface BaseButtonProps {
 	id?: string;

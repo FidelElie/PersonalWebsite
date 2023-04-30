@@ -8,6 +8,8 @@ export const Divider = forwardRef<HTMLHRElement, DividerProps>((props, ref) => {
 	)
 });
 
+Divider.displayName = "Divider";
+
 export interface DividerProps {
 	className?: string,
 }

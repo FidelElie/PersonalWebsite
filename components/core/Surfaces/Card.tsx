@@ -18,6 +18,8 @@ export const Card = forwardRef<HTMLElement, CardProps>((props, ref) => {
 	)
 });
 
+Card.displayName = "Card";
+
 export interface CardProps {
 	as?: ElementType,
 	className?: string,
