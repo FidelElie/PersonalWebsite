@@ -79,4 +79,3 @@ program.command("types").action(() => {
 
 
 program.parse(process.argv);
-

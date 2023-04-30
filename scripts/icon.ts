@@ -31,8 +31,3 @@ const iconContentsPath = [
 fs.writeFileSync(iconFilePath, iconContentsPath);
 
 console.log(`Icon enumeration created successfully to path ${iconFilePath}`);
-
-
-
-
-
