@@ -7,7 +7,7 @@ export const DetailTypes = [
 ] as const;
 
 // Education
-const EducationDetail = z.object({
+export const EducationDetailSchema = z.object({
 	type: z.literal(DetailTypes[0]),
 	qualification: z.string(),
 	organisation: z.string(),
@@ -15,56 +15,56 @@ const EducationDetail = z.object({
 	endDate: timestamp().nullable().optional()
 });
 
-type EducationDetail = z.infer<typeof EducationDetail>;
+export type EducationDetailSchema = z.infer<typeof EducationDetailSchema>;
 
 // Contact
 export const ContactMediums = [
 	"phone", "linkedin", "instagram", "facebook", "github", "location", "email"
 ] as const;
 
-const ContactDetail = z.object({
+export const ContactDetailSchema = z.object({
 	type: z.literal(DetailTypes[1]),
 	medium: z.enum(ContactMediums),
 	value: z.string()
 });
 
-type ContactDetail = z.infer<typeof ContactDetail>;
+export type ContactDetailSchema = z.infer<typeof ContactDetailSchema>;
 
 // Activities
-const ActivityDetail = z.object({
+export const ActivityDetailSchema = z.object({
 	type: z.literal(DetailTypes[2]),
 	detail: z.string()
 });
 
-type ActivityDetail =  z.infer<typeof ActivityDetail>;
+export type ActivityDetailSchema =  z.infer<typeof ActivityDetailSchema>;
 
 // Languages
 export const LanguageProficiencies = ["Native", "Fluent", "Basic"] as const;
 
-const LanguageDetail = z.object({
+export const LanguageDetailSchema = z.object({
 	type: z.literal(DetailTypes[3]),
 	proficiency: z.enum(LanguageProficiencies)
 });
 
-type LanguageDetail = z.infer<typeof LanguageDetail>;
+export type LanguageDetailSchema = z.infer<typeof LanguageDetailSchema>;
 
 // Interests
-const InterestDetail = z.object({
+export const InterestDetailSchema = z.object({
 	type: z.literal(DetailTypes[4]),
 	detail: z.string()
 });
 
-type InterestDetail = z.infer<typeof InterestDetail>;
+export type InterestDetailSchema = z.infer<typeof InterestDetailSchema>;
 
 export const DetailSchema = z.object({
 	title: z.string(),
 	description: z.string().optional(),
-	data: z.union([
-		EducationDetail,
-		ContactDetail,
-		ActivityDetail,
-		LanguageDetail,
-		InterestDetail
+	data: z.discriminatedUnion("type", [
+		EducationDetailSchema,
+		ContactDetailSchema,
+		ActivityDetailSchema,
+		LanguageDetailSchema,
+		InterestDetailSchema
 	])
 });
 

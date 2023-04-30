@@ -20,15 +20,6 @@ a { @apply text-primary; }
   font-family: "Open Sans", sans-serif;
 }
 
-#sidebar { @apply shadow-lg; }
-
-#sidebar, #main {
-  @apply box-border;
-  padding: 4% 2.5%
-}
-
-
-
 .section { margin-bottom: 1rem; }
 #sidebar .section { margin-bottom: 0.25rem; }
 .section h2 {

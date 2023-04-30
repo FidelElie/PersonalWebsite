@@ -63,7 +63,7 @@ const Detail = (props: DetailProps) => {
 										<Flex.Row className="items-center text-sm">
 											<Icon name="calendar-line" className="text-lg mr-2" />
 											<Copy.Inline>
-												{education.startDate.toLocaleDateString()}
+												{education.startDate?.toLocaleDateString()}
 											</Copy.Inline>
 											<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
 											<Copy.Inline>

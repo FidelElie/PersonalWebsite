@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export const For = <T extends unknown>(props: ForProps<T>) => {
 	const { each, else: _else = null, children } = props;
 
-	const iterable = Array.from(each, (item) => children(item));
+	const iterable = Array.from(each, (item, index) => children(item, index));
 
 	if (!iterable.length) { return <>{_else}</> }
 
@@ -13,5 +13,5 @@ export const For = <T extends unknown>(props: ForProps<T>) => {
 export interface ForProps<T> {
 	each: Iterable<T>,
 	else?: ReactNode;
-	children: (data: T) => ReactNode
+	children: (data: T, index: number) => ReactNode
 }

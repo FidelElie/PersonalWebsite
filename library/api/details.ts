@@ -1,10 +1,14 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { MergedModelSchema } from "@/configs/firebase";
+
 import { Detail, DetailSchema } from "../models";
 
 export const fetchDetails = () => Detail.find()
 
-export const useFetchDetails = () => useQuery(["details"], fetchDetails);
+export const useFetchDetails = (
+	config?: { onSuccess?: (data: MergedModelSchema<DetailSchema>[]) => void }
+) => useQuery(["details"], fetchDetails, config);
 
 export const useCreateDetails = () => useMutation(
 	async (details: DetailSchema[]) => {

@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
+import { MergedModelSchema } from "@/configs/firebase";
+
 import { useQueryStatuses } from "@/library/hooks";
 import {
 	useFetchDetails,
@@ -8,17 +10,51 @@ import {
 	useFetchTags,
 	useFetchSkills
 } from "@/library/api";
+import {
+	DetailSchema,
+	ExperienceSchema,
+	ProjectSchema,
+	SkillSchema,
+	TagSchema
+} from "@/library/models";
 
-const ResumeBuilderContext = createContext<ResumeBuilderContextType | null>(null);
+const initialContext: ResumeBuilderContextType = {
+	queries: { details: [], projects: [], tags: [], skills: [], experiences: [] },
+	selected: { details: [], projects: [], skills: [], experiences: [] },
+	isLoading: true,
+	isSuccess: false,
+	isError: false
+}
+
+const ResumeBuilderContext = createContext(initialContext);
 
 export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 	const { children } = props;
 
-	const detailsQuery = useFetchDetails();
-	const projectsQuery = useFetchProjects();
-	const experiencesQuery = useFetchExperiences();
+	const [selected, setSelected] = useState(initialContext.selected);
+	const detailsQuery = useFetchDetails({
+		onSuccess: (details) => setSelected(current => ({ ...current, details })) }
+	);
+	const projectsQuery = useFetchProjects({
+		onSuccess: (projects) => setSelected(
+			current => ({ ...current, projects: projects.slice(0, 2) }
+		))
+	});
+	const experiencesQuery = useFetchExperiences({
+		onSuccess: (experiences) => {
+			experiences.sort(
+				(a, b) => new Date(b.startDate).valueOf() - new Date(a.startDate).valueOf()
+			);
+
+			setSelected(
+				current => ({ ...current, experiences: experiences.slice(0, 1) }
+			))
+		}
+	});
+	const skillsQuery = useFetchSkills({
+		onSuccess: (skills) => setSelected(current => ({ ...current, skills: skills.slice(0, 6) }))
+	});
 	const tagsQuery = useFetchTags();
-	const skillsQuery = useFetchSkills();
 	const { isLoading, isSuccess, isError } = useQueryStatuses([
 		detailsQuery,
 		projectsQuery,
@@ -26,22 +62,20 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 		tagsQuery,
 		skillsQuery
 	]);
-	const [settings, setSettings] = useState({ reactTag: false, showWebsiteTag: false });
-
-	const changeSetting = (key: keyof Settings, bool: boolean) => setSettings(
-		currentSettings => ({ ...currentSettings, [key]: bool })
-	);
 
 	return (
 		<ResumeBuilderContext.Provider value={{
-			details: detailsQuery,
-			projects: projectsQuery,
-			tags: tagsQuery,
+			queries: {
+				details: detailsQuery.isSuccess ? detailsQuery.data : [],
+				projects: projectsQuery.isSuccess ? projectsQuery.data : [],
+				tags: tagsQuery.isSuccess ? tagsQuery.data : [],
+				skills: skillsQuery.isSuccess ? skillsQuery.data : [],
+				experiences: experiencesQuery.isSuccess ? experiencesQuery.data : []
+			},
+			selected,
 			isLoading,
 			isSuccess,
-			isError,
-			settings,
-			changeSetting
+			isError
 		}}>
 			{ children }
 		</ResumeBuilderContext.Provider>
@@ -58,17 +92,22 @@ export const useResumeBuilder = () => {
 	return context;
 }
 
-type Settings = { reactTag: boolean; showWebsiteTag: boolean }
+type Queries = {
+	details: MergedModelSchema<DetailSchema>[],
+	projects: MergedModelSchema<ProjectSchema>[],
+	tags: MergedModelSchema<TagSchema>[],
+	skills: MergedModelSchema<SkillSchema>[],
+	experiences: MergedModelSchema<ExperienceSchema>[]
+}
+
+type Selections = Omit<Queries, "tags">;
 
 export type ResumeBuilderContextType = {
-	details: ReturnType<typeof useFetchDetails>;
-	projects: ReturnType<typeof useFetchProjects>;
-	tags: ReturnType<typeof useFetchTags>;
+	queries: Queries,
+	selected: Selections,
 	isLoading: boolean;
 	isSuccess: boolean;
 	isError: boolean;
-	settings: Settings;
-	changeSetting: (key: keyof Settings, bool: boolean) => void;
 }
 
 export interface ResumeBuilderProps {

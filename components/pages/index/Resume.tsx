@@ -5,8 +5,16 @@ import styles from "./Resume.module.css";
 import { clc } from "@/library/utilities";
 import { useEventHandler, useTouch } from "@/library/hooks";
 
-import Sidebar from "./_Resume/Sidebar";
-import Contacts from "./_Resume/Contacts";
+import { About } from "./_Resume/About";
+import { Contacts } from "./_Resume/Contacts";
+import { Skills } from "./_Resume/Skills";
+import { Projects } from "./_Resume/Projects";
+import { Experiences } from "./_Resume/Experiences";
+import { Heading } from "./_Resume/Header";
+import { Education } from "./_Resume/Education";
+import { Activities } from "./_Resume/Activities";
+import { Languages } from "./_Resume/Languages";
+import { Interests } from "./_Resume/Interests";
 
 type Position = { left: number | null, top: number | null, scale: number | null }
 
@@ -138,18 +146,26 @@ export const Resume = () => {
 					transform: `translate(-50%, -50%) scale(${position.scale})`
 				}}
 			>
-				<div
-					ref={page}
-					className={styles.CurriculumVitaePage}
-				>
-					<Sidebar/>
-					<div className="flex flex-col w-2/3 relative" id="main">
-						<div className="w-full mb-4">
-							<h1 className="text-4xl tracking-tighter text-secondary font-bold dark:text-white">Fidel Pierre Elie</h1>
-							<span className="text-lg text-primary">Developer</span>
-							<div className="w-full flex flex-wrap mt-1.5">
+				<div ref={page} className={styles.CurriculumVitaePage}>
+					<div
+						className="flex flex-col w-1/3 p-5 flex-shrink-0 bg-blue-500 relative space-y-4"
+						id="sidebar"
+					>
+						<About/>
+						<Education />
+						<Activities />
+						<Languages />
+						<Interests />
+					</div>
+					<div className="flex flex-col w-2/3 p-5 relative" id="main">
+						<div className="space-y-5">
+							<div className="space-y-1">
+								<Heading/>
 								<Contacts />
 							</div>
+							<Skills/>
+							<Projects/>
+							<Experiences/>
 						</div>
 					</div>
 				</div>

@@ -1,28 +1,106 @@
+import type { MergedModelSchema } from "@/configs/firebase";
+
 import { clc } from "@/library/utilities";
+import type { DetailSchema, ContactMediums } from "@/library/models";
 
-import contactTags, { type contactTagProps } from "./Contacts.data";
+import { Flex, For, Copy, Icon, IconNames } from "@/components/core";
 
-const ContactPoint = (props: contactTagProps) => {
-  const { text, icon, href } = props;
+import { useResumeBuilder } from "../Resume.provider";
 
-  const BaseTag = href ? "a" : "div";
+const renderTypeAsLink: typeof ContactMediums[number][] = [
+  "linkedin", "email", "facebook", "github", "instagram", "linkedin", "phone"
+];
+
+const narrowToContacts = (details: MergedModelSchema<DetailSchema>[]) => {
+  return details.map(
+    detail => detail.data.type === "contact" ? { ...detail, data: detail.data } : []
+  ).flat()
+}
+
+export const Contacts = () => {
+  const { selected: { details } } = useResumeBuilder();
+
+  const contacts = narrowToContacts(details);
 
   return (
-    <BaseTag href={href} className="tag">
-      <span className="text-secondary mr-2.5 dark:text-white">
-        <i className={clc(icon, "text-base")}/>
-      </span>
-      <span className={clc("text-sm", BaseTag === "div" && "dark:text-white")}>
-        { text }
-      </span>
+    <Flex.Row className="items-center flex-wrap space-y-1.5 cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary">
+      <For each={contacts}>
+        { contact => <ContactPoint key={contact.id} contact={contact}/> }
+      </For>
+    </Flex.Row>
+  )
+}
+
+const ContactPoint = (props: ContactPointProps) => {
+  const { contact } = props;
+
+  const { data } = contact;
+
+  const BaseTag = isLink(data) ? "a": "div";
+
+  const determineIconName = (type: typeof ContactMediums[number]): typeof IconNames[number] => {
+    switch (type) {
+      case "phone":
+        return "phone-fill";
+      case "email":
+        return "mail-line";
+      case "linkedin":
+        return "linkedin-box-fill";
+      case "facebook":
+        return "facebook-box-fill";
+      case "github":
+        return "github-fill";
+      case "instagram":
+        return "instagram-fill";
+      case "location":
+        return "map-pin-2-line";
+      default:
+        throw new Error("Unknown contact medium");
+    }
+  }
+
+  const determineParseLink = (type: typeof ContactMediums[number], link: string) => {
+    switch (type) {
+      case "email":
+        return `mailto:${link}`;
+      case "phone":
+        return `tel:${link}`;
+      default:
+        return link;
+    }
+  }
+
+  const cleanContact = (link: string) => {
+    return link.replace(/https*:\/\//, "");
+  }
+
+  return (
+    <BaseTag
+      className="pr-2 pb-1"
+      {...(BaseTag !== "div" ? { href: determineParseLink(data.medium, data.value) } : {}) }
+    >
+      <Flex.Row className="items-center tracking-tighter text-sm">
+        <Icon name={determineIconName(data.medium)} className="text-lg mr-0.5 text-gray-600"/>
+        <Copy
+          className={clc(
+            "",
+            BaseTag === "a" && "underline text-primary underline-offset-4 mt-[-0.5px]"
+          )}
+        >
+          { cleanContact(data.value) }
+        </Copy>
+      </Flex.Row>
     </BaseTag>
   )
 }
 
-const Contacts = () => (
-  <>
-    { contactTags.map(tag => <ContactPoint {...tag} key={tag.text}/>) }
-  </>
-)
 
-export default Contacts;
+const isLink = (contact: DetailSchema["data"]) => {
+  if (contact.type !== "contact") { return false; }
+
+  return renderTypeAsLink.some(medium => medium === contact.medium);
+}
+
+interface ContactPointProps {
+  contact: ReturnType<typeof narrowToContacts>[number];
+}
