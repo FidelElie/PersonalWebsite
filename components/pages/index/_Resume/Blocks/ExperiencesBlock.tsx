@@ -14,10 +14,7 @@ export const ExperiencesBlock = () => {
 	);
 
 	return (
-		<Box
-			className="space-y-1.5 cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary"
-			onClick={() => setView("experiences")}
-		>
+		<Box className="space-y-1.5 cursor-pointer" onClick={() => setView("experiences")}>
 			<Heading.Two className="text-primary uppercase">Relevant Work Experience</Heading.Two>
 			<Flex.Column className="space-y-2">
 				<For each={experiences}>
@@ -47,7 +44,10 @@ const Experience = (props: ProjectProps) => {
 					</Copy.Inline>
 				</Flex.Row>
 			</Flex.Row>
-			<Copy className="text-xs text-secondary mb-2">
+			<Heading.Four className="font-light text-primary">
+				{experience.organisation}
+			</Heading.Four>
+			<Copy className="text-xs text-secondary mb-2 line-clamp-2">
 				{correspondingTags.map(tag => tag.name).join(", ")}
 			</Copy>
 			<Copy className="text-xs text-black">

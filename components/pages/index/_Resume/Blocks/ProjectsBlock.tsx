@@ -11,7 +11,7 @@ export const ProjectsBlock = () => {
 
 	return (
 		<Box
-			className="items-center flex-wrap space-y-1.5 cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary"
+			className="items-center flex-wrap space-y-1.5 cursor-pointer"
 			onClick={() => setView("projects")}
 		>
 			<Heading.Two className="text-primary uppercase">Notable Projects</Heading.Two>

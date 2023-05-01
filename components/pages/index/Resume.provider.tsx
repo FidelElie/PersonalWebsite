@@ -28,6 +28,7 @@ import {
 const initialContext: ResumeBuilderContextType = {
 	queries: { details: [], projects: [], tags: [], skills: [], experiences: [] },
 	selected: { details: [], projects: [], skills: [], experiences: [] },
+	toggleSelected: () => {},
 	view: null,
 	setView: () => {},
 	isLoading: true,
@@ -64,6 +65,12 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 		onSuccess: (skills) => setSelected(current => ({ ...current, skills: skills.slice(0, 6) }))
 	});
 	const tagsQuery = useFetchTags();
+	const queriesMap = {
+		details: detailsQuery,
+		projects: projectsQuery,
+		skills: skillsQuery,
+		experiences: experiencesQuery
+	}
 	const { isLoading, isSuccess, isError } = useQueryStatuses([
 		detailsQuery,
 		projectsQuery,
@@ -72,6 +79,23 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 		skillsQuery
 	]);
 	const [view, setView] = useState<SidebarViews>(null);
+
+	const toggleSelected = (id: string, resource: keyof ResumeBuilderContextType["selected"]) => {
+		setSelected(current => {
+			const entries = current[resource];
+
+			if (!entries.some(entry => entry.id === id)) {
+				const queryValue = queriesMap[resource];
+
+				const updatedEntries = (entries as any).concat(
+					[(queryValue.data as any)?.find((entry: any) => entry.id === id)]
+				);
+				return { ...current, [resource]: updatedEntries }
+			} else {
+				return {...current, [resource]: (entries as any).filter((entry: any) => entry.id !== id) }
+			}
+		});
+	}
 
 	return (
 		<ResumeBuilderContext.Provider value={{
@@ -83,6 +107,7 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 				experiences: experiencesQuery.isSuccess ? experiencesQuery.data : []
 			},
 			selected,
+			toggleSelected,
 			view,
 			setView,
 			isLoading,
@@ -119,6 +144,7 @@ type Selections = Omit<Queries, "tags">;
 export type ResumeBuilderContextType = {
 	queries: Queries;
 	selected: Selections;
+	toggleSelected: (id: string, resource: "details" | "projects" | "skills" | "experiences") => void;
 	view: SidebarViews;
 	setView: Dispatch<SetStateAction<SidebarViews>>;
 	isLoading: boolean;

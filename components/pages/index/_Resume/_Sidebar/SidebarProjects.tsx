@@ -1,34 +1,65 @@
-import { MergedModelSchema } from "@/configs/firebase";
+import { useMemo } from "react";
+
+import type { MergedModelSchema } from "@/configs/firebase";
 
 import { ProjectSchema } from "@/library/models";
 
-import { Box, Copy, Divider, Flex, For, Heading, Icon, Link, Show } from "@/components/core";
+import {
+	Box,
+	Copy,
+	Divider,
+	Flex,
+	For,
+	Heading,
+	Icon,
+	Link,
+	Show,
+	Toggle
+} from "@/components/core";
 
 import { useResumeBuilder } from "../../Resume.provider";
+
 
 export const SidebarProjects = () => {
 	const { selected, queries } = useResumeBuilder();
 
+	const selectedProjects = useMemo(
+		() => selected.projects.map(project => project.id),
+		[selected.projects]
+	);
+
 	return (
-		<Flex.Column className="space-y-3">
+		<Flex.Column className="space-y-3 pr-1">
 			<For each={queries.projects}>
-				{ project => <ProjectEntry key={project.id} project={project}/> }
+				{ project => (
+					<ProjectEntry key={project.id} project={project} selected={selectedProjects} />
+				) }
 			</For>
 		</Flex.Column>
 	)
 }
 
 const ProjectEntry = (props: ProjectEntryProps) => {
-	const { project } = props;
+	const { project, selected } = props;
 
-	const { queries: { tags }} = useResumeBuilder();
+	const { queries: { tags }, toggleSelected } = useResumeBuilder();
 
 	const correspondingTags = tags.filter(tag => project.tags.includes(tag.id));
+
+	const isSelected = selected.includes(project.id);
 
 	return (
 		<Flex.Column key={project.id} className="space-y-1.5">
 			<Box>
-				<Heading.Three className="text-xl mb-1" underline>{project.title}</Heading.Three>
+				<Flex.Row className="items-center justify-between">
+					<Heading.Three className="text-xl mb-1" underline>{project.title}</Heading.Three>
+					<Toggle
+						className="w-12"
+						label={`Toggle ${project.title}`}
+						checked={isSelected}
+						onChange={() => toggleSelected(project.id, "projects")}
+					/>
+				</Flex.Row>
 				<Show if={project.link}>
 					<Flex.Row className="items-center overflow-hidden">
 						<Icon name="link" className="text-lg mr-2 flex-shrink-0 dark:text-white" />
@@ -56,5 +87,6 @@ const ProjectEntry = (props: ProjectEntryProps) => {
 }
 
 interface ProjectEntryProps {
-	project: MergedModelSchema<ProjectSchema>
+	project: MergedModelSchema<ProjectSchema>;
+	selected: string[];
 }

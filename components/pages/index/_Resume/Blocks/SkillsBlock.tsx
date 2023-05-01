@@ -12,7 +12,7 @@ export const SkillsBlock = ({ className }: { className?: string }) => {
 
 	return (
 		<Box
-			className={clc("space-y-1.5 cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary", className)}
+			className={clc("space-y-1.5 cursor-pointer", className)}
 			onClick={() => setView("skills")}
 		>
 			<Heading.Two className="text-primary uppercase">Skills and Expertise</Heading.Two>
