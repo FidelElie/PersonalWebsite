@@ -24,7 +24,7 @@ const DashboardTagsPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Projects Dashboard | Fi Dev"
+			title="Projects Dashboard"
 			headerTitle="Tags"
 			headerOptions={(
 				<Flex className="items-center space-x-2">

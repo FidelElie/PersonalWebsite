@@ -21,7 +21,7 @@ const FrontPage = () => {
     <Page
       className="h-screen"
       mainClassName="flex-grow relative"
-      title="CV Builder | Fidel Elie"
+      title="CV"
       headerClassName="no-print"
       header={<Navbar/>}
       footer={<Footer className="no-print"/>}

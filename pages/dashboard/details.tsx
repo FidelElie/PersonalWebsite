@@ -36,7 +36,7 @@ const DashboardDetailsPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Details Dashboard | Fi Dev"
+			title="Details Dashboard"
 			headerTitle="Details"
 			headerOptions={(
 				<Button onClick={() => setModal("details")} className="flex items-center">

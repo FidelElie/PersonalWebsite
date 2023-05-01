@@ -3,6 +3,8 @@ import Head from "next/head";
 
 import { clc } from "@/library/utilities";
 
+import { AppConfig } from "@/configs/app.config";
+
 export const Page = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
 	const {
 		title,
@@ -19,12 +21,14 @@ export const Page = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
 
 	return (
 		<div className={clc("flex", className)} ref={ref}>
-			<Head>
-				{ title && <title>{title}</title> }
-			</Head>
-			<aside className={clc(asideClassName)}>
-				{ aside }
-			</aside>
+			{
+				title && (
+					<Head>
+						{title && <title>{`${title} | ${AppConfig.name}`}</title>}
+					</Head>
+				)
+			}
+			{ aside && <aside className={clc(asideClassName)}>{ aside }</aside> }
 			<div className="flex flex-col w-full">
 				{ header && <header className={clc(headerClassName)}>{ header }</header> }
 				<main className={clc(mainClassName)}>

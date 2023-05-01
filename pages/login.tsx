@@ -49,7 +49,7 @@ const LoginPage: ExtendedNextPage = () => {
 	}
 
 	return (
-		<AuthLayout title="Login | Fi Dev">
+		<AuthLayout title="Login">
 			<Container className="shadow mx-auto max-w-sm px-2 md:px-0">
 				<Box className="bg-blue-500 rounded-t px-4 py-3 text-center">
 					<Heading.One className="text-2xl font-light uppercase">Login</Heading.One>

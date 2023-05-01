@@ -38,7 +38,7 @@ const DashboardExperiencesPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Experiences Dashboard | Fi Dev"
+			title="Experiences Dashboard"
 			headerTitle="Experiences"
 			headerOptions={(
 				<Button onClick={() => setModal("experiences")} className="flex items-center">
