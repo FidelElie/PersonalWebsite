@@ -5,6 +5,8 @@ import styles from "./Resume.module.css";
 import { clc } from "@/library/utilities";
 import { useEventHandler, useTouch } from "@/library/hooks";
 
+import { Box, Flex, Icon } from "@/components/core";
+
 import { AboutBlock } from "./_Resume/Blocks/AboutBlock";
 import { ContactsBlock } from "./_Resume/Blocks/ContactsBlock";
 import { SkillsBlock } from "./_Resume/Blocks/SkillsBlock";
@@ -17,7 +19,7 @@ import { LanguagesBlock } from "./_Resume/Blocks/LanguagesBlock";
 import { InterestsBlock } from "./_Resume/Blocks/InterestsBlock";
 
 import { Sidebar } from "./_Resume/Sidebar";
-import { Box, Flex } from "@/components/core";
+import { useResumeBuilder } from "./Resume.provider";
 
 type Position = { left: number | null, top: number | null, scale: number | null }
 
@@ -31,6 +33,8 @@ export const Resume = () => {
 
 	const [dragStarted, setDragStarted] = useState(false);
 	const [mouseMoving, setMouseMoving] = useState(false);
+
+	const { setView } = useResumeBuilder();
 
 	const touchConfig = useTouch<HTMLDivElement>({
 		onTouchMove: (event) => {
@@ -141,6 +145,12 @@ export const Resume = () => {
 			onMouseUp={() => { setDragStarted(false); setMouseMoving(false); }}
 			{...touchConfig.register()}
 		>
+			<button
+				className="no-print absolute z-20 top-5 left-5 rounded-full shadow-lg bg-white p-4 dark:bg-gray-700"
+				onClick={() => setView("projects")}
+			>
+				<Icon name="menu-5-fill" className="text-xl dark:text-white"/>
+			</button>
 			<Sidebar/>
 			<Box
 				className={styles.CurriculumVitaeContainerTrack}

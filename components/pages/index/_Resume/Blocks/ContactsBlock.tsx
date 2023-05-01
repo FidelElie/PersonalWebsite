@@ -32,7 +32,10 @@ export const ContactsBlock = () => {
 
   return (
     <Flex.Row
-      className="items-center flex-wrap cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary"
+      className={clc(
+        "items-center flex-wrap",
+        // "cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary"
+      )}
       onClick={() => setView("details")}
     >
       <For each={contacts}>
