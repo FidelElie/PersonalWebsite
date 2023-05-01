@@ -1,5 +1,4 @@
 import "./_app.css";
-import "@fortawesome/fontawesome-free/css/all.css";
 
 import { useRef } from "react";
 import { Hydrate, QueryClient, QueryClientConfig, QueryClientProvider } from "@tanstack/react-query";
