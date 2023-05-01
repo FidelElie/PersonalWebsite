@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+	createContext,
+	useContext,
+	useState,
+	type ReactNode,
+	type Dispatch,
+	type SetStateAction
+} from "react";
 
 import { MergedModelSchema } from "@/configs/firebase";
 
@@ -21,6 +28,8 @@ import {
 const initialContext: ResumeBuilderContextType = {
 	queries: { details: [], projects: [], tags: [], skills: [], experiences: [] },
 	selected: { details: [], projects: [], skills: [], experiences: [] },
+	view: null,
+	setView: () => {},
 	isLoading: true,
 	isSuccess: false,
 	isError: false
@@ -62,6 +71,7 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 		tagsQuery,
 		skillsQuery
 	]);
+	const [view, setView] = useState<SidebarViews>(null);
 
 	return (
 		<ResumeBuilderContext.Provider value={{
@@ -73,6 +83,8 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 				experiences: experiencesQuery.isSuccess ? experiencesQuery.data : []
 			},
 			selected,
+			view,
+			setView,
 			isLoading,
 			isSuccess,
 			isError
@@ -92,24 +104,28 @@ export const useResumeBuilder = () => {
 	return context;
 }
 
+export type SidebarViews = "projects" | "experiences" | "skills" | "details" | null;
+
 type Queries = {
-	details: MergedModelSchema<DetailSchema>[],
-	projects: MergedModelSchema<ProjectSchema>[],
-	tags: MergedModelSchema<TagSchema>[],
-	skills: MergedModelSchema<SkillSchema>[],
-	experiences: MergedModelSchema<ExperienceSchema>[]
+	details: MergedModelSchema<DetailSchema>[];
+	projects: MergedModelSchema<ProjectSchema>[];
+	tags: MergedModelSchema<TagSchema>[];
+	skills: MergedModelSchema<SkillSchema>[];
+	experiences: MergedModelSchema<ExperienceSchema>[];
 }
 
 type Selections = Omit<Queries, "tags">;
 
 export type ResumeBuilderContextType = {
-	queries: Queries,
-	selected: Selections,
+	queries: Queries;
+	selected: Selections;
+	view: SidebarViews;
+	setView: Dispatch<SetStateAction<SidebarViews>>;
 	isLoading: boolean;
 	isSuccess: boolean;
 	isError: boolean;
 }
 
 export interface ResumeBuilderProps {
-	children: ReactNode
+	children: ReactNode;
 }

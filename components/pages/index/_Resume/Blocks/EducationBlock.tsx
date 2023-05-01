@@ -4,7 +4,7 @@ import { DetailSchema } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
-import { useResumeBuilder } from "../Resume.provider";
+import { useResumeBuilder } from "../../Resume.provider";
 
 const narrowToEducation = (details: MergedModelSchema<DetailSchema>[]) => {
 	return details.map(
@@ -12,7 +12,7 @@ const narrowToEducation = (details: MergedModelSchema<DetailSchema>[]) => {
 	).flat();
 }
 
-export const Education = () => {
+export const EducationBlock = () => {
 	const { selected: { details } } = useResumeBuilder();
 
 	const educationPoints = narrowToEducation(details);

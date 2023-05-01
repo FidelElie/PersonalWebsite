@@ -5,10 +5,14 @@ import type { DetailSchema, ContactMediums } from "@/library/models";
 
 import { Flex, For, Copy, Icon, IconNames } from "@/components/core";
 
-import { useResumeBuilder } from "../Resume.provider";
+import { useResumeBuilder } from "../../Resume.provider";
 
 const renderTypeAsLink: typeof ContactMediums[number][] = [
   "linkedin", "email", "facebook", "github", "instagram", "linkedin", "phone"
+];
+
+const orderPriority: readonly typeof ContactMediums[number][] = [
+  "phone", "location", "email", "github", "linkedin"
 ];
 
 const narrowToContacts = (details: MergedModelSchema<DetailSchema>[]) => {
@@ -17,13 +21,20 @@ const narrowToContacts = (details: MergedModelSchema<DetailSchema>[]) => {
   ).flat()
 }
 
-export const Contacts = () => {
-  const { selected: { details } } = useResumeBuilder();
+export const ContactsBlock = () => {
+  const { selected: { details }, setView } = useResumeBuilder();
 
-  const contacts = narrowToContacts(details);
+  const narrowedToContacts = narrowToContacts(details);
+
+  const contacts = orderPriority.map(
+    type => narrowedToContacts.find(contact => contact.data.medium === type) ?? []
+  ).flat();
 
   return (
-    <Flex.Row className="items-center flex-wrap space-y-1.5 cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary">
+    <Flex.Row
+      className="items-center flex-wrap cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary"
+      onClick={() => setView("details")}
+    >
       <For each={contacts}>
         { contact => <ContactPoint key={contact.id} contact={contact}/> }
       </For>
@@ -76,7 +87,7 @@ const ContactPoint = (props: ContactPointProps) => {
 
   return (
     <BaseTag
-      className="pr-2 pb-1"
+      className="pr-2 pb-2"
       {...(BaseTag !== "div" ? { href: determineParseLink(data.medium, data.value) } : {}) }
     >
       <Flex.Row className="items-center tracking-tighter text-sm">
@@ -84,7 +95,7 @@ const ContactPoint = (props: ContactPointProps) => {
         <Copy
           className={clc(
             "",
-            BaseTag === "a" && "underline text-primary underline-offset-4 mt-[-0.5px]"
+            BaseTag === "a" && "underline text-primary underline-offset-4"
           )}
         >
           { cleanContact(data.value) }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { MergedModelSchema } from "@/configs/firebase";
 
 import { SkillSchema, TagSchema } from "@/library/models";
@@ -6,15 +5,15 @@ import { clc } from "@/library/utilities";
 
 import { Box, Copy, Flex, For, Grid, Heading, Icon } from "@/components/core";
 
-import { useResumeBuilder } from "../Resume.provider";
+import { useResumeBuilder } from "../../Resume.provider";
 
-
-export const Skills = ({ className }: { className?: string }) => {
-	const { selected: { skills }, queries: { tags } } = useResumeBuilder();
+export const SkillsBlock = ({ className }: { className?: string }) => {
+	const { selected: { skills }, queries: { tags }, setView } = useResumeBuilder();
 
 	return (
 		<Box
 			className={clc("space-y-1.5 cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary", className)}
+			onClick={() => setView("skills")}
 		>
 			<Heading.Two className="text-primary uppercase">Skills and Expertise</Heading.Two>
 			<Grid className="grid-cols-3 gap-1">

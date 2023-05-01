@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { MergedModelSchema } from "@/configs/firebase";
 
 import { ProjectSchema, TagSchema } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 
-import { useResumeBuilder } from "../Resume.provider";
+import { useResumeBuilder } from "../../Resume.provider";
 
-export const Projects = () => {
-	const { selected: { projects }, queries: { tags } } = useResumeBuilder();
+export const ProjectsBlock = () => {
+	const { selected: { projects }, queries: { tags }, setView } = useResumeBuilder();
 
 	return (
 		<Box
 			className="items-center flex-wrap space-y-1.5 cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary"
+			onClick={() => setView("projects")}
 		>
 			<Heading.Two className="text-primary uppercase">Notable Projects</Heading.Two>
 			<Flex.Column className="space-y-2">

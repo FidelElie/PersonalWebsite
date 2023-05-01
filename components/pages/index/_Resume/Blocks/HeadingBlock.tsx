@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Box, Heading as CoreHeading } from "@/components/core";
 
-export const Heading = () => {
+export const HeadingBlock = () => {
 	const [name, setName] = useState("Fidel Pierre Elie");
 	const [title, setTitle] = useState("Developer");
 

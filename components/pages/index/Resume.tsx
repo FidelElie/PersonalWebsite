@@ -5,16 +5,19 @@ import styles from "./Resume.module.css";
 import { clc } from "@/library/utilities";
 import { useEventHandler, useTouch } from "@/library/hooks";
 
-import { About } from "./_Resume/About";
-import { Contacts } from "./_Resume/Contacts";
-import { Skills } from "./_Resume/Skills";
-import { Projects } from "./_Resume/Projects";
-import { Experiences } from "./_Resume/Experiences";
-import { Heading } from "./_Resume/Header";
-import { Education } from "./_Resume/Education";
-import { Activities } from "./_Resume/Activities";
-import { Languages } from "./_Resume/Languages";
-import { Interests } from "./_Resume/Interests";
+import { AboutBlock } from "./_Resume/Blocks/AboutBlock";
+import { ContactsBlock } from "./_Resume/Blocks/ContactsBlock";
+import { SkillsBlock } from "./_Resume/Blocks/SkillsBlock";
+import { ProjectsBlock } from "./_Resume/Blocks/ProjectsBlock";
+import { ExperiencesBlock } from "./_Resume/Blocks/ExperiencesBlock";
+import { HeadingBlock } from "./_Resume/Blocks/HeadingBlock";
+import { EducationBlock } from "./_Resume/Blocks/EducationBlock";
+import { ActivitiesBlock } from "./_Resume/Blocks/ActivitiesBlock";
+import { LanguagesBlock } from "./_Resume/Blocks/LanguagesBlock";
+import { InterestsBlock } from "./_Resume/Blocks/InterestsBlock";
+
+import { Sidebar } from "./_Resume/Sidebar";
+import { Box, Flex } from "@/components/core";
 
 type Position = { left: number | null, top: number | null, scale: number | null }
 
@@ -110,7 +113,7 @@ export const Resume = () => {
 	}, [editPosition]);
 
 	return (
-		<div
+		<Box
 			ref={track}
 			className={clc(
 				styles.CurriculumVitaeContainer,
@@ -128,6 +131,7 @@ export const Resume = () => {
 				}
 			}}
 			onWheel={(event) => {
+				if (event.target !== event.currentTarget) { return; }
 				if (event.ctrlKey) {
 					return requestAnimationFrame(() => editPosition({ scale: parseScale(event.deltaY) }));
 				}
@@ -137,7 +141,8 @@ export const Resume = () => {
 			onMouseUp={() => { setDragStarted(false); setMouseMoving(false); }}
 			{...touchConfig.register()}
 		>
-			<div
+			<Sidebar/>
+			<Box
 				className={styles.CurriculumVitaeContainerTrack}
 				style={{
 					position: "absolute",
@@ -146,30 +151,27 @@ export const Resume = () => {
 					transform: `translate(-50%, -50%) scale(${position.scale})`
 				}}
 			>
-				<div ref={page} className={styles.CurriculumVitaePage}>
-					<div
-						className="flex flex-col w-1/3 p-5 flex-shrink-0 bg-blue-500 relative space-y-4"
-						id="sidebar"
-					>
-						<About/>
-						<Education />
-						<Activities />
-						<Languages />
-						<Interests />
-					</div>
-					<div className="flex flex-col w-2/3 p-5 relative" id="main">
-						<div className="space-y-5">
-							<div className="space-y-1">
-								<Heading/>
-								<Contacts />
-							</div>
-							<Skills/>
-							<Projects/>
-							<Experiences/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+				<Box as="article" ref={page} className={styles.CurriculumVitaePage}>
+					<Flex.Column className="w-1/3 p-5 flex-shrink-0 bg-blue-500 relative space-y-4">
+						<AboutBlock/>
+						<EducationBlock />
+						<ActivitiesBlock />
+						<LanguagesBlock />
+						<InterestsBlock />
+					</Flex.Column>
+					<Flex.Column className="flex flex-col w-2/3 p-5 relative" id="main">
+						<Box className="space-y-5">
+							<Box className="space-y-1">
+								<HeadingBlock/>
+								<ContactsBlock />
+							</Box>
+							<SkillsBlock/>
+							<ProjectsBlock/>
+							<ExperiencesBlock/>
+						</Box>
+					</Flex.Column>
+				</Box>
+			</Box>
+		</Box>
 	)
 }

@@ -1,6 +1,6 @@
 import { Box, Copy, Heading } from "@/components/core"
 
-export const About = () => {
+export const AboutBlock = () => {
 	return (
 		<Box>
 			<Heading.Two className="mb-1 uppercase text-white">About Me</Heading.Two>

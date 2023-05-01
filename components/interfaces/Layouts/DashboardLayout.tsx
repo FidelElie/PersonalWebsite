@@ -4,7 +4,17 @@ import { Transition } from "@headlessui/react";
 import { useAuth, useDashboard } from "@/library/providers";
 import { clc } from "@/library/utilities";
 
-import { Copy, Flex, Icon, IconNames, Link, Page, Show, type PageConfiguredProps, Heading } from "@/components/core";
+import {
+	Copy,
+	Flex,
+	Icon,
+	IconNames,
+	Link,
+	Page,
+	Show,
+	Heading,
+	type PageConfiguredProps
+} from "@/components/core";
 
 import { ThemeToggle } from "../Theme";
 

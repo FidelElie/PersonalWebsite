@@ -1,7 +1,7 @@
 .CurriculumVitaePage {
 	width: 21cm;
 	height: 29.7cm;
-	@apply shadow-lg border border-gray-200 bg-white overflow-hidden flex rounded;
+	@apply shadow-lg border border-gray-200 bg-white overflow-hidden flex rounded relative;
 }
 
 :global(.dark) .CurriculumVitaePage {
