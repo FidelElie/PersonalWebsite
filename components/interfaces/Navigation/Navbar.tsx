@@ -20,11 +20,11 @@ export const Navbar = () => {
 				</Link>
 				<Flex className="items-center justify-end space-x-3">
 					<ThemeToggle initialPlacement="bottom-end"/>
-					<button
+					{/* <button
 						className=""
 					>
 						<Icon name="menu-5-line" className="text-gray-800 text-xl dark:text-gray-50" />
-					</button>
+					</button> */}
 				</Flex>
 			</Container>
 		</Box>

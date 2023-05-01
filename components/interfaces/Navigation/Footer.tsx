@@ -23,7 +23,7 @@ export const Footer = (props: FooterProps) => {
               href="/login"
               className="text-tertiary text-sm whitespace-nowrap tracking-tight dark:text-gray-50"
             >
-              Login
+              Admin Login
             </Link>
           </Flex.Row>
           <Copy.Inline className="text-xs tracking-tight">
