@@ -1,8 +1,9 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { onAuthStateChanged } from "firebase/auth";
 
 import type { UserSchema } from "../models";
-import { useFirebaseAuth } from "./Firebase.provider";
+import { useFirebaseAuth } from "./FirebaseProvider";
 
 import { useFetchCurrentUser } from "../api";
 
@@ -11,34 +12,30 @@ const AuthContext = createContext(initialContext);
 
 export const AuthProvider = (props: AuthProviderProps) => {
 	const { children } = props;
-	const auth = useFirebaseAuth();
-	const [initialLoad, setInitialLoad] = useState(false);
-	const [uid, setUid] = useState<string | null>(null);
-	const [loading, setLoading] = useState(initialContext.loading);
 
-	const userQuery = useFetchCurrentUser(uid, {
-		onSettled: () => setLoading(false),
-		enabled: initialLoad
-	});
+	const auth = useFirebaseAuth();
+	const queryClient = useQueryClient();
+	const [initialLoad, setInitialLoad] = useState(false);
+	const userQuery = useFetchCurrentUser({ enabled: initialLoad });
 
 	useEffect(() => {
-		return onAuthStateChanged(auth, async (user) => {
+		return onAuthStateChanged(auth, () => {
 			try {
-				setUid(user ? user.uid : null);
+				queryClient.invalidateQueries(["user"]);
 			} catch (error) {
 				console.log(error);
 				// Connection error likely
 			} finally {
 				setInitialLoad(true);
 			}
-		})
+		});
 	}, []);
 
 	return (
 		<AuthContext.Provider
 			value={{
 				user: userQuery.isSuccess ? userQuery.data : null,
-				loading
+				loading: !initialLoad || userQuery.isInitialLoading
 			}}
 		>
 			{ children }
