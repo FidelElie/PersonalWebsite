@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Link from "next/link";
-import { useQueryClient } from "@tanstack/react-query";
 
 import { clc } from "@/library/utilities";
 import { useLoginUser } from "@/library/api";
@@ -12,12 +10,12 @@ import {
 	Icon,
 	Button,
 	Box,
-	Flex,
 	Heading,
 	Show,
 	Copy,
 	Container
 } from "@/components/core";
+
 import { AuthLayout } from "@/components/interfaces";
 
 const SUBMISSION_ERRORS = {
@@ -28,8 +26,7 @@ const SUBMISSION_ERRORS = {
 }
 
 const LoginPage: ExtendedNextPage = () => {
-	const queryClient = useQueryClient();
-	const loginUser = useLoginUser({ onSuccess: () => queryClient.invalidateQueries(["user"]) });
+	const loginUser = useLoginUser();
 	const [fields, setFields] = useState({ email: "", password: "" });
 	const [submissionErrors, setSubmissionErrors] = useState(SUBMISSION_ERRORS);
 
@@ -49,24 +46,26 @@ const LoginPage: ExtendedNextPage = () => {
 	}
 
 	return (
-		<AuthLayout title="Login">
+		<AuthLayout>
 			<Container className="shadow mx-auto max-w-sm px-2 md:px-0">
 				<Box className="bg-blue-500 rounded-t px-4 py-3 text-center">
-					<Heading.One className="text-2xl font-light uppercase">Login</Heading.One>
+					<Heading.One className="text-2xl font-light uppercase text-white">Login</Heading.One>
 				</Box>
 				{
 					Object.values(submissionErrors).some(error => error === true) && (
 						<Box className="px-3 py-2 bg-gray-400 text-sm">
 							<Show if={submissionErrors["auth/wrong-password"]}>
-								<Copy>Wrong username / password provided</Copy>
+								<Copy className="text-white">Wrong username / password provided</Copy>
 							</Show>
 							<Show
 								if={submissionErrors["auth/user-not-found"] || submissionErrors["auth/invalid-email"]}
 							>
-								<Copy>User Not Found</Copy>
+								<Copy className="text-white">User Not Found</Copy>
 							</Show>
 							<Show if={submissionErrors.generic}>
-								<Copy>Oops something went wrong, please try again later</Copy>
+								<Copy className="text-white">
+									Oops something went wrong, please try again later
+								</Copy>
 							</Show>
 						</Box>
 					)
@@ -92,14 +91,11 @@ const LoginPage: ExtendedNextPage = () => {
 							onChange={value => editFields({ password: value })}
 							required
 						/>
-						<Flex.Row className="justify-end">
-							<Link
-								href="#"
-								className="text-tertiary text-xs whitespace-nowrap font-light tracking-wide dark:text-gray-50"
-							>
+						<Box className="text-right">
+							<Copy className="text-xs whitespace-nowrap tracking-wide">
 								Forgot Password? Contact An Administrator
-							</Link>
-						</Flex.Row>
+							</Copy>
+						</Box>
 					</Box>
 					<Button.Submit
 						className="w-full flex items-center justify-between disabled:opacity-75"
@@ -124,5 +120,6 @@ LoginPage.auth = {
 		return "/";
 	}
 }
+LoginPage.title = "Login";
 
 export default LoginPage;

@@ -9,4 +9,6 @@ DashboardPage.auth = {
 	redirectUnauthenticated: "/login"
 }
 
+DashboardPage.title = "Dashboard";
+
 export default DashboardPage;

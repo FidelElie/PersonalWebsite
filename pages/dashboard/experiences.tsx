@@ -7,7 +7,11 @@ import { useFetchExperiences, useFetchTags } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
 
 import { Button, Flex, For, Icon, Copy } from "@/components/core";
-import { DashboardLayout, QueryHandler } from "@/components/interfaces";
+
+import { QueryHandler } from "@/components/interfaces";
+
+import { getDashboardProvider } from "@/components/pages/dashboard/DashboardProvider";
+import { DashboardLayout } from "@/components/pages/dashboard/DashboardLayout";
 import { ExperienceCard } from "@/components/pages/dashboard/experiences/ExperienceCard";
 import { ExperiencesModal } from "@/components/pages/dashboard/experiences/ExperiencesModal";
 import {
@@ -38,7 +42,6 @@ const DashboardExperiencesPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Experiences Dashboard"
 			headerTitle="Experiences"
 			headerOptions={(
 				<Button onClick={() => setModal("experiences")} className="flex items-center">
@@ -82,7 +85,11 @@ const DashboardExperiencesPage: ExtendedNextPage = () => {
 	)
 }
 
+DashboardExperiencesPage.getLayout = getDashboardProvider;
+
 DashboardExperiencesPage.auth = {
 	redirectUnauthenticated: "/login"
 }
+DashboardExperiencesPage.title = "Experiences";
+
 export default DashboardExperiencesPage;

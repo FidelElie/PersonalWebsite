@@ -7,7 +7,11 @@ import { SkillSchema } from "@/library/models";
 import type { ExtendedNextPage } from "@/library/types";
 
 import { Button, For, Icon, Copy, Grid } from "@/components/core";
-import { DashboardLayout, QueryHandler } from "@/components/interfaces";
+
+import { QueryHandler } from "@/components/interfaces";
+
+import { getDashboardProvider } from "@/components/pages/dashboard/DashboardProvider";
+import { DashboardLayout } from "@/components/pages/dashboard/DashboardLayout";
 import { SkillsModal } from "@/components/pages/dashboard/skills/SkillsModal";
 import { DeleteSkillsModal } from "@/components/pages/dashboard/skills/DeleteSkillsModal";
 import { SkillCard } from "@/components/pages/dashboard/skills/SkillCard";
@@ -36,7 +40,6 @@ const DashboardSkillsPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Skills Dashboard"
 			headerTitle="Skills"
 			headerOptions={(
 				<Button onClick={() => setModal("skills")} className="flex items-center">
@@ -81,7 +84,12 @@ const DashboardSkillsPage: ExtendedNextPage = () => {
 	)
 }
 
+DashboardSkillsPage.getLayout = getDashboardProvider;
+
 DashboardSkillsPage.auth = {
 	redirectUnauthenticated: "/login"
 }
+
+DashboardSkillsPage.title = "Skills";
+
 export default DashboardSkillsPage;

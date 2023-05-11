@@ -1,11 +1,12 @@
 import type { GetServerSideProps } from "next";
 
+import type { ExtendedNextPage } from "@/library/types";
+
 import { ServiceLayout } from "@/components/interfaces";
 
-const MaintenancePage = () => {
+const MaintenancePage: ExtendedNextPage = () => {
 	return (
 		<ServiceLayout
-			title="Maintenance"
 			heading="Under Maintenance"
 			description="The Website Will Be Back Up Soon."
 		/>
@@ -19,5 +20,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 	return { props: {} }
 }
+
+MaintenancePage.title = "Maintenance";
 
 export default MaintenancePage;

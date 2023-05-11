@@ -1,11 +1,12 @@
+import type { ExtendedNextPage } from "@/library/types";
+
 import { Copy, Link } from "@/components/core";
 
 import { ServiceLayout } from "@/components/interfaces";
 
-const NotFoundErrorPage = () => {
+const NotFoundErrorPage: ExtendedNextPage = () => {
 	return (
 		<ServiceLayout
-			title="Not Found"
 			heading="404: Page Not Found"
 			description={(
 				<Copy className="font-light">
@@ -15,5 +16,7 @@ const NotFoundErrorPage = () => {
 		/>
 	)
 }
+
+NotFoundErrorPage.title = "Not Found";
 
 export default NotFoundErrorPage;

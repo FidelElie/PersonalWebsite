@@ -1,8 +1,9 @@
 import { Fragment, MouseEventHandler, ReactNode } from "react";
 import { Transition } from "@headlessui/react";
 
-import { useAuth, useDashboard } from "@/library/providers";
+import { useAuth } from "@/library/providers";
 import { clc } from "@/library/utilities";
+import { useLogoutUser } from "@/library/api";
 
 import {
 	Copy,
@@ -13,16 +14,21 @@ import {
 	Page,
 	Show,
 	Heading,
+	Box,
 	type PageConfiguredProps
 } from "@/components/core";
 
-import { ThemeToggle } from "../Theme";
+import { ThemeToggle } from "../../interfaces/Theme";
+
+import { useDashboard } from "./DashboardProvider";
 
 export const DashboardLayout = (props: DashboardLayoutProps) => {
 	const { headerTitle, headerOptions, children, ...pageProps } = props;
 
 	const { user } = useAuth();
 	const { showSidebar, setShowSidebar } = useDashboard();
+
+	const logoutUser = useLogoutUser();
 
 	const handleBackgroundClick: MouseEventHandler<HTMLDivElement> = (event) => {
 		if (event.currentTarget === event.target) { setShowSidebar(false); }
@@ -66,14 +72,14 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-				<div
+				<Box
 					className="fixed h-screen w-full bg-black bg-opacity-25 md:static"
 					onClick={handleBackgroundClick}
 				>
-					<Flex
+					<Flex.Column
 						className={
 							clc(
-								"flex-col justify-center items-center w-48 h-screen bg-white border-r",
+								"justify-center items-center w-48 h-screen bg-white border-r",
 								"dark:bg-gray-700 dark:border-gray-500",
 							)
 						}
@@ -97,7 +103,10 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 							<SidebarLink href="/dashboard/details" icon="information-line" text="Details" />
 						</Flex.Column>
 						<Flex.Column className="items-center border-t w-full dark:border-gray-500">
-							<button className="flex items-center py-2.5 px-2 w-full">
+							<button
+								className="flex items-center py-2.5 px-2 w-full"
+								onClick={() => logoutUser.mutate()}
+							>
 								<Flex.Row
 									className="flex-shrink-0 w-10 h-10 justify-center items-center rounded-full bg-blue-500 mr-2"
 								>
@@ -116,8 +125,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 								</Flex>
 							</button>
 						</Flex.Column>
-					</Flex>
-				</div>
+					</Flex.Column>
+				</Box>
       </Transition>
 			)}
 			{ ...pageProps }

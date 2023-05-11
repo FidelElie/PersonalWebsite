@@ -7,8 +7,11 @@ import type { ExtendedNextPage } from "@/library/types";
 import type { DetailSchema } from "@/library/models";
 
 import { Button, Icon } from "@/components/core";
-import { DashboardLayout, QueryHandler } from "@/components/interfaces";
 
+import { QueryHandler } from "@/components/interfaces";
+
+import { getDashboardProvider } from "@/components/pages/dashboard/DashboardProvider";
+import { DashboardLayout } from "@/components/pages/dashboard/DashboardLayout";
 import { DetailSections } from "@/components/pages/dashboard/details/DetailSections";
 import { DetailsModal } from "@/components/pages/dashboard/details/DetailsModal";
 import { DeleteDetailsModal } from "@/components/pages/dashboard/details/DeleteDetailsModal";
@@ -36,7 +39,6 @@ const DashboardDetailsPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Details Dashboard"
 			headerTitle="Details"
 			headerOptions={(
 				<Button onClick={() => setModal("details")} className="flex items-center">
@@ -66,8 +68,11 @@ const DashboardDetailsPage: ExtendedNextPage = () => {
 	)
 }
 
+DashboardDetailsPage.getLayout = getDashboardProvider;
+
 DashboardDetailsPage.auth = {
 	redirectUnauthenticated: "/login"
 }
+DashboardDetailsPage.title = "Details";
 
 export default DashboardDetailsPage;

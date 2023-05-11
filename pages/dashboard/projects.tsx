@@ -7,7 +7,11 @@ import { ProjectSchema } from "@/library/models";
 import type { ExtendedNextPage } from "@/library/types";
 
 import { Button, Flex, For, Icon, Copy } from "@/components/core";
-import { DashboardLayout, QueryHandler } from "@/components/interfaces";
+
+import { QueryHandler } from "@/components/interfaces";
+
+import { getDashboardProvider } from "@/components/pages/dashboard/DashboardProvider";
+import { DashboardLayout } from "@/components/pages/dashboard/DashboardLayout";
 import { ProjectCard } from "@/components/pages/dashboard/projects/ProjectCard";
 import { ProjectsModal } from "@/components/pages/dashboard/projects/ProjectsModal";
 import { DeleteProjectsModal } from "@/components/pages/dashboard/projects/DeleteProjectsModal";
@@ -36,7 +40,6 @@ const DashboardProjectsPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Projects Dashboard"
 			headerTitle="Projects"
 			headerOptions={(
 				<Button onClick={() => setModal("projects")} className="flex items-center">
@@ -80,7 +83,12 @@ const DashboardProjectsPage: ExtendedNextPage = () => {
 	)
 }
 
+DashboardProjectsPage.getLayout = getDashboardProvider;
+
 DashboardProjectsPage.auth = {
 	redirectUnauthenticated: "/login"
 }
+
+DashboardProjectsPage.title = "Projects";
+
 export default DashboardProjectsPage;

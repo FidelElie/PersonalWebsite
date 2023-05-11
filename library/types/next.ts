@@ -10,7 +10,8 @@ export type ExtendedNextPage<Props = {}, InitialProps = Props> = NextPage<Props,
 	auth?: {
 		redirectAuthenticated?: ((user: UserSchema) => string) | string;
 		redirectUnauthenticated?: string
-	}
+	},
+	title?: string | ((props: Props) => string)
 }
 
 export type ExtendedAppProps<P = any> = Omit<AppProps<P>, "Component"> & {

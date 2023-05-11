@@ -11,8 +11,7 @@ import type { ExtendedAppProps } from "@/library/types";
 import {
   FirebaseProvider,
   AuthProvider,
-  ThemeProvider,
-  DashboardProvider
+  ThemeProvider
 } from "@/library/providers";
 
 import { ComponentRouter } from "@/components/pages/ComponentRouter";
@@ -35,10 +34,8 @@ const App = (props: ExtendedAppProps) => {
         <FirebaseProvider client={firebaseClient}>
           <AuthProvider>
             <ThemeProvider>
-              <DashboardProvider>
-                <ComponentRouter {...props}/>
-                <Analytics/>
-              </DashboardProvider>
+              <ComponentRouter {...props}/>
+              <Analytics/>
             </ThemeProvider>
           </AuthProvider>
         </FirebaseProvider>

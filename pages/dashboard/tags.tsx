@@ -5,7 +5,11 @@ import { useFetchTags } from "@/library/api";
 import useDebounce from "@/library/hooks/useDebounce";
 
 import { Button, Flex, For, Icon, Show, Grid, TextField, Card, Copy } from "@/components/core";
-import { DashboardLayout, QueryHandler } from "@/components/interfaces";
+
+import { QueryHandler } from "@/components/interfaces";
+
+import { getDashboardProvider } from "@/components/pages/dashboard/DashboardProvider";
+import { DashboardLayout } from "@/components/pages/dashboard/DashboardLayout";
 import { AddTagsButton } from "@/components/pages/dashboard/tags/AddTagsButton";
 import { TagCard } from "@/components/pages/dashboard/tags/TagCard";
 import { DeleteTagsModal } from "@/components/pages/dashboard/tags/DeleteTagsModal";
@@ -24,7 +28,6 @@ const DashboardTagsPage: ExtendedNextPage = () => {
 
 	return (
 		<DashboardLayout
-			title="Projects Dashboard"
 			headerTitle="Tags"
 			headerOptions={(
 				<Flex className="items-center space-x-2">
@@ -95,7 +98,12 @@ const DashboardTagsPage: ExtendedNextPage = () => {
 	)
 }
 
+DashboardTagsPage.getLayout = getDashboardProvider;
+
 DashboardTagsPage.auth = {
 	redirectUnauthenticated: "/login"
 }
+
+DashboardTagsPage.title = "Tags";
+
 export default DashboardTagsPage;

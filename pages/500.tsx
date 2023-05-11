@@ -1,11 +1,12 @@
+import type { ExtendedNextPage } from "@/library/types";
+
 import { Copy, Link } from "@/components/core";
 
 import { ServiceLayout } from "@/components/interfaces";
 
-const ServerErrorPage = () => {
+const ServerErrorPage: ExtendedNextPage = () => {
 	return (
 		<ServiceLayout
-			title="Something Went Wrong"
 			heading="500: Something Went Wrong"
 			description={(
 				<Copy className="font-light">
@@ -15,5 +16,7 @@ const ServerErrorPage = () => {
 		/>
 	)
 }
+
+ServerErrorPage.title = "Something Went Wrong";
 
 export default ServerErrorPage;

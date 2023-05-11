@@ -1,13 +1,9 @@
 import { ReactNode, forwardRef } from "react";
-import Head from "next/head";
 
 import { clc } from "@/library/utilities";
 
-import { AppConfig } from "@/configs/app.config";
-
 export const Page = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
 	const {
-		title,
 		className,
 		asideClassName,
 		headerClassName,
@@ -21,13 +17,6 @@ export const Page = forwardRef<HTMLDivElement, PageProps>((props, ref) => {
 
 	return (
 		<div className={clc("flex", className)} ref={ref}>
-			{
-				title && (
-					<Head>
-						{title && <title>{`${title} | ${AppConfig.name}`}</title>}
-					</Head>
-				)
-			}
 			{ aside && <aside className={clc(asideClassName)}>{ aside }</aside> }
 			<div className="flex flex-col w-full">
 				{ header && <header className={clc(headerClassName)}>{ header }</header> }
@@ -53,7 +42,6 @@ const PageFooter = ({ footerClassName, footer }: PageFooterProps) => {
 Page.displayName = "Page";
 
 export interface PageProps {
-	title?: string,
 	className?: string;
 	asideClassName?: string;
 	headerClassName?: string;
@@ -67,4 +55,4 @@ export interface PageProps {
 
 type PageFooterProps = Pick<PageProps, "footerClassName" | "footer">;
 
-export type PageConfiguredProps = Pick<PageProps, "title" | "children">;
+export type PageConfiguredProps = Pick<PageProps, "children">;
