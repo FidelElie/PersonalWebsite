@@ -1,3 +1,4 @@
 export const AppConfig = {
-	name: "Fidel Elie"
+	name: "Fidel Elie",
+	localStoragePrefix: "FI_DEV"
 };
