@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&display=swap');
+
+body {
+  font-family: "Lato", sans-serif;
+  @apply bg-gray-50 dark:bg-gray-600
+}
+
+* { @apply transition-all; }
+
+a { @apply text-primary; }
+
+.lato {
+  font-family: "Lato", sans-serif;
+}
+
+.open-sans {
+  font-family: "Open Sans", sans-serif;
+}
+
+.section { margin-bottom: 1rem; }
+#sidebar .section { margin-bottom: 0.25rem; }
+.section h2 {
+  @apply uppercase text-sm font-semibold;
+  margin-bottom: 0.25rem;
+}
+
+.section div:last-child {
+  margin-bottom: 0;
+}
+
+.point {
+  @apply flex flex-col;
+  font-family: "Open Sans", sans-serif;
+  padding-bottom: 0.5rem;
+}
+
+.tag {
+  @apply flex items-center;
+  padding-right: 0.6rem;
+  padding-bottom: 0.1rem;
+}
+
+@media print {
+  .no-print, .no-print * { display: none !important; }
+}

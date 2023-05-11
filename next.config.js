@@ -1,10 +1,16 @@
-module.exports = {
+const { withSuperjson } = require('next-superjson');
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   redirects() {
     return [
       process.env.MAINTENANCE_MODE === "1"
-        ? { source: "/((?!maintenance).*)", destination: "/maintenance.html", permanent: false }
+        ? { source: "/((?!maintenance).*)", destination: "/maintenance", permanent: false }
         : null,
     ].filter(Boolean);
   }
 }
+
+module.exports = withSuperjson(nextConfig)({});
