@@ -4,7 +4,7 @@ export const useLocalStorage = <T = JSONParsable>(
 	key: string,
 	initialValue: JSONParsable = null
 ) => {
-	const [storageValue, setStorageValue] = useState<JSONParsable>();
+	const [storageValue, setStorageValue] = useState<JSONParsable>(initialValue);
 
 	const editStorageValue = (value: T) => { setStorageValue(value as JSONParsable); }
 
