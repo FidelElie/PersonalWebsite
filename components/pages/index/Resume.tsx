@@ -19,7 +19,7 @@ import { LanguagesBlock } from "./_Resume/Blocks/LanguagesBlock";
 import { InterestsBlock } from "./_Resume/Blocks/InterestsBlock";
 
 import { Sidebar } from "./_Resume/Sidebar";
-import { useResumeBuilder } from "./Resume.provider";
+import { useResumeBuilder } from "./ResumeProvider";
 
 type Position = { left: number | null, top: number | null, scale: number | null }
 

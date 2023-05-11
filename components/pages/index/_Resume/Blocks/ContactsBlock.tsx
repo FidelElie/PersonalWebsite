@@ -5,7 +5,7 @@ import type { DetailSchema, ContactMediums } from "@/library/models";
 
 import { Flex, For, Copy, Icon, IconNames } from "@/components/core";
 
-import { useResumeBuilder } from "../../Resume.provider";
+import { useResumeBuilder } from "../../ResumeProvider";
 
 const renderTypeAsLink: typeof ContactMediums[number][] = [
   "linkedin", "email", "facebook", "github", "instagram", "linkedin", "phone"

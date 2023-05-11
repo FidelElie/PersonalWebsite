@@ -6,7 +6,7 @@ import { SkillSchema } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading, Icon, Toggle } from "@/components/core";
 
-import { useResumeBuilder } from "../../Resume.provider";
+import { useResumeBuilder } from "../../ResumeProvider";
 
 export const SidebarSkills = () => {
 	const { selected, queries } = useResumeBuilder();

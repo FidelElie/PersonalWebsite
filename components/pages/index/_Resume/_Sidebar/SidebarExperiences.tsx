@@ -17,7 +17,7 @@ import {
 	Toggle
 } from "@/components/core";
 
-import { useResumeBuilder } from "../../Resume.provider";
+import { useResumeBuilder } from "../../ResumeProvider";
 
 export const SidebarExperiences = () => {
 	const { queries, selected } = useResumeBuilder();

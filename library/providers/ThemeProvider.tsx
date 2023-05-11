@@ -1,8 +1,10 @@
 import { createContext, ReactNode, useContext, useEffect } from "react";
 
+import { AppConfig } from "@/configs/app.config";
+
 import { useLocalStorage } from "../hooks";
 
-export const THEME_STORAGE_KEY = "FI_DEV_THEME";
+export const THEME_STORAGE_KEY = `${AppConfig.localStoragePrefix}_THEME`;
 
 export const DARK_CLASS = "dark";
 

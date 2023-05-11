@@ -4,7 +4,7 @@ import { DetailSchema } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
-import { useResumeBuilder } from "../../Resume.provider";
+import { useResumeBuilder } from "../../ResumeProvider";
 
 const proficiencyPriority = {
 	Native: 1,

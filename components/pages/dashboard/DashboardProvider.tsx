@@ -1,16 +1,20 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode, type ReactElement } from "react";
 
-import { useLocalStorage } from "../hooks";
+import { AppConfig } from "@/configs/app.config";
+
+import { useLocalStorage } from "@/library/hooks";
 
 const initialContext: DashboardContextType = { showSidebar: false, setShowSidebar: () => {} }
 const DashboardContext = createContext(initialContext);
 
-const SIDEBAR_STORAGE_KEY = "FI_DEV_DASHBOARD_STATE";
+const SIDEBAR_STORAGE_KEY = `${AppConfig.localStoragePrefix}_DASHBOARD_STATE`;
 
 export const DashboardProvider = (props: DashboardProviderProps) => {
 	const { children } = props;
 
 	const [showSidebar, setShowSidebar] = useLocalStorage<boolean>(SIDEBAR_STORAGE_KEY, false);
+
+	console.log(showSidebar);
 
 	return (
 		<DashboardContext.Provider value={{ showSidebar, setShowSidebar }}>
@@ -20,6 +24,10 @@ export const DashboardProvider = (props: DashboardProviderProps) => {
 }
 
 export const useDashboard = () => useContext(DashboardContext);
+
+export const getDashboardProvider = (page: ReactElement) => (
+	<DashboardProvider>{page}</DashboardProvider>
+)
 
 export type DashboardContextType = {
 	showSidebar: boolean,

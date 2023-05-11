@@ -5,7 +5,7 @@ import { clc } from "@/library/utilities";
 
 import { Box, Copy, Flex, For, Grid, Heading, Icon } from "@/components/core";
 
-import { useResumeBuilder } from "../../Resume.provider";
+import { useResumeBuilder } from "../../ResumeProvider";
 
 export const SkillsBlock = ({ className }: { className?: string }) => {
 	const { selected: { skills }, queries: { tags }, setView } = useResumeBuilder();

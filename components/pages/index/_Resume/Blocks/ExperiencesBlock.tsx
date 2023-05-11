@@ -4,7 +4,7 @@ import { ExperienceSchema, TagSchema } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
-import { useResumeBuilder } from "../../Resume.provider";
+import { useResumeBuilder } from "../../ResumeProvider";
 
 export const ExperiencesBlock = () => {
 	const { selected: { experiences }, queries: { tags }, setView } = useResumeBuilder();

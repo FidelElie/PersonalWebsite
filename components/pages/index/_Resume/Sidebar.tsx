@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import { Transition } from "@headlessui/react";
 
-import { Button, Copy, Show, Flex, Grid, Icon, IconProps, Box } from "@/components/core";
+import { Button, Copy, Show, Flex, Grid, Icon, IconProps, Box, Divider } from "@/components/core";
 
-import { useResumeBuilder } from "../Resume.provider";
+import { useResumeBuilder } from "../ResumeProvider";
 
 import { SidebarProjects } from "./_Sidebar/SidebarProjects";
 import { SidebarExperiences } from "./_Sidebar/SidebarExperiences";

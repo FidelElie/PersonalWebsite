@@ -4,7 +4,7 @@ import { ProjectSchema, TagSchema } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 
-import { useResumeBuilder } from "../../Resume.provider";
+import { useResumeBuilder } from "../../ResumeProvider";
 
 export const ProjectsBlock = () => {
 	const { selected: { projects }, queries: { tags }, setView } = useResumeBuilder();

@@ -1,4 +1,5 @@
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
 
 import {
   fetchDetails,
@@ -7,21 +8,20 @@ import {
   fetchSkills,
   fetchTags
 } from "@/library/api";
+import type { ExtendedNextPage } from "@/library/types";
 
 import { Page } from "@/components/core";
 
 import { Navbar, Footer } from "@/components/interfaces/Navigation";
 
-import { ResumeBuilderProvider } from "@/components/pages/index/Resume.provider";
+import { ResumeBuilderProvider } from "@/components/pages/index/ResumeProvider";
 import { Resume } from "@/components/pages/index/Resume";
-import { QueryClient, dehydrate } from "@tanstack/react-query";
 
-const FrontPage = () => {
+const FrontPage: ExtendedNextPage = () => {
   return (
     <Page
       className="h-screen"
       mainClassName="flex-grow relative"
-      title="CV"
       headerClassName="no-print"
       header={<Navbar/>}
       footer={<Footer className="no-print"/>}
@@ -50,5 +50,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   }
 }
+
+FrontPage.title = "CV";
 
 export default FrontPage;
