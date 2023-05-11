@@ -2,6 +2,8 @@ import {
 	createContext,
 	useContext,
 	useState,
+	useRef,
+	useEffect,
 	type ReactNode,
 	type Dispatch,
 	type SetStateAction
@@ -41,29 +43,13 @@ const ResumeBuilderContext = createContext(initialContext);
 export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 	const { children } = props;
 
+	const initialLoadComplete = useRef(false);
 	const [selected, setSelected] = useState(initialContext.selected);
-	const detailsQuery = useFetchDetails({
-		onSuccess: (details) => setSelected(current => ({ ...current, details })) }
-	);
-	const projectsQuery = useFetchProjects({
-		onSuccess: (projects) => setSelected(
-			current => ({ ...current, projects: projects.slice(0, 2) }
-		))
-	});
-	const experiencesQuery = useFetchExperiences({
-		onSuccess: (experiences) => {
-			experiences.sort(
-				(a, b) => new Date(b.startDate).valueOf() - new Date(a.startDate).valueOf()
-			);
 
-			setSelected(
-				current => ({ ...current, experiences: experiences.slice(0, 1) }
-			))
-		}
-	});
-	const skillsQuery = useFetchSkills({
-		onSuccess: (skills) => setSelected(current => ({ ...current, skills: skills.slice(0, 6) }))
-	});
+	const detailsQuery = useFetchDetails();
+	const projectsQuery = useFetchProjects();
+	const experiencesQuery = useFetchExperiences();
+	const skillsQuery = useFetchSkills();
 	const tagsQuery = useFetchTags();
 	const queriesMap = {
 		details: detailsQuery,
@@ -96,6 +82,45 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 			}
 		});
 	}
+
+	useEffect(() => {
+		if (detailsQuery.data && !initialLoadComplete.current) {
+			setSelected(current => ({ ...current, details: detailsQuery.data }))
+		}
+	}, [detailsQuery.data]);
+
+	useEffect(() => {
+		if (projectsQuery.data && !initialLoadComplete.current) {
+			let projects = [...projectsQuery.data];
+			setSelected(current => ({ ...current, projects: projects.slice(0, 2) }))
+		}
+	}, [projectsQuery.data]);
+
+	useEffect(() => {
+		if (experiencesQuery.data && !initialLoadComplete.current) {
+			let experiences = [...experiencesQuery.data];
+
+			experiences.sort(
+				(a, b) => new Date(b.startDate).valueOf() - new Date(a.startDate).valueOf()
+			);
+
+			setSelected(
+				current => ({ ...current, experiences: experiences.slice(0, 1) }
+				))
+		}
+	}, [experiencesQuery.data]);
+
+	useEffect(() => {
+		if (skillsQuery.data && !initialLoadComplete.current) {
+			let skills = [...skillsQuery.data];
+
+			setSelected(current => ({ ...current, skills: skills.slice(0, 6) }))
+		}
+	}, [skillsQuery.data]);
+
+	useEffect(() => {
+		if (!isLoading) { initialLoadComplete.current = true; }
+	}, [isLoading]);
 
 	return (
 		<ResumeBuilderContext.Provider value={{

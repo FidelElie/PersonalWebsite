@@ -1,14 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
 import { Skill, SkillSchema } from "../models";
 
 export const fetchSkills = () => Skill.find();
 
-export const useFetchSkills = (
-	config?: { onSuccess?: (data: MergedModelSchema<SkillSchema>[]) => void }
-) => useQuery(["skills"], fetchSkills, config);
+export const useFetchSkills = () => useQuery(["skills"], fetchSkills);
 
 export const useCreateSkills = () => useMutation(
 	async (entries: SkillSchema[]) => {

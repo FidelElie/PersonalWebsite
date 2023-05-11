@@ -1,14 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
 import { Experience, ExperienceSchema } from "../models";
 
 export const fetchExperiences = () => Experience.find();
 
-export const useFetchExperiences = (
-	config?: { onSuccess?: (data: MergedModelSchema<ExperienceSchema>[]) => void }
-) => useQuery(["experiences"], fetchExperiences, config);
+export const useFetchExperiences = () => useQuery(["experiences"], fetchExperiences);
 
 export const useCreateExperiences = () => useMutation(
 	async (entries: ExperienceSchema[]) => {
