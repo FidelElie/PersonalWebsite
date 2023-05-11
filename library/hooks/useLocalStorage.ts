@@ -4,9 +4,9 @@ export const useLocalStorage = <T = JSONParsable>(
 	key: string,
 	initialValue: JSONParsable = null
 ) => {
-	const [storageValue, setStorageValue] = useState<JSONParsable>(initialValue);
+	const [storageValue, setStorageValue] = useState<JSONParsable>();
 
-	const editStorageValue = (value: T) => { setStorageValue(value as JSONParsable); }
+	const editStorageValue = (value: T) => setStorageValue(value as JSONParsable);
 
 	useEffect(() => {
 		if (localStorage) {
@@ -20,7 +20,10 @@ export const useLocalStorage = <T = JSONParsable>(
 		if (storageValue !== undefined) { localStorage.setItem(key, JSON.stringify(storageValue)); }
 	}, [storageValue, key]);
 
-	return [storageValue as T, editStorageValue] as const;
+	return [
+		(storageValue !== undefined ? storageValue : initialValue) as T,
+		editStorageValue
+	] as const;
 }
 
 type JSONPrimitives = string | number | boolean | null;
