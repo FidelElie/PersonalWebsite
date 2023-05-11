@@ -19,11 +19,9 @@
     "@vercel/analytics": "^1.0.0",
     "firebase": "^9.19.1",
     "next": "13.3.0",
-    "next-superjson": "^0.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-viewport-list": "^7.1.1",
-    "superjson": "^1.12.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {

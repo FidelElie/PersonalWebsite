@@ -63,11 +63,13 @@ const Detail = (props: DetailProps) => {
 										<Flex.Row className="items-center text-sm">
 											<Icon name="calendar-line" className="text-lg mr-2" />
 											<Copy.Inline>
-												{education.startDate?.toLocaleDateString()}
+												{ new Date(education.startDate).toLocaleDateString() }
 											</Copy.Inline>
 											<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
 											<Copy.Inline>
-												{education.endDate?.toLocaleDateString() ?? "Present"}
+												<Show if={education.endDate} else="Present">
+													{ endDate => new Date(endDate).toLocaleDateString() }
+												</Show>
 											</Copy.Inline>
 										</Flex.Row>
 									</Flex.Column>

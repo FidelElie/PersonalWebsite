@@ -75,11 +75,13 @@ const ExperienceEntry = (props: ProjectEntryProps) => {
 				<Flex.Row className="items-center text-sm">
 					<Icon name="calendar-line" className="text-lg mr-2 dark:text-white" />
 					<Copy.Inline>
-						{experience.startDate.toLocaleDateString()}
+						{new Date(experience.startDate).toLocaleDateString()}
 					</Copy.Inline>
 					<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
 					<Copy.Inline>
-						{experience.endDate?.toLocaleDateString() ?? "Present"}
+						<Show if={experience.endDate} else="Present">
+							{ endDate => new Date(endDate).toLocaleDateString() }
+						</Show>
 					</Copy.Inline>
 				</Flex.Row>
 			</Box>

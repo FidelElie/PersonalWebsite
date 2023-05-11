@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 
 import { getFirebaseClient } from "./client";
-import { timestampToDate, timestamp } from "./timestamp";
+import { timestamp } from "./timestamp";
 
 export const ModelSchema = z.object({
 	id: z.string(),
