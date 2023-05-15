@@ -8,7 +8,7 @@
 	@apply bg-gray-700 border-gray-700;
 }
 
-.CurriculumVitaeContainerTrack {}
+.CurriculumVitaeContainerTrack { position: absolute; }
 
 .CurriculumVitaeContainer {
 	@apply w-full h-full overflow-hidden relative transition-all;

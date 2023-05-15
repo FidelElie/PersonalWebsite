@@ -1,25 +1,32 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { Skill, SkillSchema } from "../models";
+import type { FindConfig } from "@/configs/firebase";
 
-export const fetchSkills = () => Skill.find();
+import { Skill, type SkillSchema } from "../models";
 
-export const useFetchSkills = () => useQuery(["skills"], fetchSkills);
+// READ Skills
+export type FindSkillConfig = FindConfig<SkillSchema>;
 
-export const useCreateSkills = () => useMutation(
-	async (entries: SkillSchema[]) => {
-		return await Skill.create(entries);
-	}
+export const fetchSkills = (config?: FindSkillConfig) => Skill.find(config);
+
+export const useFetchSkills = (config?: FindSkillConfig) => useQuery(
+	["skills", config],
+	() => fetchSkills(config)
 );
 
-export const useEditSkill= () => useMutation(
-	async (project: SkillSchema & { id: string }) => {
-		return await Skill.findByIdAndUpdate(project.id, project);
-	}
-);
+// CREATE Skills
+export const createSkills = (entries: SkillSchema[]) => Skill.create(entries);
 
-export const useDeleteSkill = () => useMutation(
-	async (id: string) => {
-		return await Skill.findByIdAndDelete(id);
-	}
-)
+export const useCreateSkills = () => useMutation(createSkills);
+
+// UPDATE Skill
+export const editSkill = (project: SkillSchema & { id: string }) => {
+	return Skill.findByIdAndUpdate(project.id, project);
+}
+
+export const useEditSkill = () => useMutation(editSkill);
+
+// DELETE Skill
+export const deleteSkill = (id: string) => Skill.findByIdAndDelete(id);
+
+export const useDeleteSkill = () => useMutation(deleteSkill);

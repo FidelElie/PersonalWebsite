@@ -155,7 +155,6 @@ export const Resume = () => {
 			<Box
 				className={styles.CurriculumVitaeContainerTrack}
 				style={{
-					position: "absolute",
 					left: position.left!,
 					top: position.top!,
 					transform: `translate(-50%, -50%) scale(${position.scale})`

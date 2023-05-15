@@ -9,7 +9,13 @@ import {
 	serverTimestamp,
 	updateDoc,
 	getFirestore,
-	setDoc
+	setDoc,
+	query,
+	orderBy,
+	limit,
+	where,
+	type CollectionReference,
+	getCountFromServer,
 } from "firebase/firestore";
 
 import { getFirebaseClient } from "./client";
@@ -47,8 +53,8 @@ export class Model<Schema extends AnyZodObject>{
 		})));
 	}
 
-	find = async () => {
-		const collection = this.getCollectionReference();
+	find = async (config: FindConfig<z.infer<Schema>> = {}) => {
+		const collection = this.createQueryObject(this.getCollectionReference(), config);
 
 		const snapshot = await getDocs(collection);
 
@@ -58,6 +64,19 @@ export class Model<Schema extends AnyZodObject>{
 		);
 
 		return validatedDocuments;
+	}
+
+	findOne = async (config: FindConfig<z.infer<Schema>> = {}) => {
+		const collection = this.createQueryObject(this.getCollectionReference(), config);
+
+		const snapshot = await getDocs(collection);
+
+		if (snapshot.docs.length === 0) {
+			return null;
+		} else {
+			const firstResult = snapshot.docs[0];
+			return this.modelIncomingData(firstResult.id, firstResult.data())
+		}
 	}
 
 	findById = async (id: string) => {
@@ -77,10 +96,38 @@ export class Model<Schema extends AnyZodObject>{
 		await updateDoc(this.getDocumentReference(id), {
 			...this.cleanEntry(data),
 			updatedAt: serverTimestamp()
-		})
+		});
 	}
 
 	findByIdAndDelete = async (id: string) => { await deleteDoc(this.getDocumentReference(id)); }
+
+	updateMany = async (
+		config: FindConfig<z.infer<Schema>> = {},
+		data: Partial<MergedModelSchema<z.infer<Schema>>>
+	) => {
+		const documents = await this.find(config);
+
+		await Promise.all(documents.map(document => updateDoc(
+			this.getDocumentReference(document.id), {
+				...this.cleanEntry(data),
+				updatedAt: serverTimestamp()
+			}
+		)));
+	}
+
+	deleteMany = async (config: FindConfig<z.infer<Schema>> = {}) => {
+		const documents = await this.find(config);
+
+		await Promise.all(documents.map(document => deleteDoc(this.getDocumentReference(document.id))));
+	}
+
+	countDocuments = async (config: FindConfig<z.infer<Schema>> = {}) => {
+		const collection = this.createQueryObject(this.getCollectionReference(), config);
+
+		const snapshot = await getCountFromServer(collection);
+
+		return snapshot.data().count;
+	}
 
 	// Utility methods
 	private modelIncomingData = (id: string, data: DocumentData) => {
@@ -104,8 +151,61 @@ export class Model<Schema extends AnyZodObject>{
 	private getDocumentReference = (id?: string) => {
 		return id ? doc(this.db, this.name, id) : doc(this.db, this.name);
 	}
+
+	private createQueryObject = (
+		collection: CollectionReference<DocumentData>,
+		config: FindConfig<z.infer<Schema>> = {}
+	) => {
+		const { where: _where, order, limit: _limit } = config;
+
+		if (_where || order || _limit) {
+			const configs = [
+				_where ? this.parseWhereConfig(_where): [],
+				order ? this.parseOrderConfig(order)  : [],
+				_limit ? limit(_limit) : []
+			].flat()
+
+			return query(collection, ...configs);
+		} else {
+			return collection;
+		}
+	}
+
+	parseWhereConfig = (_where: NonNullable<FindConfig<z.infer<Schema>>["where"]>) => {
+		return _where.map(array => {
+			const [key, operation, value] = array;
+
+			return where(key.toString(), operation, value);
+		})
+	}
+
+	parseOrderConfig = (order: NonNullable<FindConfig<z.infer<Schema>>["order"]>) => {
+		const ordersToParse = typeof order === "string" ?
+			order.split(" ").map(order => [order.trim()]) :
+			Object.entries(order);
+
+		return ordersToParse.map((order) => {
+			const [key, direction] = order;
+
+			if (!direction || (direction !== "asc" && direction !== "desc")) { return orderBy(key); }
+
+			return orderBy(key, direction);
+		});
+	}
 }
 
 export const registerModel = <Schema extends AnyZodObject>(name: string, schema: Schema) => {
 	return new Model<Schema>(name, schema);
+}
+
+type WhereOperations = "==" | "!=" | "<" | ">" | ">=" | "<=" | "array-contains" | "array-contains-any";
+type ArrayOperations =  | "in" | "not-in";
+
+export interface FindConfig<Schema> {
+	where?: (
+		readonly [keyof Schema, WhereOperations, Schema[keyof Schema]] |
+		readonly [keyof Schema, ArrayOperations, (Schema[keyof Schema])[]]
+	)[];
+	order?: string | { [key in keyof Partial<Schema>]: "asc" | "desc" };
+	limit?: number;
 }

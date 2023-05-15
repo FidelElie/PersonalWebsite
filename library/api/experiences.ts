@@ -1,25 +1,35 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { Experience, ExperienceSchema } from "../models";
+import type { FindConfig } from "@/configs/firebase";
 
-export const fetchExperiences = () => Experience.find();
+import { Experience, type ExperienceSchema } from "../models";
 
-export const useFetchExperiences = () => useQuery(["experiences"], fetchExperiences);
+// READ Experiences
+export type FindExperienceConfig = Omit<FindConfig<ExperienceSchema>, "order">;
 
-export const useCreateExperiences = () => useMutation(
-	async (entries: ExperienceSchema[]) => {
-		return await Experience.create(entries);
-	}
+export const fetchExperiences = (config: FindExperienceConfig = {}) => Experience.find({
+	...config,
+	order: { startDate: "desc" }
+});
+
+export const useFetchExperiences = (config?: FindExperienceConfig) => useQuery(
+	["experiences", config],
+	() => fetchExperiences(config)
 );
 
-export const useEditExperience = () => useMutation(
-	async (project: ExperienceSchema & { id: string }) => {
-		return await Experience.findByIdAndUpdate(project.id, project);
-	}
-);
+// CREATE Experiences
+const createExperiences = (entries: ExperienceSchema[]) => Experience.create(entries);
 
-export const useDeleteExperience = () => useMutation(
-	async (id: string) => {
-		return await Experience.findByIdAndDelete(id);
-	}
-)
+export const useCreateExperiences = () => useMutation(createExperiences);
+
+// UPDATE Experience
+export const editExperience = (project: ExperienceSchema & { id: string }) => {
+	return Experience.findByIdAndUpdate(project.id, project);
+}
+
+export const useEditExperience = () => useMutation(editExperience);
+
+// DELETE Experience
+export const deleteExperience = (id: string) => Experience.findByIdAndDelete(id);
+
+export const useDeleteExperience = () => useMutation(deleteExperience);

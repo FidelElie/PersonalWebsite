@@ -1,31 +1,54 @@
+import type { AnyZodObject } from "zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { Tag, TagSchema } from "../models";
+import type { FindConfig, Model } from "@/configs/firebase";
 
-export const fetchTags = () => Tag.find();
+import { Tag, Project, Experience, Skill, type TagSchema } from "../models";
 
-export const useFetchTags = () => useQuery(["tags"], fetchTags);
+// READ Tags
+export type FindTagConfig = FindConfig<TagSchema>;
 
-export const useCreateTags = () => useMutation(
-	async (entries: TagSchema[]) => {
-		return await Tag.create(entries)
-	}
+export const fetchTags = (config?: FindTagConfig) => Tag.find(config);
+
+export const useFetchTags = (config?: FindTagConfig) => useQuery(
+	["tags", config],
+	() => fetchTags(config)
 );
 
-export const useEditTag = () => useMutation(
-	async (tag: TagSchema & { id: string }) => {
-		return await Tag.findByIdAndUpdate(tag.id, tag);
-	}
-);
+// CREATE Tags
+export const createTags = (entries: TagSchema[]) => Tag.create(entries);
 
-export const useDeleteTag = () => useMutation(
-	async (id: string) => {
-		return await Tag.findByIdAndDelete(id);
+export const useCreateTags = () => useMutation(createTags);
+
+// UPDATE Tags
+export const editTag = (tag: TagSchema & { id: string }) => Tag.findByIdAndUpdate(tag.id, tag);
+
+export const useEditTag = () => useMutation(editTag);
+
+// DELETE Tags
+const deleteTag = async (id: string) => {
+	const amendCorrespondingReference = async <T extends AnyZodObject>(resource: Model<T>) => {
+		const documents = await resource.find({ where: [["tags", "array-contains", id as any]]});
+
+		await Promise.all(documents.map(document => {
+			const tags = [...document.tags];
+
+			const amendedTags = tags.filter(tag => tag.id !== id);
+
+			return resource.findByIdAndUpdate(document.id, { tags: amendedTags } as any);
+		}));
 	}
-);
+
+	await Promise.all([
+		amendCorrespondingReference(Project),
+		amendCorrespondingReference(Experience),
+		amendCorrespondingReference(Skill),
+		Tag.findByIdAndDelete(id)
+	]);
+}
+
+export const useDeleteTag = () => useMutation((id: string) => deleteTag(id));
 
 export const useDeleteTags = () => useMutation(
-	async (ids: string[]) => {
-		await Promise.all(ids.map(id => Tag.findByIdAndDelete(id)));
-	}
-)
+	(ids: string[]) => Promise.all(ids.map(id => deleteTag(id)))
+);

@@ -25,7 +25,7 @@ export const Sidebar = () => {
 		>
 			<Flex.Column
 				as="aside"
-				className="w-3/4 h-full p-3  border-r bg-white absolute top-0 left-0 z-20 md:p-5 md:w-96"
+				className="w-3/4 h-full p-3  border-r bg-white absolute top-0 left-0 z-20 md:p-5 md:w-96 dark:bg-gray-700 dark:border-gray-500"
 			>
 				<Grid className="gap-2 grid-cols-2">
 					<SidebarOption icon="tools-line" text="Projects" onClick={() => setView("projects")}/>

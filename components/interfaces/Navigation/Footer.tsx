@@ -11,11 +11,12 @@ export const Footer = (props: FooterProps) => {
     <Flex.Column
       as="footer"
       className={clc(
-        "w-full no-print border-t px-5 py-2.5 bg-white dark:bg-gray-700 dark:border-white dark:border-0 md:px-0",
+        "w-full no-print border-t px-5 py-2.5 bg-white",
+        "dark:bg-gray-700 dark:border-gray-500",
         className
       )}
     >
-      <Container className="mx-auto max-w-4xl">
+      <Container className="mx-auto lg:max-w-7xl">
         <Flex.Row className="w-full items-center justify-between">
           <Flex.Row className="items-center">
             <Box className="w-3 h-3 mr-2 rounded-full bg-primary"></Box>

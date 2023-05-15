@@ -1,25 +1,32 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { Detail, DetailSchema } from "../models";
+import type { FindConfig } from "@/configs/firebase";
 
-export const fetchDetails = () => Detail.find()
+import { Detail, type DetailSchema } from "../models";
 
-export const useFetchDetails = () => useQuery(["details"], fetchDetails);
+// READ Details
+export type FindDetailConfig = FindConfig<DetailSchema>;
 
-export const useCreateDetails = () => useMutation(
-	async (details: DetailSchema[]) => {
-		await Detail.create(details);
-	}
+export const fetchDetails = (config?: FindDetailConfig) => Detail.find(config)
+
+export const useFetchDetails = (config?: FindDetailConfig) => useQuery(
+	["details", config],
+	() => fetchDetails(config)
 );
 
-export const useEditDetail = () => useMutation(
-	async (detail: DetailSchema & { id: string }) => {
-		await Detail.findByIdAndUpdate(detail.id, detail);
-	}
-);
+// CREATE Details
+export const createDetails = (details: DetailSchema[]) => Detail.create(details);
 
-export const useDeleteDetail = () => useMutation(
-	async (id: string) => {
-		await Detail.findByIdAndDelete(id);
-	}
-)
+export const useCreateDetails = () => useMutation(createDetails);
+
+// UPDATE Detail
+export const editDetail = (detail: DetailSchema & { id: string }) => {
+	return Detail.findByIdAndUpdate(detail.id, detail);
+}
+
+export const useEditDetail = () => useMutation(editDetail);
+
+// DELETE Detail
+export const deleteDetail = (id: string) => Detail.findByIdAndDelete(id);
+
+export const useDeleteDetail = () => useMutation(deleteDetail);

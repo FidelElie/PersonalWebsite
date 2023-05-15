@@ -1,25 +1,32 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import type { FindConfig } from "@/configs/firebase";
+
 import { Project, ProjectSchema } from "../models";
 
-export const fetchProjects = () => Project.find();
+// READ Projects
+export type FetchProjectConfig = FindConfig<ProjectSchema>;
 
-export const useFetchProjects = () => useQuery(["projects"], fetchProjects);
+export const fetchProjects = (config?: FetchProjectConfig) => Project.find(config);
 
-export const useCreateProjects = () => useMutation(
-	async (entries: ProjectSchema[]) => {
-		return	await Project.create(entries);
-	}
+export const useFetchProjects = (config?: FetchProjectConfig) => useQuery(
+	["projects", config],
+	() => fetchProjects(config)
 );
 
-export const useEditProject = () => useMutation(
-	async (project: ProjectSchema & { id: string }) => {
-		return await Project.findByIdAndUpdate(project.id, project);
-	}
-);
+// CREATE Projects
+export const createProjects = (entries: ProjectSchema[]) => Project.create(entries);
 
-export const useDeleteProject = () => useMutation(
-	async (id: string) => {
-		return await Project.findByIdAndDelete(id);
-	}
-)
+export const useCreateProjects = () => useMutation(createProjects);
+
+// UPDATE Project
+export const editProject = (project: ProjectSchema & { id: string }) => {
+	return Project.findByIdAndUpdate(project.id, project);
+}
+
+export const useEditProject = () => useMutation(editProject);
+
+// DELETE Project
+export const deleteProject = (id: string) => Project.findByIdAndDelete(id);
+
+export const useDeleteProject = () => useMutation(deleteProject);
