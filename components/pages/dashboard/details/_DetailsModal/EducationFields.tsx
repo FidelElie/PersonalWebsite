@@ -10,7 +10,7 @@ export const EducationFields = (props: EducationFieldsProps) => {
 	if (data.type !== "education") { return null; }
 
 	const updateHasEndDate = (checked: boolean) => {
-		editDataFields({ endDate: !checked ? new Date() : null });
+		editDataFields({ endDate: !checked ? new Date().toISOString() : null });
 	}
 
 	return (
@@ -35,7 +35,7 @@ export const EducationFields = (props: EducationFieldsProps) => {
 				id="start-date"
 				label="Start Date"
 				value={data.startDate}
-				onChange={date => editDataFields({ startDate: date })}
+				onChange={date => editDataFields({ startDate: date.toISOString() })}
 			/>
 			<Flex className="items-center">
 				<Show
@@ -50,7 +50,7 @@ export const EducationFields = (props: EducationFieldsProps) => {
 						id="end-date"
 						label="End Date"
 						value={data.endDate!}
-						onChange={date => editDataFields({ endDate: date })}
+						onChange={date => editDataFields({ endDate: date.toDateString() })}
 					/>
 				</Show>
 				<input

@@ -47,9 +47,9 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 	const [selected, setSelected] = useState(initialContext.selected);
 
 	const detailsQuery = useFetchDetails();
-	const projectsQuery = useFetchProjects();
-	const experiencesQuery = useFetchExperiences();
-	const skillsQuery = useFetchSkills();
+	const projectsQuery = useFetchProjects({ where: [["active", "!=", false]]});
+	const experiencesQuery = useFetchExperiences({ where: [["active", "!=", false]]});
+	const skillsQuery = useFetchSkills({ where: [["active", "!=", false]]});
 	const tagsQuery = useFetchTags();
 	const queriesMap = {
 		details: detailsQuery,

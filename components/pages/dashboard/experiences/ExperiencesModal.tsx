@@ -35,7 +35,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 	);
 
 	const updateHasEndDate = (checked: boolean) => {
-		editFields({ endDate: !checked ? new Date() : null });
+		editFields({ endDate: !checked ? new Date().toISOString() : null });
 	}
 
 	const handleSubmission = async () => {
@@ -93,7 +93,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 						id="start-date"
 						label="Start Date"
 						value={fields.startDate}
-						onChange={date => editFields({ startDate: date })}
+						onChange={date => editFields({ startDate: date.toISOString() })}
 					/>
 					<Flex className="items-center">
 						<Show
@@ -104,7 +104,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 								id="end-date"
 								label="End Date"
 								value={fields.endDate!}
-								onChange={date => editFields({ endDate: date })}
+								onChange={date => editFields({ endDate: date.toISOString() })}
 							/>
 						</Show>
 						<input
@@ -154,9 +154,10 @@ const populateFields = (
 		organisation: experience?.organisation ?? "",
 		description: experience?.description ?? "",
 		link: experience?.link ?? "",
-		startDate: experience?.startDate ?? (new Date()),
+		startDate: experience?.startDate ?? new Date().toISOString(),
 		endDate: experience?.endDate ?? null,
-		tags: experience?.tags ?? []
+		tags: experience?.tags ?? [],
+		active: experience?.active ?? true
 	}
 }
 

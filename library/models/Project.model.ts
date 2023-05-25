@@ -7,7 +7,8 @@ export const ProjectSchema = z.object({
 	description: z.string(),
 	link: z.string().optional(),
 	repo: z.string().optional(),
-	tags: z.array(z.string()).default([])
+	tags: z.array(z.string()).default([]),
+	active: z.boolean().default(false)
 });
 
 export type ProjectSchema = z.infer<typeof ProjectSchema>;

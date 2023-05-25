@@ -125,7 +125,8 @@ const populateFields = (
 		description: project?.description ?? "",
 		link: project?.link ?? "",
 		repo: project?.repo ?? "",
-		tags: project?.tags ?? []
+		tags: project?.tags ?? [],
+		active: project?.active ?? true
 	}
 }
 

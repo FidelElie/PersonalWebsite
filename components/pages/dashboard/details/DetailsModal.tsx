@@ -122,7 +122,7 @@ const populateDataField = (type: DetailSchema["data"]["type"]): DetailSchema["da
 				type: "education",
 				qualification: "",
 				organisation: "",
-				startDate: new Date(),
+				startDate: (new Date()).toISOString(),
 				endDate: null
 			}
 		case "contact":

@@ -118,7 +118,8 @@ const populateFields = (
 		...(skill ? { skill: skill.id } : {}),
 		name: skill?.name ?? "",
 		icon: skill?.icon ?? "bug-2-fill",
-		tags: skill?.tags ?? []
+		tags: skill?.tags ?? [],
+		active: skill?.active ?? true
 	}
 }
 

@@ -37,11 +37,17 @@ export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
 
   await Promise.all([
-    queryClient.prefetchQuery(["tags"], fetchTags),
-    queryClient.prefetchQuery(["skills"], fetchSkills),
-    queryClient.prefetchQuery(["projects"], fetchProjects),
-    queryClient.prefetchQuery(["experiences"], fetchExperiences),
-    queryClient.prefetchQuery(["details"], fetchDetails)
+    queryClient.prefetchQuery(["tags"], () => fetchTags()),
+    queryClient.prefetchQuery(["skills"], () => fetchSkills({ where: [["active", "!=", false]]})),
+    queryClient.prefetchQuery(
+      ["projects"],
+      () => fetchProjects({ where: [["active", "!=", false]]})
+    ),
+    queryClient.prefetchQuery(
+      ["experiences"],
+      () => fetchExperiences({ where: [["active", "!=", false]]})
+    ),
+    queryClient.prefetchQuery(["details"], () => fetchDetails())
   ]);
 
   return {
