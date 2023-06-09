@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { TagSchema } from "@/library/models";
-import { useCreateTags, useEditTag } from "@/library/api";
+import { Tag, TagSchema, TagModel } from "@/library/models";
+import { useCreateTags, useEditTagById } from "@/library/api";
 
 import { Button, Flex, Form, Icon, TextField } from "@/components/core"
-import { MergedModelSchema } from "@/configs/firebase";
 
 export const TagInput = (props: TagInputProps) => {
 	const { tag, onClose } = props;
@@ -14,7 +13,7 @@ export const TagInput = (props: TagInputProps) => {
 	const [fields, setFields] = useState(populateFields(tag));
 
 	const createTags = useCreateTags();
-	const editTag = useEditTag();
+	const editTag = useEditTagById();
 
 	const editFields = (data: Partial<typeof fields>) => setFields(
 		currentFields => ({ ...currentFields, ...data })
@@ -23,9 +22,12 @@ export const TagInput = (props: TagInputProps) => {
 	const handleSubmission = async () => {
 		try {
 			if (!tag) {
-				await createTags.mutateAsync([fields]);
+				await createTags.mutateAsync([Tag.schema.parse(fields)]);
 			} else {
-				await editTag.mutateAsync({ ...fields, id: tag.id })
+				await editTag.mutateAsync({
+					id: tag.id,
+					tag: Tag.schema.parse({ ...tag, ...fields  } )
+				});
 			}
 
 			queryClient.invalidateQueries(["tags"]);
@@ -80,7 +82,7 @@ export const TagInput = (props: TagInputProps) => {
 	)
 }
 
-const populateFields = (tag?: MergedTagSchema | null): MergedTagSchema | TagSchema => {
+const populateFields = (tag?: TagModel | null): TagModel | TagSchema => {
 	return {
 		...(tag ? { id: tag.id } : {}),
 		name: tag?.name ?? "",
@@ -88,9 +90,4 @@ const populateFields = (tag?: MergedTagSchema | null): MergedTagSchema | TagSche
 	}
 }
 
-type MergedTagSchema = MergedModelSchema<TagSchema>;
-
-export interface TagInputProps {
-	tag?: MergedTagSchema,
-	onClose: () => void
-}
+export interface TagInputProps { tag?: TagModel, onClose: () => void }

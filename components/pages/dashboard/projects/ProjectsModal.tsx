@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import type { MergedModelSchema } from "@/configs/firebase";
-
-import { useCreateProjects, useEditProject } from "@/library/api";
-import { ProjectSchema, TagSchema } from "@/library/models";
+import { useCreateProjects, useEditProjectById } from "@/library/api";
+import { ProjectModel, ProjectSchema, TagModel } from "@/library/models";
 
 import {
 	Form,
@@ -25,7 +23,7 @@ export const ProjectsModal = (props: ProjectsModalProps) => {
 
 	const queryClient = useQueryClient();
 	const createProjects = useCreateProjects();
-	const editProject = useEditProject();
+	const editProject = useEditProjectById();
 	const [fields, setFields] = useState(populateFields(project));
 
 
@@ -38,7 +36,7 @@ export const ProjectsModal = (props: ProjectsModalProps) => {
 			if (!project) {
 				await createProjects.mutateAsync([fields]);
 			} else {
-				await editProject.mutateAsync({ ...fields, id: project.id });
+				await editProject.mutateAsync({ id: project.id, project: { ...project, ...fields }});
 			}
 
 			queryClient.invalidateQueries(["projects"]);
@@ -116,9 +114,7 @@ export const ProjectsModal = (props: ProjectsModalProps) => {
 	)
 }
 
-const populateFields = (
-	project?: MergedProjectSchema | null
-): ProjectSchema | MergedProjectSchema => {
+const populateFields = (project?: ProjectModel | null ): ProjectSchema | ProjectModel => {
 	return {
 		...(project ? { project: project.id } : {}),
 		title: project?.title ?? "",
@@ -126,13 +122,12 @@ const populateFields = (
 		link: project?.link ?? "",
 		repo: project?.repo ?? "",
 		tags: project?.tags ?? [],
-		active: project?.active ?? true
+		active: project?.active ?? true,
+		points: project?.points ?? []
 	}
 }
 
-type MergedProjectSchema = MergedModelSchema<ProjectSchema>;
-
 export interface ProjectsModalProps extends ModalConfiguredProps {
-	project?: MergedProjectSchema | null;
-	tags: MergedModelSchema<TagSchema>[];
+	project?: ProjectModel | null;
+	tags: TagModel[];
 }

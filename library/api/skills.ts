@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import type { FindConfig } from "@/configs/firebase";
 
-import { Skill, type SkillSchema } from "../models";
+import { Skill, SkillSchema, SkillModel } from "../models";
 
 // READ Skills
 export type FindSkillConfig = FindConfig<SkillSchema>;
@@ -20,11 +20,13 @@ export const createSkills = (entries: SkillSchema[]) => Skill.create(entries);
 export const useCreateSkills = () => useMutation(createSkills);
 
 // UPDATE Skill
-export const editSkill = (project: SkillSchema & { id: string }) => {
-	return Skill.findByIdAndUpdate(project.id, project);
+export const editSkillById = (
+	{ id, skill }: { id: string, skill: Partial<SkillModel> }
+) => {
+	return Skill.findByIdAndUpdate(id, skill);
 }
 
-export const useEditSkill = () => useMutation(editSkill);
+export const useEditSkillById = () => useMutation(editSkillById);
 
 // DELETE Skill
 export const deleteSkill = (id: string) => Skill.findByIdAndDelete(id);

@@ -1,12 +1,10 @@
-import { MergedModelSchema } from "@/configs/firebase";
-
-import { DetailSchema } from "@/library/models";
+import { DetailModel } from "@/library/models";
 
 import { Copy, Flex, For, Heading } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeProvider";
 
-const narrowToActivities = (details: MergedModelSchema<DetailSchema>[]) => {
+const narrowToActivities = (details: DetailModel[]) => {
 	return details.map(
 		detail => detail.data.type === "activity" ? { ...detail, data: detail.data } : []
 	).flat()

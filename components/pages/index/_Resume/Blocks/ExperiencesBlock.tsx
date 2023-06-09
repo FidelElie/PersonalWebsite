@@ -1,8 +1,7 @@
-import { MergedModelSchema } from "@/configs/firebase";
+import { toTimestamp } from "@/library/utilities";
+import { ExperienceModel, TagModel } from "@/library/models";
 
-import { ExperienceSchema, TagSchema } from "@/library/models";
-
-import { Box, Copy, Flex, For, Heading } from "@/components/core";
+import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeProvider";
 
@@ -10,7 +9,7 @@ export const ExperiencesBlock = () => {
 	const { selected: { experiences }, queries: { tags }, setView } = useResumeBuilder();
 
 	experiences.sort(
-		(a, b) => new Date(b.startDate).valueOf() - new Date(a.startDate).valueOf()
+		(a, b) => toTimestamp(b.startDate).toDate().valueOf() - toTimestamp(a.startDate).toDate().valueOf()
 	);
 
 	return (
@@ -18,14 +17,21 @@ export const ExperiencesBlock = () => {
 			<Heading.Two className="text-primary uppercase">Relevant Work Experience</Heading.Two>
 			<Flex.Column className="space-y-2">
 				<For each={experiences}>
-					{experience => <Experience key={experience.id} experience={experience} tags={tags} />}
+					{	experience => (
+							<ExperiencePoint
+								key={experience.id}
+								experience={experience}
+								tags={tags}
+							/>
+						)
+					}
 				</For>
 			</Flex.Column>
 		</Box>
 	)
 }
 
-const Experience = (props: ProjectProps) => {
+const ExperiencePoint = (props: ProjectProps) => {
 	const { experience, tags } = props;
 
 	const correspondingTags = tags.filter(tag => experience.tags.includes(tag.id));
@@ -36,11 +42,13 @@ const Experience = (props: ProjectProps) => {
 				<Heading.Three className="text-black">{experience.title}</Heading.Three>
 				<Flex.Row className="items-center text-xs text-secondary">
 					<Copy.Inline className="text-black tracking-wide">
-						{new Date(experience.startDate).getFullYear()}
+						{toTimestamp(experience.startDate).toDate().getFullYear()}
 					</Copy.Inline>
 					<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
 					<Copy.Inline className="text-black tracking-wide">
-						{experience.endDate ? new Date(experience.endDate).getFullYear() : "Present"}
+						<Show if={experience.endDate} else="Present">
+							{ endDate => toTimestamp(endDate).toDate().getFullYear() }
+						</Show>
 					</Copy.Inline>
 				</Flex.Row>
 			</Flex.Row>
@@ -58,7 +66,7 @@ const Experience = (props: ProjectProps) => {
 }
 
 interface ProjectProps {
-	experience: MergedModelSchema<ExperienceSchema>,
-	tags: MergedModelSchema<TagSchema>[]
+	experience: ExperienceModel;
+	tags: TagModel[];
 }
 

@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 
-import type { MergedModelSchema } from "@/configs/firebase";
-
-import { ProjectSchema } from "@/library/models";
+import { ProjectModel } from "@/library/models";
 
 import {
 	Box,
@@ -18,7 +16,6 @@ import {
 } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeProvider";
-
 
 export const SidebarProjects = () => {
 	const { selected, queries } = useResumeBuilder();
@@ -87,6 +84,6 @@ const ProjectEntry = (props: ProjectEntryProps) => {
 }
 
 interface ProjectEntryProps {
-	project: MergedModelSchema<ProjectSchema>;
+	project: ProjectModel;
 	selected: string[];
 }

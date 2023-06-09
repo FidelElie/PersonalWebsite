@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { registerModel } from "@/configs/firebase";
 
-export const UserSchema = z.object({
+const UserSchema = z.object({
 	forename: z.string().optional(),
 	surname: z.string().optional(),
 	email: z.string().email(),
@@ -11,6 +11,7 @@ export const UserSchema = z.object({
 	role: z.enum(["admin", "editor", "member"])
 });
 
-export type UserSchema = z.infer<typeof UserSchema>;
-
 export const User = registerModel("users", UserSchema);
+
+export type UserSchema = z.infer<typeof User.schema>;
+export type UserModel = z.infer<typeof User.model>

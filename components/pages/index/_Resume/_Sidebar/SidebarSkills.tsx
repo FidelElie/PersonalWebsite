@@ -1,10 +1,8 @@
 import { useMemo } from "react";
 
-import { MergedModelSchema } from "@/configs/firebase";
+import { SkillModel } from "@/library/models";
 
-import { SkillSchema } from "@/library/models";
-
-import { Box, Copy, Flex, For, Heading, Icon, Toggle } from "@/components/core";
+import { Copy, Flex, For, Heading, Icon, Toggle } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeProvider";
 
@@ -26,7 +24,7 @@ export const SidebarSkills = () => {
 }
 
 const SkillEntry = (props: ProjectEntryProps) => {
-	const { skill, selected} = props;
+	const { skill, selected } = props;
 
 	const { queries: { tags }, toggleSelected } = useResumeBuilder();
 
@@ -56,7 +54,7 @@ const SkillEntry = (props: ProjectEntryProps) => {
 }
 
 interface ProjectEntryProps {
-	skill: MergedModelSchema<SkillSchema>;
-	selected: string[]
+	skill: SkillModel;
+	selected: string[];
 }
 

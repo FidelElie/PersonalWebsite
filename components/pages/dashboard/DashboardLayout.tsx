@@ -107,22 +107,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
 								className="flex items-center py-2.5 px-2 w-full"
 								onClick={() => logoutUser.mutate()}
 							>
-								<Flex.Row
-									className="flex-shrink-0 w-10 h-10 justify-center items-center rounded-full bg-blue-500 mr-2"
-								>
-									<Icon
-										name="user-3-line"
-										className="text-2xl text-white dark:text-gray-100"
-									/>
-								</Flex.Row>
-								<Flex className="flex-col justify-start">
-									<Copy className="text-sm text-left uppercase tracking-tight">
-										{user?.forename} {user?.surname}
-									</Copy>
-									<Copy className="text-blue-500 tracking-tight font-light no-underline text-xs">
-										{user?.email}
-									</Copy>
-								</Flex>
+								<Icon name="logout-box-fill" className="text-3xl text-primary mr-2"/>
+								<Copy className="">Logout</Copy>
 							</button>
 						</Flex.Column>
 					</Flex.Column>

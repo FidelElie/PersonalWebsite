@@ -3,7 +3,6 @@ import "./_app.css";
 import { useRef } from "react";
 import { Hydrate, QueryClient, QueryClientConfig, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Analytics } from "@vercel/analytics/react";
 
 import { getFirebaseClient } from "@/configs/firebase/client";
 
@@ -35,7 +34,6 @@ const App = (props: ExtendedAppProps) => {
           <AuthProvider>
             <ThemeProvider>
               <ComponentRouter {...props}/>
-              <Analytics/>
             </ThemeProvider>
           </AuthProvider>
         </FirebaseProvider>

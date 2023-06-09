@@ -1,9 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 
 import { useDeleteDetail } from "@/library/api";
-import { DetailSchema } from "@/library/models";
-
-import { MergedModelSchema } from "@/configs/firebase";
+import {  DetailModel } from "@/library/models";
 
 import { Button, Copy, Divider, Flex, Modal, type ModalConfiguredProps } from "@/components/core";
 
@@ -47,6 +45,4 @@ export const DeleteDetailsModal = (props: DeleteDetailsModalProps) => {
 	)
 }
 
-interface DeleteDetailsModalProps extends ModalConfiguredProps {
-	detail: MergedModelSchema<DetailSchema>;
-}
+interface DeleteDetailsModalProps extends ModalConfiguredProps { detail: DetailModel; }

@@ -1,9 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 
 import { useDeleteProject } from "@/library/api";
-import { ProjectSchema } from "@/library/models";
-
-import { MergedModelSchema } from "@/configs/firebase";
+import type { ProjectModel } from "@/library/models";
 
 import { Button, Copy, Divider, Flex, Modal, type ModalConfiguredProps } from "@/components/core";
 
@@ -47,6 +45,4 @@ export const DeleteProjectsModal = (props: DeleteProjectsModalProps) => {
 	)
 }
 
-interface DeleteProjectsModalProps extends ModalConfiguredProps {
-	project: MergedModelSchema<ProjectSchema>;
-}
+interface DeleteProjectsModalProps extends ModalConfiguredProps { project: ProjectModel; }

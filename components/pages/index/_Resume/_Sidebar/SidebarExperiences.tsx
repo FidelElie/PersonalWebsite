@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 
-import type { MergedModelSchema } from "@/configs/firebase";
-
-import { ExperienceSchema } from "@/library/models";
+import { ExperienceModel } from "@/library/models";
 
 import {
 	Box,
@@ -18,6 +16,7 @@ import {
 } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeProvider";
+import { toTimestamp } from "@/library/utilities";
 
 export const SidebarExperiences = () => {
 	const { queries, selected } = useResumeBuilder();
@@ -75,12 +74,12 @@ const ExperienceEntry = (props: ProjectEntryProps) => {
 				<Flex.Row className="items-center text-sm">
 					<Icon name="calendar-line" className="text-lg mr-2 dark:text-white" />
 					<Copy.Inline>
-						{new Date(experience.startDate).toLocaleDateString()}
+						{toTimestamp(experience.startDate).toDate().toLocaleDateString()}
 					</Copy.Inline>
 					<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
 					<Copy.Inline>
 						<Show if={experience.endDate} else="Present">
-							{ endDate => new Date(endDate).toLocaleDateString() }
+							{ endDate => toTimestamp(endDate).toDate().toLocaleDateString() }
 						</Show>
 					</Copy.Inline>
 				</Flex.Row>
@@ -95,6 +94,6 @@ const ExperienceEntry = (props: ProjectEntryProps) => {
 }
 
 interface ProjectEntryProps {
-	experience: MergedModelSchema<ExperienceSchema>,
+	experience: ExperienceModel,
 	selected: string[]
 }

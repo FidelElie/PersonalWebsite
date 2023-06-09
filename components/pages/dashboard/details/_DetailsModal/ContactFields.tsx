@@ -1,4 +1,4 @@
-import { ContactMediums } from "@/library/models";
+import { CONTACT_MEDIUMS } from "@/library/models";
 
 import type { DetailsFormFieldsInterface } from "../DetailsModal.data";
 
@@ -15,7 +15,7 @@ export const ContactFields = (props: DetailsFormContactFieldsProps) => {
 		<>
 			<Select
 				value={data.medium}
-				options={ContactMediums}
+				options={CONTACT_MEDIUMS}
 				onChange={medium => editDataFields({ medium })}
 				valueDisplay={value => (<Copy.Inline className="capitalize">{value}</Copy.Inline>)}
 				optionDisplay={option => (

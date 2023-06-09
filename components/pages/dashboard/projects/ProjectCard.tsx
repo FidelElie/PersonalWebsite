@@ -1,14 +1,25 @@
-import { MergedModelSchema } from "@/configs/firebase";
-import { ProjectSchema, TagSchema } from "@/library/models";
+import { useQueryClient } from "@tanstack/react-query";
 
-import { Card, Copy, Divider, Flex, Heading, Icon, Link, Show } from "@/components/core";
+import { clc } from "@/library/utilities";
+import { useEditProjectById } from "@/library/api";
+import { ProjectModel, TagModel } from "@/library/models";
+
+import { Card, Copy, Divider, Flex, Heading, Icon, Link, Show, Toggle } from "@/components/core";
 import { TagsDisplay } from "@/components/interfaces";
 
 export const ProjectCard = (props: ProjectCardProps) => {
 	const { project, tags, onEdit, onDelete } = props;
 
+	const queryClient = useQueryClient();
+	const editProject = useEditProjectById();
+
+	const handleActiveToggle = async (checked: boolean) => {
+		await editProject.mutateAsync({ id: project.id, project: { active: checked }});
+		queryClient.invalidateQueries(["projects"]);
+	}
+
 	return (
-		<Card className="group p-3">
+		<Card className={clc("group p-3 transition-all", !project.active && "opacity-50")}>
 			<Flex
 				className="flex-col-reverse mb-2 md:items-center md:mb-0 md:justify-between md:flex-row"
 			>
@@ -26,6 +37,12 @@ export const ProjectCard = (props: ProjectCardProps) => {
 					>
 						<Icon name="delete-bin-line" className="text-lg dark:text-white" />
 					</button>
+					<Toggle
+						label="Active"
+						className="h-6 w-10"
+						checked={project.active}
+						onChange={handleActiveToggle}
+					/>
 				</Flex.Row>
 			</Flex>
 			<Show if={project.link}>
@@ -53,11 +70,9 @@ export const ProjectCard = (props: ProjectCardProps) => {
 	)
 }
 
-type MergedProjectSchema = MergedModelSchema<ProjectSchema>;
-
 export interface ProjectCardProps {
-	project: MergedProjectSchema;
-	tags: MergedModelSchema<TagSchema>[];
-	onEdit: (project: MergedProjectSchema) => void;
-	onDelete: (project: MergedProjectSchema) => void;
+	project: ProjectModel;
+	tags: TagModel[];
+	onEdit: (project: ProjectModel) => void;
+	onDelete: (project: ProjectModel) => void;
 }

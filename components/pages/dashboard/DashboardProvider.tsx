@@ -14,8 +14,6 @@ export const DashboardProvider = (props: DashboardProviderProps) => {
 
 	const [showSidebar, setShowSidebar] = useLocalStorage<boolean>(SIDEBAR_STORAGE_KEY, false);
 
-	console.log(showSidebar);
-
 	return (
 		<DashboardContext.Provider value={{ showSidebar, setShowSidebar }}>
 			{ children }

@@ -1,9 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 
 import { useDeleteSkill } from "@/library/api";
-import { SkillSchema } from "@/library/models";
-
-import { MergedModelSchema } from "@/configs/firebase";
+import { SkillModel } from "@/library/models";
 
 import { Button, Copy, Divider, Flex, Modal, type ModalConfiguredProps } from "@/components/core";
 
@@ -48,5 +46,5 @@ export const DeleteSkillsModal = (props: DeleteProjectsModalProps) => {
 }
 
 interface DeleteProjectsModalProps extends ModalConfiguredProps {
-	skill: MergedModelSchema<SkillSchema>;
+	skill: SkillModel;
 }

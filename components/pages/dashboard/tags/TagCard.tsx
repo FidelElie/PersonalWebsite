@@ -1,9 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { MergedModelSchema } from "@/configs/firebase"
+import { TagModel } from "@/library/models";
 
 import { clc } from "@/library/utilities";
-import { TagSchema } from "@/library/models"
 
 import { Flex, Show, Heading, Icon, Box, Link } from "@/components/core";
 import { TagInput } from "./TagInput";
@@ -68,7 +67,7 @@ export const TagCard = (props: TagCardProps) => {
 }
 
 export interface TagCardProps {
-	tag: MergedModelSchema<TagSchema>;
+	tag: TagModel;
 	selected?: string[] | null;
 	setSelected: Dispatch<SetStateAction<string[] | null>>;
 }

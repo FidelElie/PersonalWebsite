@@ -1,6 +1,4 @@
-import { MergedModelSchema } from "@/configs/firebase";
-
-import { ProjectSchema, TagSchema } from "@/library/models";
+import type { ProjectModel, TagModel } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 
@@ -17,14 +15,14 @@ export const ProjectsBlock = () => {
 			<Heading.Two className="text-primary uppercase">Notable Projects</Heading.Two>
 			<Flex.Column className="space-y-2">
 				<For each={projects}>
-					{project => <Project key={project.id} project={project} tags={tags} />}
+					{project => <ProjectPoint key={project.id} project={project} tags={tags} />}
 				</For>
 			</Flex.Column>
 		</Box>
 	)
 }
 
-const Project = (props: ProjectProps) => {
+const ProjectPoint = (props: ProjectProps) => {
 	const { project, tags } = props;
 
 	const correspondingTags = tags.filter(tag => project.tags.includes(tag.id));
@@ -48,7 +46,7 @@ const Project = (props: ProjectProps) => {
 }
 
 interface ProjectProps {
-	project: MergedModelSchema<ProjectSchema>,
-	tags: MergedModelSchema<TagSchema>[]
+	project: ProjectModel
+	tags: TagModel[]
 }
 

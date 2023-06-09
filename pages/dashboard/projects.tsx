@@ -1,9 +1,7 @@
 import { useState } from "react";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
 import { useFetchProjects, useFetchTags } from "@/library/api";
-import { ProjectSchema } from "@/library/models";
+import { ProjectModel } from "@/library/models";
 import type { ExtendedNextPage } from "@/library/types";
 
 import { Button, Flex, For, Icon, Copy } from "@/components/core";
@@ -21,15 +19,15 @@ const DashboardProjectsPage: ExtendedNextPage = () => {
 	const tagsQuery = useFetchTags();
 
 	const [modal, setModal] = useState<string | null>(null);
-	const [selected, setSelected] = useState<MergedModelSchema<ProjectSchema> | null>(null);
+	const [selected, setSelected] = useState<ProjectModel | null>(null);
 
-	const startEditing = (detail: MergedModelSchema<ProjectSchema>) => {
-		setSelected(detail);
+	const startEditing = (project: ProjectModel) => {
+		setSelected(project);
 		setModal("projects")
 	}
 
-	const startDeletion = (detail: MergedModelSchema<ProjectSchema>) => {
-		setSelected(detail);
+	const startDeletion = (project: ProjectModel) => {
+		setSelected(project);
 		setModal("delete-project");
 	}
 

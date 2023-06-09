@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { Timestamp } from "firebase/firestore";
 
-import type { MergedModelSchema } from "@/configs/firebase";
-
-import { useCreateExperiences, useEditExperience } from "@/library/api";
-import { ExperienceSchema, TagSchema } from "@/library/models";
+import { useCreateExperiences, useEditExperienceById } from "@/library/api";
+import { ExperienceSchema, ExperienceModel, TagModel } from "@/library/models";
+import { toTimestamp } from "@/library/utilities";
 
 import {
 	Form,
@@ -16,9 +16,9 @@ import {
 	DateField,
 	Show,
 	Heading,
-	type ModalConfiguredProps,
 	Divider,
-	Copy
+	Copy,
+	type ModalConfiguredProps
 } from "@/components/core";
 import { TagsSelector } from "@/components/interfaces";
 
@@ -27,7 +27,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 
 	const queryClient = useQueryClient();
 	const createExperiences = useCreateExperiences();
-	const editExperience = useEditExperience();
+	const editExperience = useEditExperienceById();
 	const [fields, setFields] = useState(populateFields(experience));
 
 	const editFields = (data: Partial<ExperienceSchema>) => setFields(
@@ -35,7 +35,7 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 	);
 
 	const updateHasEndDate = (checked: boolean) => {
-		editFields({ endDate: !checked ? new Date().toISOString() : null });
+		editFields({ endDate: !checked ? Timestamp.fromDate(new Date()) : null });
 	}
 
 	const handleSubmission = async () => {
@@ -43,7 +43,10 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 			if (!experience) {
 				await createExperiences.mutateAsync([fields]);
 			} else {
-				await editExperience.mutateAsync({ ...fields, id: experience.id });
+				await editExperience.mutateAsync({
+					id: experience.id,
+					experience: { ...experience, ...fields }
+				});
 			}
 
 			queryClient.invalidateQueries(["experiences"]);
@@ -92,20 +95,25 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 					<DateField
 						id="start-date"
 						label="Start Date"
-						value={fields.startDate}
-						onChange={date => editFields({ startDate: date.toISOString() })}
+						value={toTimestamp(fields.startDate).toDate()}
+						onChange={date => editFields({ startDate: Timestamp.fromDate(date) })}
 					/>
 					<Flex className="items-center">
 						<Show
 							if={fields.endDate}
 							else={<Copy.Label htmlFor="present">Experience until present</Copy.Label>}
 						>
-							<DateField
-								id="end-date"
-								label="End Date"
-								value={fields.endDate!}
-								onChange={date => editFields({ endDate: date.toISOString() })}
-							/>
+							{
+								endDate => (
+									<DateField
+										id="end-date"
+										label="End Date"
+										value={toTimestamp(endDate).toDate()}
+										onChange={date => editFields({ endDate: Timestamp.fromDate(date) })}
+									/>
+								)
+							}
+
 						</Show>
 						<input
 							id="present"
@@ -146,24 +154,23 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 }
 
 const populateFields = (
-	experience?: MergedExperienceSchema | null
-): ExperienceSchema | MergedExperienceSchema => {
+	experience?: ExperienceModel | null
+): ExperienceSchema | ExperienceModel => {
 	return {
 		...(experience ? { experience: experience.id } : {}),
 		title: experience?.title ?? "",
 		organisation: experience?.organisation ?? "",
 		description: experience?.description ?? "",
 		link: experience?.link ?? "",
-		startDate: experience?.startDate ?? new Date().toISOString(),
+		startDate: experience?.startDate ?? Timestamp.fromDate(new Date()),
 		endDate: experience?.endDate ?? null,
 		tags: experience?.tags ?? [],
-		active: experience?.active ?? true
+		active: experience?.active ?? true,
+		points: experience?.points ?? []
 	}
 }
 
-type MergedExperienceSchema = MergedModelSchema<ExperienceSchema>;
-
 export interface ExperiencesModalProps extends ModalConfiguredProps {
-	experience?: MergedExperienceSchema | null;
-	tags: MergedModelSchema<TagSchema>[];
+	experience?: ExperienceModel | null;
+	tags: TagModel[];
 }

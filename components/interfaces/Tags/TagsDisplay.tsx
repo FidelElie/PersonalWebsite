@@ -1,6 +1,5 @@
 import { clc } from "@/library/utilities";
-import { TagSchema } from "@/library/models";
-import { MergedModelSchema } from "@/configs/firebase";
+import type { TagModel } from "@/library/models";
 
 import { Box, Card, Copy, Flex, For } from "@/components/core";
 
@@ -26,8 +25,4 @@ export const TagsDisplay = (props: TagsDisplayProps) => {
 	)
 }
 
-export interface TagsDisplayProps {
-	className?: string,
-	tagIds: string[];
-	tags: MergedModelSchema<TagSchema>[];
-}
+export interface TagsDisplayProps { className?: string; tagIds: string[]; tags: TagModel[]; }

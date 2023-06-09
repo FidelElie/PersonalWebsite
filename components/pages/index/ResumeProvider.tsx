@@ -9,8 +9,7 @@ import {
 	type SetStateAction
 } from "react";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
+import { toTimestamp } from "@/library/utilities";
 import { useQueryStatuses } from "@/library/hooks";
 import {
 	useFetchDetails,
@@ -19,13 +18,7 @@ import {
 	useFetchTags,
 	useFetchSkills
 } from "@/library/api";
-import {
-	DetailSchema,
-	ExperienceSchema,
-	ProjectSchema,
-	SkillSchema,
-	TagSchema
-} from "@/library/models";
+import { DetailModel, ExperienceModel, ProjectModel, SkillModel, TagModel } from "@/library/models";
 
 const initialContext: ResumeBuilderContextType = {
 	queries: { details: [], projects: [], tags: [], skills: [], experiences: [] },
@@ -101,7 +94,7 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 			let experiences = [...experiencesQuery.data];
 
 			experiences.sort(
-				(a, b) => new Date(b.startDate).valueOf() - new Date(a.startDate).valueOf()
+				(a, b) => toTimestamp(b.startDate).toDate().valueOf() - toTimestamp(a.startDate).toDate().valueOf()
 			);
 
 			setSelected(
@@ -157,11 +150,11 @@ export const useResumeBuilder = () => {
 export type SidebarViews = "projects" | "experiences" | "skills" | "details" | null;
 
 type Queries = {
-	details: MergedModelSchema<DetailSchema>[];
-	projects: MergedModelSchema<ProjectSchema>[];
-	tags: MergedModelSchema<TagSchema>[];
-	skills: MergedModelSchema<SkillSchema>[];
-	experiences: MergedModelSchema<ExperienceSchema>[];
+	details: DetailModel[];
+	projects: ProjectModel[];
+	tags: TagModel[];
+	skills: SkillModel[];
+	experiences: ExperienceModel[];
 }
 
 type Selections = Omit<Queries, "tags">;
@@ -177,6 +170,4 @@ export type ResumeBuilderContextType = {
 	isError: boolean;
 }
 
-export interface ResumeBuilderProps {
-	children: ReactNode;
-}
+export interface ResumeBuilderProps { children: ReactNode; }

@@ -1,6 +1,5 @@
-import { MergedModelSchema } from "@/configs/firebase";
-
-import { DetailSchema, DetailTypes } from "@/library/models";
+import { DetailSchema, DetailModel, DETAIL_TYPES } from "@/library/models";
+import { toTimestamp } from "@/library/utilities";
 
 import { Box, Copy, Flex, For, Heading, Icon, Show } from "@/components/core";
 
@@ -9,9 +8,9 @@ export const DetailSections = (props: DetailsSectionProps) => {
 
 	return (
 		<Box className="space-y-5">
-			<For each={DetailTypes}>
+			<For each={DETAIL_TYPES}>
 				{ detail => (
-					<Detail
+					<DetailPoint
 						key={detail}
 						type={detail}
 						startEditing={startEditing}
@@ -24,7 +23,7 @@ export const DetailSections = (props: DetailsSectionProps) => {
 	)
 }
 
-const Detail = (props: DetailProps) => {
+const DetailPoint = (props: DetailProps) => {
 	const { details, type, startEditing, startDeletion } = props;
 
 	return (
@@ -63,12 +62,12 @@ const Detail = (props: DetailProps) => {
 										<Flex.Row className="items-center text-sm">
 											<Icon name="calendar-line" className="text-lg mr-2" />
 											<Copy.Inline>
-												{ new Date(education.startDate).toLocaleDateString() }
+												{ toTimestamp(education.startDate).toDate().toLocaleDateString() }
 											</Copy.Inline>
 											<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
 											<Copy.Inline>
 												<Show if={education.endDate} else="Present">
-													{ endDate => new Date(endDate).toLocaleDateString() }
+													{ endDate => toTimestamp(endDate).toDate().toLocaleDateString() }
 												</Show>
 											</Copy.Inline>
 										</Flex.Row>
@@ -97,14 +96,12 @@ const Detail = (props: DetailProps) => {
 	)
 }
 
-type DetailTypes = DetailSchema["data"]["type"];
+type DETAIL_TYPES = DetailSchema["data"]["type"];
 
 export interface DetailsSectionProps {
-	details: MergedModelSchema<DetailSchema>[];
-	startEditing: (detail: MergedModelSchema<DetailSchema>) => void;
-	startDeletion: (detail: MergedModelSchema<DetailSchema>) => void;
+	details: DetailModel[];
+	startEditing: (detail: DetailModel) => void;
+	startDeletion: (detail: DetailModel) => void;
 }
 
-interface DetailProps extends DetailsSectionProps {
-	type: DetailTypes;
-}
+interface DetailProps extends DetailsSectionProps { type: DETAIL_TYPES; }

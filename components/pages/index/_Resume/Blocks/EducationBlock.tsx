@@ -1,12 +1,11 @@
-import { MergedModelSchema } from "@/configs/firebase";
+import { toTimestamp } from "@/library/utilities";
+import type { DetailModel } from "@/library/models";
 
-import { DetailSchema } from "@/library/models";
-
-import { Box, Copy, Flex, For, Heading } from "@/components/core";
+import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeProvider";
 
-const narrowToEducation = (details: MergedModelSchema<DetailSchema>[]) => {
+const narrowToEducation = (details: DetailModel[]) => {
 	return details.map(
 		detail => detail.data.type === "education" ? { ...detail, data: detail.data } : []
 	).flat();
@@ -18,7 +17,7 @@ export const EducationBlock = () => {
 	const educationPoints = narrowToEducation(details);
 
 	educationPoints.sort(
-		(a, b) => new Date(b.data.startDate).valueOf() - new Date(a.data.startDate).valueOf()
+		(a, b) => toTimestamp(b.data.startDate).toDate().valueOf() - toTimestamp(a.data.startDate).toDate().valueOf()
 	);
 
 	return (
@@ -49,11 +48,13 @@ const EducationEntry = (props: EducationEntryProps) => {
 			</Copy>
 			<Flex.Row className="items-center text-xs text-secondary">
 				<Copy.Inline className="text-secondary tracking-wide">
-					{new Date(education.data.startDate).getFullYear()}
+					{ toTimestamp(education.data.startDate).toDate().getFullYear()}
 				</Copy.Inline>
 				<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
 				<Copy.Inline className="text-secondary tracking-wide">
-					{education.data.endDate ? new Date(education.data.endDate).getFullYear() : "Present"}
+					<Show if={education.data.endDate} else="Present">
+						{ endDate => toTimestamp(endDate).toDate().getFullYear() }
+					</Show>
 				</Copy.Inline>
 			</Flex.Row>
 		</Box>

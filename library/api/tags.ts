@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import type { FindConfig, Model } from "@/configs/firebase";
 
-import { Tag, Project, Experience, Skill, type TagSchema } from "../models";
+import { Tag, Project, Experience, Skill, TagSchema, TagModel } from "../models";
 
 // READ Tags
 export type FindTagConfig = FindConfig<TagSchema>;
@@ -21,9 +21,13 @@ export const createTags = (entries: TagSchema[]) => Tag.create(entries);
 export const useCreateTags = () => useMutation(createTags);
 
 // UPDATE Tags
-export const editTag = (tag: TagSchema & { id: string }) => Tag.findByIdAndUpdate(tag.id, tag);
+export const editTagById = (
+	{ id, tag }: { id: string, tag: Partial<TagModel> }
+) => {
+	return Tag.findByIdAndUpdate(id, tag);
+}
 
-export const useEditTag = () => useMutation(editTag);
+export const useEditTagById = () => useMutation(editTagById);
 
 // DELETE Tags
 const deleteTag = async (id: string) => {

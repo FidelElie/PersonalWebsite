@@ -20,11 +20,13 @@ export const createDetails = (details: DetailSchema[]) => Detail.create(details)
 export const useCreateDetails = () => useMutation(createDetails);
 
 // UPDATE Detail
-export const editDetail = (detail: DetailSchema & { id: string }) => {
-	return Detail.findByIdAndUpdate(detail.id, detail);
+export const editDetailById = (
+	{ id, detail }: { id: string, detail: DetailSchema}
+) => {
+	return Detail.findByIdAndUpdate(id, detail);
 }
 
-export const useEditDetail = () => useMutation(editDetail);
+export const useEditDetailById = () => useMutation(editDetailById);
 
 // DELETE Detail
 export const deleteDetail = (id: string) => Detail.findByIdAndDelete(id);

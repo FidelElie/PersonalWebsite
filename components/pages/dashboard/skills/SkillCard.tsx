@@ -1,19 +1,30 @@
-import { MergedModelSchema } from "@/configs/firebase";
-import { SkillSchema, TagSchema } from "@/library/models";
+import { useQueryClient } from "@tanstack/react-query";
 
-import { Card, Flex, Heading, Icon } from "@/components/core";
+import { clc } from "@/library/utilities";
+import { TagModel, SkillModel } from "@/library/models";
+import { useEditSkillById } from "@/library/api";
+
+import { Card, Flex, Heading, Icon, Toggle } from "@/components/core";
 import { TagsDisplay } from "@/components/interfaces";
 
 export const SkillCard = (props: SkillCardProps) => {
 	const { skill, tags, onEdit, onDelete } = props;
 
+	const queryClient = useQueryClient();
+	const editSkill = useEditSkillById();
+
+	const handleActiveToggle = async (checked: boolean ) => {
+		await editSkill.mutateAsync({ id: skill.id, skill: { active: checked }});
+		queryClient.invalidateQueries(["skills"]);
+	}
+
 	return (
-		<Card className="group p-3">
+		<Card className={clc("group p-3 transition-all", !skill.active && "opacity-50")}>
 			<Flex
-				className="flex-col-reverse mb-2 md:items-center md:mb-0 md:justify-between md:flex-row"
+				className="flex-row mb-2 md:items-center md:mb-0 justify-between md:flex-row"
 			>
 				<Flex.Row className="items-center">
-					<Icon name={skill.icon} className="mr-2 text-2xl"/>
+					<Icon name={skill.icon} className="mr-2 text-2xl dark:text-white"/>
 					<Heading.Three className="text-xl mb-1" underline>{skill.name}</Heading.Three>
 				</Flex.Row>
 				<Flex.Row className="items-center space-x-2">
@@ -29,6 +40,12 @@ export const SkillCard = (props: SkillCardProps) => {
 					>
 						<Icon name="delete-bin-line" className="text-lg dark:text-white" />
 					</button>
+					<Toggle
+						label="Active"
+						className="h-6 w-10"
+						checked={skill.active}
+						onChange={handleActiveToggle}
+					/>
 				</Flex.Row>
 			</Flex>
 			<TagsDisplay tagIds={skill.tags} tags={tags} className="mt-2" />
@@ -36,11 +53,9 @@ export const SkillCard = (props: SkillCardProps) => {
 	)
 }
 
-type MergedSkillSchema = MergedModelSchema<SkillSchema>;
-
 export interface SkillCardProps {
-	skill: MergedSkillSchema;
-	tags: MergedModelSchema<TagSchema>[];
-	onEdit: (skill: MergedSkillSchema) => void;
-	onDelete: (skill: MergedSkillSchema) => void;
+	skill: SkillModel;
+	tags: TagModel[];
+	onEdit: (skill: SkillModel) => void;
+	onDelete: (skill: SkillModel) => void;
 }

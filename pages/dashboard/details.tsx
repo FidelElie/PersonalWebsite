@@ -1,10 +1,8 @@
 import { useState } from "react";
 
-import type { MergedModelSchema } from "@/configs/firebase";
-
 import { useFetchDetails } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
-import type { DetailSchema } from "@/library/models";
+import type { DetailModel } from "@/library/models";
 
 import { Button, Icon } from "@/components/core";
 
@@ -20,14 +18,14 @@ const DashboardDetailsPage: ExtendedNextPage = () => {
 	const detailsQuery = useFetchDetails();
 
 	const [modal, setModal] = useState<string | null>(null);
-	const [selected, setSelected] = useState<MergedModelSchema<DetailSchema> | null>(null);
+	const [selected, setSelected] = useState<DetailModel | null>(null);
 
-	const startEditing = (detail: MergedModelSchema<DetailSchema>) => {
+	const startEditing = (detail: DetailModel) => {
 		setSelected(detail);
 		setModal("details")
 	}
 
-	const startDeletion = (detail: MergedModelSchema<DetailSchema>) => {
+	const startDeletion = (detail: DetailModel) => {
 		setSelected(detail);
 		setModal("delete-detail");
 	}

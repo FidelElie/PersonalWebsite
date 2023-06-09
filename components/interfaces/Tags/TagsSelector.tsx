@@ -1,6 +1,5 @@
-import { MouseEvent } from "react";
-import { TagSchema } from "@/library/models";
-import { MergedModelSchema } from "@/configs/firebase";
+import type { MouseEvent } from "react";
+import type { TagModel } from "@/library/models";
 
 import { Box, Card, Copy, Flex, For, Icon, Select, Show } from "@/components/core"
 
@@ -55,6 +54,6 @@ export const TagsSelector = (props: TagsSelectorProps) => {
 
 export interface TagsSelectorProps {
 	value: string[],
-	tags: MergedModelSchema<TagSchema>[],
+	tags: TagModel[],
 	onChange: (tags: string[]) => void
 }

@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import type { MergedModelSchema } from "@/configs/firebase";
-
-import { useCreateSkills, useEditSkill } from "@/library/api";
-import { SkillSchema, TagSchema } from "@/library/models";
+import { useCreateSkills, useEditSkillById } from "@/library/api";
+import { Skill, SkillModel, SkillSchema, TagModel } from "@/library/models";
 
 import {
 	Form,
@@ -14,20 +12,18 @@ import {
 	Modal,
 	Heading,
 	Divider,
-	Select,
 	IconNames,
-	Icon,
-	Copy,
-	type ModalConfiguredProps
+	type IconProps,
+	type ModalConfiguredProps,
 } from "@/components/core";
-import { TagsSelector } from "@/components/interfaces";
+import { TagsSelector, IconPicker } from "@/components/interfaces";
 
 export const SkillsModal = (props: ProjectsModalProps) => {
 	const { isOpen, onClose, skill, skills, tags } = props;
 
 	const queryClient = useQueryClient();
-	const createProjects = useCreateSkills();
-	const editProject = useEditSkill();
+	const createSkills = useCreateSkills();
+	const editSkill = useEditSkillById();
 	const [fields, setFields] = useState(populateFields(skill));
 
 	const usedIcons = skills.filter(
@@ -43,9 +39,12 @@ export const SkillsModal = (props: ProjectsModalProps) => {
 	const handleSubmission = async () => {
 		try {
 			if (!skill) {
-				await createProjects.mutateAsync([fields]);
+				await createSkills.mutateAsync([Skill.schema.parse(fields)]);
 			} else {
-				await editProject.mutateAsync({ ...fields, id: skill.id });
+				await editSkill.mutateAsync({
+					id: skill.id,
+					skill: Skill.schema.parse({ ...skill, ...fields })
+				});
 			}
 
 			queryClient.invalidateQueries(["skills"]);
@@ -73,14 +72,12 @@ export const SkillsModal = (props: ProjectsModalProps) => {
 						onChange={name => editFields({ name })}
 						required
 					/>
-					<Select
+					<IconPicker
+						id="skill-icon-picker"
+						label="Skill Icon Picker"
 						value={fields.icon}
-						options={usableIcons}
-						placeholder="Icon"
-						optionDisplay={icon => <IconDisplay icon={icon!} />}
-						valueDisplay={icon => <IconDisplay icon={icon!}/>}
-						onChange={icon => editFields({ icon })}
-						virtualize
+						icons={usableIcons}
+						onChange={(icon) => editFields({ icon })}
 					/>
 					<Heading.Three className="text-lg tracking-tight">Tags Information</Heading.Three>
 					<TagsSelector
@@ -104,29 +101,22 @@ export const SkillsModal = (props: ProjectsModalProps) => {
 	)
 }
 
-const IconDisplay = ({ icon } : { icon: typeof IconNames[number] }) => (
-	<Flex className="items-center">
-		<Icon name={icon} className="mr-2 text-lg" />
-		<Copy className="capitalize">{icon?.split("-").join(" ")}</Copy>
-	</Flex>
-)
-
 const populateFields = (
-	skill?: MergedSkillSchema | null
-): SkillSchema | MergedSkillSchema => {
+	skill?: SkillModel | null
+): WithOptionalIcon<SkillSchema> | SkillModel => {
 	return {
-		...(skill ? { skill: skill.id } : {}),
+		...(skill ? { id: skill.id } : {}),
 		name: skill?.name ?? "",
-		icon: skill?.icon ?? "bug-2-fill",
+		icon: skill?.icon,
 		tags: skill?.tags ?? [],
 		active: skill?.active ?? true
 	}
 }
 
-type MergedSkillSchema = MergedModelSchema<SkillSchema>;
+type WithOptionalIcon<T> = Omit<T, "icon"> & { icon?: IconProps["name"] };
 
 export interface ProjectsModalProps extends ModalConfiguredProps {
-	skill?: MergedSkillSchema | null;
-	skills: MergedSkillSchema[];
-	tags: MergedModelSchema<TagSchema>[];
+	skill?: SkillModel | null;
+	skills: SkillModel[];
+	tags: TagModel[];
 }

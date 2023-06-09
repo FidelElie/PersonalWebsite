@@ -1,4 +1,7 @@
+import { Timestamp } from "firebase/firestore";
+
 import type { DetailsFormFieldsInterface } from "../DetailsModal.data";
+import { toTimestamp } from "@/library/utilities";
 
 import { Copy, DateField, Flex, Show, TextField } from "@/components/core";
 
@@ -10,7 +13,7 @@ export const EducationFields = (props: EducationFieldsProps) => {
 	if (data.type !== "education") { return null; }
 
 	const updateHasEndDate = (checked: boolean) => {
-		editDataFields({ endDate: !checked ? new Date().toISOString() : null });
+		editDataFields({ endDate: !checked ? Timestamp.fromDate(new Date()) : null });
 	}
 
 	return (
@@ -34,8 +37,8 @@ export const EducationFields = (props: EducationFieldsProps) => {
 			<DateField
 				id="start-date"
 				label="Start Date"
-				value={data.startDate}
-				onChange={date => editDataFields({ startDate: date.toISOString() })}
+				value={toTimestamp(data.startDate).toDate()}
+				onChange={date => editDataFields({ startDate: Timestamp.fromDate(date)})}
 			/>
 			<Flex className="items-center">
 				<Show
@@ -46,12 +49,16 @@ export const EducationFields = (props: EducationFieldsProps) => {
 						</Copy.Label>
 					)}
 				>
-					<DateField
-						id="end-date"
-						label="End Date"
-						value={data.endDate!}
-						onChange={date => editDataFields({ endDate: date.toDateString() })}
-					/>
+					{
+						endDate => (
+							<DateField
+								id="end-date"
+								label="End Date"
+								value={toTimestamp(endDate).toDate()}
+								onChange={date => editDataFields({ endDate: Timestamp.fromDate(date) })}
+							/>
+						)
+					}
 				</Show>
 				<input
 					id="present"

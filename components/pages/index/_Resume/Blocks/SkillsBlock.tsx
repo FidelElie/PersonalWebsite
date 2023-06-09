@@ -1,6 +1,4 @@
-import { MergedModelSchema } from "@/configs/firebase";
-
-import { SkillSchema, TagSchema } from "@/library/models";
+import { SkillModel, TagModel } from "@/library/models";
 import { clc } from "@/library/utilities";
 
 import { Box, Copy, Flex, For, Grid, Heading, Icon } from "@/components/core";
@@ -18,14 +16,14 @@ export const SkillsBlock = ({ className }: { className?: string }) => {
 			<Heading.Two className="text-primary uppercase">Skills and Expertise</Heading.Two>
 			<Grid className="grid-cols-3 gap-1">
 				<For each={skills}>
-					{skill => <Skill key={skill.id} skill={skill} tags={tags} />}
+					{skill => <SkillPoint key={skill.id} skill={skill} tags={tags} />}
 				</For>
 			</Grid>
 		</Box>
 	)
 }
 
-const Skill = (props: SkillProps) => {
+const SkillPoint = (props: SkillProps) => {
 	const { skill, tags } = props;
 
 	const correspondingTags = tags.filter(tag => skill.tags.includes(tag.id));
@@ -44,6 +42,6 @@ const Skill = (props: SkillProps) => {
 }
 
 interface SkillProps {
-	skill: MergedModelSchema<SkillSchema>,
-	tags: MergedModelSchema<TagSchema>[]
+	skill: SkillModel;
+	tags: TagModel[];
 }

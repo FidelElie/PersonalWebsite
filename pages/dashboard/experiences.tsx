@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
-import { ExperienceSchema } from "@/library/models";
+import { ExperienceModel } from "@/library/models";
 import { useFetchExperiences, useFetchTags } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
 
@@ -23,14 +21,14 @@ const DashboardExperiencesPage: ExtendedNextPage = () => {
 	const tagsQuery = useFetchTags();
 
 	const [modal, setModal] = useState<string | null>(null);
-	const [selected, setSelected] = useState<MergedModelSchema<ExperienceSchema> | null>(null);
+	const [selected, setSelected] = useState<ExperienceModel | null>(null);
 
-	const startEditing = (detail: MergedModelSchema<ExperienceSchema>) => {
+	const startEditing = (detail: ExperienceModel) => {
 		setSelected(detail);
 		setModal("experiences")
 	}
 
-	const startDeletion = (detail: MergedModelSchema<ExperienceSchema>) => {
+	const startDeletion = (detail: ExperienceModel) => {
 		setSelected(detail);
 		setModal("delete-experience");
 	}

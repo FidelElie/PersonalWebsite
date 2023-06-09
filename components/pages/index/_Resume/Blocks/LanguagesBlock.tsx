@@ -1,6 +1,4 @@
-import { MergedModelSchema } from "@/configs/firebase";
-
-import { DetailSchema } from "@/library/models";
+import { DetailModel } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
@@ -12,7 +10,7 @@ const proficiencyPriority = {
 	Basic: 3
 }
 
-const narrowToLanguage = (details: MergedModelSchema<DetailSchema>[]) => {
+const narrowToLanguage = (details: DetailModel[]) => {
 	return details.map(
 		detail => detail.data.type === "language" ? { ...detail, data: detail.data } : []
 	).flat();

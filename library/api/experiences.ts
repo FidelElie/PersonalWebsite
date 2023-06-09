@@ -8,8 +8,7 @@ import { Experience, type ExperienceSchema } from "../models";
 export type FindExperienceConfig = Omit<FindConfig<ExperienceSchema>, "order">;
 
 export const fetchExperiences = (config: FindExperienceConfig = {}) => Experience.find({
-	...config,
-	order: { startDate: "desc" }
+	...config
 });
 
 export const useFetchExperiences = (config?: FindExperienceConfig) => useQuery(
@@ -23,11 +22,13 @@ const createExperiences = (entries: ExperienceSchema[]) => Experience.create(ent
 export const useCreateExperiences = () => useMutation(createExperiences);
 
 // UPDATE Experience
-export const editExperience = (project: ExperienceSchema & { id: string }) => {
-	return Experience.findByIdAndUpdate(project.id, project);
+export const editExperienceById = (
+	{ id, experience } : { id: string, experience: Partial<ExperienceSchema>}
+) => {
+	return Experience.findByIdAndUpdate(id, experience);
 }
 
-export const useEditExperience = () => useMutation(editExperience);
+export const useEditExperienceById = () => useMutation(editExperienceById);
 
 // DELETE Experience
 export const deleteExperience = (id: string) => Experience.findByIdAndDelete(id);

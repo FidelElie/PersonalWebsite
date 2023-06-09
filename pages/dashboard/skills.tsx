@@ -1,9 +1,7 @@
 import { useState } from "react";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
 import { useFetchSkills, useFetchTags } from "@/library/api";
-import { SkillSchema } from "@/library/models";
+import { SkillModel } from "@/library/models";
 import type { ExtendedNextPage } from "@/library/types";
 
 import { Button, For, Icon, Copy, Grid } from "@/components/core";
@@ -21,15 +19,15 @@ const DashboardSkillsPage: ExtendedNextPage = () => {
 	const tagsQuery = useFetchTags();
 
 	const [modal, setModal] = useState<string | null>(null);
-	const [selected, setSelected] = useState<MergedModelSchema<SkillSchema> | null>(null);
+	const [selected, setSelected] = useState<SkillModel | null>(null);
 
-	const startEditing = (detail: MergedModelSchema<SkillSchema>) => {
-		setSelected(detail);
+	const startEditing = (skill: SkillModel) => {
+		setSelected(skill);
 		setModal("skills")
 	}
 
-	const startDeletion = (detail: MergedModelSchema<SkillSchema>) => {
-		setSelected(detail);
+	const startDeletion = (skill: SkillModel) => {
+		setSelected(skill);
 		setModal("delete-skills");
 	}
 

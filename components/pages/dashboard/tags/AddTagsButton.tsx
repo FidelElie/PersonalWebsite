@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Show, Icon, Flex } from "@/components/core";
+
 import { TagInput } from "./TagInput";
 
 export const AddTagsButton = () => {

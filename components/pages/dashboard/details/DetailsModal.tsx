@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { Timestamp } from "firebase/firestore";
 
-import { MergedModelSchema } from "@/configs/firebase";
-
-import { useCreateDetails, useEditDetail } from "@/library/api";
-import { DetailSchema, DetailTypes } from "@/library/models";
+import { useCreateDetails, useEditDetailById } from "@/library/api";
+import { DetailSchema, DetailModel, DETAIL_TYPES } from "@/library/models";
 
 import {
 	Form,
@@ -13,10 +12,10 @@ import {
 	Select,
 	Button,
 	Modal,
-	type ModalConfiguredProps,
 	Divider,
 	Heading,
-	Copy
+	Copy,
+	type ModalConfiguredProps
 } from "@/components/core";
 
 import { EducationFields } from "./_DetailsModal/EducationFields";
@@ -30,7 +29,7 @@ export const DetailsModal = (props: DetailsModalProps) => {
 
 	const queryClient = useQueryClient();
 	const createDetails = useCreateDetails();
-	const editDetail = useEditDetail();
+	const editDetail = useEditDetailById();
 	const [fields, setFields] = useState(populateFields(detail));
 
 	const editFields = (data: Partial<DetailSchema>) => setFields(
@@ -46,7 +45,7 @@ export const DetailsModal = (props: DetailsModalProps) => {
 			if (!detail) {
 				await createDetails.mutateAsync([fields]);
 			} else {
-				await editDetail.mutateAsync({ ...fields, id: detail.id });
+				await editDetail.mutateAsync({ id: detail.id, detail: { ...detail, ...fields } });
 			}
 
 			queryClient.invalidateQueries(["details"]);
@@ -78,7 +77,7 @@ export const DetailsModal = (props: DetailsModalProps) => {
 					<Heading.Three className="text-lg">Type Information</Heading.Three>
 					<Select
 						value={fields.data.type}
-						options={DetailTypes}
+						options={DETAIL_TYPES}
 						onChange={value => editFields({ data: populateDataField(value) })}
 						valueDisplay={value => <Copy.Inline className="capitalize">{value}</Copy.Inline>}
 						optionDisplay={option => (
@@ -106,7 +105,7 @@ export const DetailsModal = (props: DetailsModalProps) => {
 	)
 }
 
-const populateFields = (detail?: MergedDetailSchema | null): DetailSchema | MergedDetailSchema => {
+const populateFields = (detail?: DetailModel | null): DetailSchema | DetailModel => {
 	return {
 		...(detail ? { id: detail.id } : {}),
 		title: detail ? detail.title : "",
@@ -122,7 +121,7 @@ const populateDataField = (type: DetailSchema["data"]["type"]): DetailSchema["da
 				type: "education",
 				qualification: "",
 				organisation: "",
-				startDate: (new Date()).toISOString(),
+				startDate: Timestamp.fromDate(new Date()),
 				endDate: null
 			}
 		case "contact":
@@ -138,8 +137,4 @@ const populateDataField = (type: DetailSchema["data"]["type"]): DetailSchema["da
 	}
 }
 
-type MergedDetailSchema = MergedModelSchema<DetailSchema>;
-
-export interface DetailsModalProps extends ModalConfiguredProps {
-	detail?: MergedDetailSchema | null;
-}
+export interface DetailsModalProps extends ModalConfiguredProps { detail?: DetailModel | null; }

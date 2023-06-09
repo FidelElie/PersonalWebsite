@@ -36,7 +36,7 @@ const BaseTextField = forwardRef<HTMLInputElement, BaseTextFieldProps>((props, r
 			<input
 				id={id}
 				className={clc(
-					"w-full font-light tracking-tight text-sm",
+					"w-full font-light tracking-tight text-sm bg-transparent",
 					"dark:text-white",
 					"border-transparent focus:border-transparent focus:ring-0",
 					inputClassName

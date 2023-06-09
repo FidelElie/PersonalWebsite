@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import type { FindConfig } from "@/configs/firebase";
 
-import { Project, ProjectSchema } from "../models";
+import { Project, ProjectModel, ProjectSchema } from "../models";
 
 // READ Projects
 export type FetchProjectConfig = FindConfig<ProjectSchema>;
@@ -20,11 +20,13 @@ export const createProjects = (entries: ProjectSchema[]) => Project.create(entri
 export const useCreateProjects = () => useMutation(createProjects);
 
 // UPDATE Project
-export const editProject = (project: ProjectSchema & { id: string }) => {
-	return Project.findByIdAndUpdate(project.id, project);
+export const editProjectById = (
+	{ id, project }: { id: string, project: Partial<ProjectModel> }
+) => {
+	return Project.findByIdAndUpdate(id, project);
 }
 
-export const useEditProject = () => useMutation(editProject);
+export const useEditProjectById = () => useMutation(editProjectById);
 
 // DELETE Project
 export const deleteProject = (id: string) => Project.findByIdAndDelete(id);

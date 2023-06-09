@@ -1,21 +1,19 @@
-import type { MergedModelSchema } from "@/configs/firebase";
-
 import { clc } from "@/library/utilities";
-import type { DetailSchema, ContactMediums } from "@/library/models";
+import type { DetailSchema, DetailModel, CONTACT_MEDIUMS } from "@/library/models";
 
 import { Flex, For, Copy, Icon, IconNames } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeProvider";
 
-const renderTypeAsLink: typeof ContactMediums[number][] = [
+const renderTypeAsLink: typeof CONTACT_MEDIUMS[number][] = [
   "linkedin", "email", "facebook", "github", "instagram", "linkedin", "phone"
 ];
 
-const orderPriority: readonly typeof ContactMediums[number][] = [
+const orderPriority: readonly typeof CONTACT_MEDIUMS[number][] = [
   "phone", "location", "email", "github", "linkedin"
 ];
 
-const narrowToContacts = (details: MergedModelSchema<DetailSchema>[]) => {
+const narrowToContacts = (details: DetailModel[]) => {
   return details.map(
     detail => detail.data.type === "contact" ? { ...detail, data: detail.data } : []
   ).flat()
@@ -31,13 +29,7 @@ export const ContactsBlock = () => {
   ).flat();
 
   return (
-    <Flex.Row
-      className={clc(
-        "items-center flex-wrap",
-        // "cursor-pointer ring-1 ring-transparent ring-offset-8 hover:ring-primary"
-      )}
-      onClick={() => setView("details")}
-    >
+    <Flex.Row className="items-center flex-wrap" onClick={() => setView("details")}>
       <For each={contacts}>
         { contact => <ContactPoint key={contact.id} contact={contact}/> }
       </For>
@@ -52,7 +44,7 @@ const ContactPoint = (props: ContactPointProps) => {
 
   const BaseTag = isLink(data) ? "a": "div";
 
-  const determineIconName = (type: typeof ContactMediums[number]): typeof IconNames[number] => {
+  const determineIconName = (type: typeof CONTACT_MEDIUMS[number]): typeof IconNames[number] => {
     switch (type) {
       case "phone":
         return "phone-fill";
@@ -73,7 +65,7 @@ const ContactPoint = (props: ContactPointProps) => {
     }
   }
 
-  const determineParseLink = (type: typeof ContactMediums[number], link: string) => {
+  const determineParseLink = (type: typeof CONTACT_MEDIUMS[number], link: string) => {
     switch (type) {
       case "email":
         return `mailto:${link}`;

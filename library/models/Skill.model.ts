@@ -1,16 +1,19 @@
 import { z } from "zod";
 
-import { registerModel } from "@/configs/firebase";
+import { registerModel, reference } from "@/configs/firebase";
+
+import { Tag } from "./Tag.model";
 
 import { IconNames } from "@/components/core";
 
-export const SkillSchema = z.object({
+const SkillSchema = z.object({
 	name: z.string(),
 	icon: z.enum(IconNames),
-	tags: z.array(z.string()).default([]),
+	tags: z.array(reference(Tag.reference)).default([]),
 	active: z.boolean().default(false)
 });
 
-export type SkillSchema = z.infer<typeof SkillSchema>;
-
 export const Skill = registerModel("skills", SkillSchema);
+
+export type SkillSchema = z.infer<typeof Skill["schema"]>;
+export type SkillModel = z.infer<typeof Skill["model"]>;
