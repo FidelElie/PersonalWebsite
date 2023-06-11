@@ -57,7 +57,7 @@ const EducationEntry = (props: EducationEntryProps) => {
 				{education.data.qualification}
 			</Copy>
 			<Box className="p-0.5 border border-secondary rounded w-min">
-				<Copy className="text-secondary text-xs whitespace-nowrap">
+				<Copy className="text-secondary text-xs whitespace-nowrap" light>
 					{education.data.organisation}
 				</Copy>
 			</Box>

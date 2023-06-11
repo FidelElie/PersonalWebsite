@@ -145,6 +145,8 @@ export class Model<Schema extends AnyZodObject>{
 		if (data.id) { delete data.id; }
 
 		const parsedData = Object.fromEntries(Object.entries(data).map(([key, value]) => {
+			if (!value) { return [key, value]; }
+
 			const schemaEntry = this.model.shape[key];
 			const hasReferenceDescriptor = this.findDescriptor(schemaEntry, firebaseReferenceIdentifier);
 			const hasTimestampDescriptor = this.findDescriptor(schemaEntry, firebaseTimestampIdentifier);

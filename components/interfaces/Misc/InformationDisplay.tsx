@@ -6,7 +6,7 @@ import { Flex, Box, Show, Copy, Icon, IconProps } from "@/components/core";
 import { PointsDisplay } from "@/components/interfaces";
 
 export const InformationDisplay = (props: InformationDisplayProps) => {
-	const { points, description } = props;
+	const { points, description, light } = props;
 
 	const [info, setInfo] = useState<"points" | "description">("points");
 
@@ -15,7 +15,7 @@ export const InformationDisplay = (props: InformationDisplayProps) => {
 			<Box className="flex-grow">
 				<Show if={info === "points"} else={<Copy className="text-sm">{description}</Copy>}>
 					<Show if={points.length} else={(
-						<Copy className="text-sm my-1 tracking-tight">No points added</Copy>
+						<Copy className="text-sm my-1 tracking-tight" light={light}>No points added</Copy>
 					)}>
 						<PointsDisplay points={points} />
 					</Show>
@@ -63,4 +63,5 @@ interface InformationToggleButtonProps {
 export interface InformationDisplayProps {
 	points: string[];
 	description: string;
+	light?: boolean;
 }

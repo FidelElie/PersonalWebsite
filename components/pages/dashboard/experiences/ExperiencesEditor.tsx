@@ -37,7 +37,7 @@ export const ExperiencesEditor = (props: ExperienceEditorProps) => {
 	);
 
 	const updateHasEndDate = (checked: boolean) => {
-		editFields({ endDate: !checked ? Timestamp.fromDate(new Date()) : null });
+		editFields({ endDate: !checked ? Timestamp.fromDate(new Date()).toJSON() : null });
 	}
 
 	const handleSubmission = async () => {
@@ -107,7 +107,7 @@ export const ExperiencesEditor = (props: ExperienceEditorProps) => {
 						id="start-date"
 						label="Start Date"
 						value={toTimestamp(fields.startDate).toDate()}
-						onChange={date => editFields({ startDate: Timestamp.fromDate(date) })}
+						onChange={date => editFields({ startDate: Timestamp.fromDate(date).toJSON() })}
 					/>
 					<Flex className="items-center">
 						<Show
@@ -120,19 +120,22 @@ export const ExperiencesEditor = (props: ExperienceEditorProps) => {
 										id="end-date"
 										label="End Date"
 										value={toTimestamp(endDate).toDate()}
-										onChange={date => editFields({ endDate: Timestamp.fromDate(date) })}
+										onChange={date => editFields({ endDate: Timestamp.fromDate(date).toJSON() })}
 									/>
 								)
 							}
 
 						</Show>
-						<input
-							id="present"
-							type="checkbox"
-							checked={!fields.endDate}
-							className="ml-2.5 p-2 rounded border-gray-300 dark:border-gray-100"
-							onChange={event => updateHasEndDate(event.target.checked)}
-						/>
+						<label>
+							<span className="sr-only">End date is present</span>
+							<input
+								id="present"
+								type="checkbox"
+								checked={!fields.endDate}
+								className="ml-2.5 p-2 rounded border-gray-300 dark:border-gray-100"
+								onChange={event => updateHasEndDate(event.target.checked)}
+							/>
+						</label>
 					</Flex>
 					<Heading.Three className="text-lg tracking-tight">Tags Information</Heading.Three>
 					<TagsSelector

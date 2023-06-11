@@ -99,7 +99,7 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 	useEffect(() => {
 		if (projectsQuery.data && !initialLoadComplete.current) {
 			let projects = [...projectsQuery.data];
-			setSelected(current => ({ ...current, projects: projects.slice(0, 2) }))
+			setSelected(current => ({ ...current, projects: projects.slice(0, 1) }))
 		}
 	}, [projectsQuery.data]);
 

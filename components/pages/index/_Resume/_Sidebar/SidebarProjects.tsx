@@ -15,6 +15,8 @@ import {
 	Toggle
 } from "@/components/core";
 
+import { InformationDisplay } from "@/components/interfaces";
+
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
 
 export const SidebarProjects = () => {
@@ -78,7 +80,7 @@ const ProjectEntry = (props: ProjectEntryProps) => {
 				{correspondingTags.map(tag => tag.name).join(", ")}
 			</Copy>
 			<Divider className="my-2" />
-			<Copy className="text-xs md:text-sm">{project.description}</Copy>
+			<InformationDisplay points={project.points} description={project.description} light/>
 		</Flex.Column>
 	)
 }

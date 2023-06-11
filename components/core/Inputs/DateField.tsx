@@ -24,7 +24,7 @@ export const DateField = (props: DateFieldProps) => {
 				component === "month" ? value : parsedDate.getMonth(),
 				component === "day" ? value : parsedDate.getDate()
 			)
-		)
+		);
 	}
 
 	return (
@@ -36,7 +36,7 @@ export const DateField = (props: DateFieldProps) => {
 				{label}
 			</label>
 			<DateComponentField
-				value={1}
+				value={value.getDate()}
 				onChange={day => dispatchChange(day, "day")}
 				options={numberArray(
 					1,
@@ -149,7 +149,7 @@ const DateComponentSeparator = () => (
 export interface DateFieldProps {
 	id: string,
 	label: string,
-	value: Date | string;
+	value: Date;
 	className?: string,
 	onChange: (date: Date) => void;
 	years?: { min: number, max: number }

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { ExperienceModel } from "@/library/models";
+import { toTimestamp } from "@/library/utilities";
 
 import {
 	Box,
@@ -15,8 +16,9 @@ import {
 	Toggle
 } from "@/components/core";
 
+import { InformationDisplay } from "@/components/interfaces";
+
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
-import { toTimestamp } from "@/library/utilities";
 
 export const SidebarExperiences = () => {
 	const { queries, selected } = useResumeBuilder();
@@ -25,6 +27,10 @@ export const SidebarExperiences = () => {
 		() => selected.experiences.map(experience => experience.id),
 		[selected.experiences]
 	);
+
+	queries.experiences.sort((a, b) => {
+		return toTimestamp(b.startDate).toDate().valueOf() - toTimestamp(a.startDate).toDate().valueOf()
+	});
 
 	return (
 		<Flex.Column className="space-y-3 pr-1">
@@ -88,7 +94,7 @@ const ExperienceEntry = (props: ProjectEntryProps) => {
 				{correspondingTags.map(tag => tag.name).join(", ")}
 			</Copy>
 			<Divider className="my-2" />
-			<Copy className="text-sm">{experience.description}</Copy>
+			<InformationDisplay points={experience.points} description={experience.description} light/>
 		</Flex.Column>
 	)
 }

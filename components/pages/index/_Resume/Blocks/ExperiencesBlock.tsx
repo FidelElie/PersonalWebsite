@@ -17,7 +17,7 @@ export const ExperiencesBlock = () => {
 		<Box className="space-y-1.5 cursor-pointer" onClick={() => setView("experiences")}>
 			<Heading.Two className="text-primary uppercase" light>Relevant Work Experience</Heading.Two>
 			<Flex.Column className="space-y-2">
-				<For each={experiences} else={<PlaceholderBlock title="work experience"/>}>
+				<For each={experiences} else={<PlaceholderBlock title="experiences"/>}>
 					{	experience => (
 							<ExperiencePoint
 								key={experience.id}
@@ -66,7 +66,7 @@ const ExperiencePoint = (props: ExperiencePointProps) => {
 					)}
 				</For>
 			</Flex.Row>
-			<Show if={showDescription} else={<PointsDisplay points={experience.points}/>}>
+			<Show if={showDescription} else={<PointsDisplay points={experience.points} light/>}>
 				<Copy className="text-xs text-black" light>{experience.description}</Copy>
 			</Show>
 		</Flex.Column>

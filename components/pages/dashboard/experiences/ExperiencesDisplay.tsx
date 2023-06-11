@@ -16,8 +16,7 @@ import {
 	Show,
 	Toggle
 } from "@/components/core";
-import { TagsDisplay } from "@/components/interfaces";
-import { InformationDisplay } from "../InformationDisplay";
+import { TagsDisplay, InformationDisplay } from "@/components/interfaces";
 
 export const ExperiencesDisplay = (props: ExperiencesDisplayProps) => {
 	const { experiences, tags, update, delete: _delete } = props;

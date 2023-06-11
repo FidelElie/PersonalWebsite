@@ -52,7 +52,7 @@ const ProjectPoint = (props: ProjectPointProps) => {
 					)}
 				</For>
 			</Flex.Row>
-			<Show if={showDescription} else={<PointsDisplay points={project.points} />}>
+			<Show if={showDescription} else={<PointsDisplay points={project.points} light/>}>
 				<Copy className="text-xs text-black" light>{project.description}</Copy>
 			</Show>
 		</Flex.Column>

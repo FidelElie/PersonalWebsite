@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
 
 import styles from "./Resume.module.css";
 
@@ -80,12 +79,22 @@ export const Resume = () => {
 	}
 
 	const parseScale = (delta: number) => {
+		const normaliseScale = (scale: number) => {
+			if (scale <= 0.4) {
+				return 0.4;
+			} else if (scale >= 2) {
+				return 2;
+			} else {
+				return scale;
+			}
+		}
+
 		if (delta < 0) {
-			return position["scale"]! + 0.1;
+			return normaliseScale(position["scale"]! + 0.1);
 		} else if (delta > 0) {
-			return position["scale"]! - 0.1;
+			return normaliseScale(position["scale"]! - 0.1);
 		} else {
-			return position["scale"];
+			return normaliseScale(position["scale"]!);
 		}
 	}
 
@@ -188,8 +197,8 @@ export const Resume = () => {
 								<ContactsBlock />
 							</Box>
 							<SkillsBlock/>
-							<ProjectsBlock/>
 							<ExperiencesBlock/>
+							<ProjectsBlock/>
 						</Box>
 						<Show if={settings.showWebsiteLink}>
 							<button onClick={() => setView("settings")}>

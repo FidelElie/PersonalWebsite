@@ -121,7 +121,7 @@ const populateDataField = (type: DetailSchema["data"]["type"]): DetailSchema["da
 				type: "education",
 				qualification: "",
 				organisation: "",
-				startDate: Timestamp.fromDate(new Date()),
+				startDate: Timestamp.fromDate(new Date()).toJSON(),
 				endDate: null
 			}
 		case "contact":

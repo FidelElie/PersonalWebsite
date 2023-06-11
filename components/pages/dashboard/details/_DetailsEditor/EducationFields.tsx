@@ -38,7 +38,7 @@ export const EducationFields = (props: EducationFieldsProps) => {
 				id="start-date"
 				label="Start Date"
 				value={toTimestamp(data.startDate).toDate()}
-				onChange={date => editDataFields({ startDate: Timestamp.fromDate(date)})}
+				onChange={date => editDataFields({ startDate: Timestamp.fromDate(date).toJSON() })}
 			/>
 			<Flex className="items-center">
 				<Show
@@ -55,7 +55,7 @@ export const EducationFields = (props: EducationFieldsProps) => {
 								id="end-date"
 								label="End Date"
 								value={toTimestamp(endDate).toDate()}
-								onChange={date => editDataFields({ endDate: Timestamp.fromDate(date) })}
+								onChange={date => editDataFields({ endDate: Timestamp.fromDate(date).toJSON() })}
 							/>
 						)
 					}
