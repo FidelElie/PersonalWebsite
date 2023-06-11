@@ -18,7 +18,9 @@ export const Loader = forwardRef<HTMLDivElement, LoaderProps>((props, ref) => {
 			</span>
 		</div>
 	)
-})
+});
+
+Loader.displayName = "Loader";
 
 export interface LoaderProps {
 	children: ReactNode;
