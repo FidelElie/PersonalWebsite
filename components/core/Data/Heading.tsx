@@ -8,6 +8,7 @@ export const BaseHeading = forwardRef<HTMLHeadingElement, HeadingProps>((props, 
 		className,
 		level = 1,
 		underline,
+		light,
 		children
 	} = props;
 
@@ -18,8 +19,9 @@ export const BaseHeading = forwardRef<HTMLHeadingElement, HeadingProps>((props, 
 			id={id}
 			ref={ref}
 			className={clc(
-				"tracking-tight dark:text-white",
+				"tracking-tight",
 				underline && "underline decoration-primary underline-offset-4",
+				!light && "dark:text-white",
 				className,
 			)}
 		>
@@ -35,7 +37,8 @@ export interface HeadingProps {
 	id?: string,
 	level?: 1 | 2 | 3 | 4 | 5 | 6,
 	underline?: boolean,
-	children: ReactNode
+	children: ReactNode;
+	light?: boolean;
 }
 
 type HeadingPropsWithLevel = Omit<HeadingProps, "level">;

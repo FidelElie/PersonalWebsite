@@ -2,7 +2,7 @@ import { DetailModel } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
-import { useResumeBuilder } from "../../ResumeProvider";
+import { useResumeBuilder } from "../../ResumeBuilderProvider";
 
 const proficiencyPriority = {
 	Native: 1,
@@ -27,7 +27,7 @@ export const LanguagesBlock = () => {
 
 	return (
 		<Flex.Column className="w-full space-y-1">
-			<Heading.Two className="text-white uppercase">Languages</Heading.Two>
+			<Heading.Two className="uppercase text-secondary" light>Languages</Heading.Two>
 			<Flex.Column className="space-y-0.5">
 				<For each={languages}>
 					{language => <LanguageEntry key={language.id} language={language} />}
@@ -41,15 +41,12 @@ const LanguageEntry = (props: LanguageEntryProps) => {
 	const { language } = props;
 
 	return (
-		<Box>
-			<Copy className="text-white text-sm">
-				{language.title}
-			</Copy>
-			<Copy className="text-secondary text-xs tracking-tighter">
+		<Flex.Row className="justify-between items-center">
+			<Copy className="text-white text-sm">{language.title}</Copy>
+			<Copy className="text-white text-xs tracking-tighter" light>
 				{language.data.proficiency}
 			</Copy>
-
-		</Box>
+		</Flex.Row>
 	)
 }
 

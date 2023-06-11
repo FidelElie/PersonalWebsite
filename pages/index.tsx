@@ -14,7 +14,7 @@ import { Page } from "@/components/core";
 
 import { Navbar, Footer } from "@/components/interfaces/Navigation";
 
-import { ResumeBuilderProvider } from "@/components/pages/index/ResumeProvider";
+import { ResumeBuilderProvider } from "@/components/pages/index/ResumeBuilderProvider";
 import { Resume } from "@/components/pages/index/Resume";
 
 const FrontPage: ExtendedNextPage = () => {

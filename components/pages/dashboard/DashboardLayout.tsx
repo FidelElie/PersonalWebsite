@@ -1,7 +1,6 @@
 import { Fragment, MouseEventHandler, ReactNode } from "react";
 import { Transition } from "@headlessui/react";
 
-import { useAuth } from "@/library/providers";
 import { clc } from "@/library/utilities";
 import { useLogoutUser } from "@/library/api";
 
@@ -25,7 +24,6 @@ import { useDashboard } from "./DashboardProvider";
 export const DashboardLayout = (props: DashboardLayoutProps) => {
 	const { headerTitle, headerOptions, children, ...pageProps } = props;
 
-	const { user } = useAuth();
 	const { showSidebar, setShowSidebar } = useDashboard();
 
 	const logoutUser = useLogoutUser();

@@ -15,7 +15,7 @@ import {
 	Toggle
 } from "@/components/core";
 
-import { useResumeBuilder } from "../../ResumeProvider";
+import { useResumeBuilder } from "../../ResumeBuilderProvider";
 import { toTimestamp } from "@/library/utilities";
 
 export const SidebarExperiences = () => {

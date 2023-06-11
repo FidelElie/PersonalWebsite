@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 import styles from "./Resume.module.css";
 
 import { clc } from "@/library/utilities";
 import { useEventHandler, useTouch } from "@/library/hooks";
 
-import { Box, Flex, Icon } from "@/components/core";
+import { Box, Button, Copy, Flex, Icon, Link, Show } from "@/components/core";
 
 import { AboutBlock } from "./_Resume/Blocks/AboutBlock";
 import { ContactsBlock } from "./_Resume/Blocks/ContactsBlock";
@@ -19,7 +20,7 @@ import { LanguagesBlock } from "./_Resume/Blocks/LanguagesBlock";
 import { InterestsBlock } from "./_Resume/Blocks/InterestsBlock";
 
 import { Sidebar } from "./_Resume/Sidebar";
-import { useResumeBuilder } from "./ResumeProvider";
+import { useResumeBuilder } from "./ResumeBuilderProvider";
 
 type Position = { left: number | null, top: number | null, scale: number | null }
 
@@ -34,7 +35,7 @@ export const Resume = () => {
 	const [dragStarted, setDragStarted] = useState(false);
 	const [mouseMoving, setMouseMoving] = useState(false);
 
-	const { setView } = useResumeBuilder();
+	const { setView, settings } = useResumeBuilder();
 
 	const touchConfig = useTouch<HTMLDivElement>({
 		onTouchMove: (event) => {
@@ -151,6 +152,13 @@ export const Resume = () => {
 			>
 				<Icon name="menu-5-fill" className="text-xl dark:text-white"/>
 			</button>
+			<Button
+				className="no-print items-center absolute z-10 top-5 right-5"
+				onClick={() => window.print()}
+			>
+				<Icon name="printer-fill" className="text-white mr-1"/>
+				Print
+			</Button>
 			<Sidebar/>
 			<Box
 				className={styles.CurriculumVitaeContainerTrack}
@@ -161,15 +169,20 @@ export const Resume = () => {
 				}}
 			>
 				<Box as="article" ref={page} className={styles.CurriculumVitaePage}>
-					<Flex.Column className="w-1/3 p-5 flex-shrink-0 bg-blue-500 relative space-y-4">
+					<Flex.Column className="w-1/3 p-5 flex-shrink-0 bg-blue-500 relative space-y-3">
 						<AboutBlock/>
 						<EducationBlock />
 						<ActivitiesBlock />
 						<LanguagesBlock />
 						<InterestsBlock />
+						<Show if={settings.showReactTag}>
+							<button onClick={() => setView("settings")}>
+								<Copy className="absolute bottom-2 text-white text-sm">Made with React</Copy>
+							</button>
+						</Show>
 					</Flex.Column>
 					<Flex.Column className="flex flex-col w-2/3 p-5 relative" id="main">
-						<Box className="space-y-5">
+						<Box className="space-y-3">
 							<Box className="space-y-1">
 								<HeadingBlock/>
 								<ContactsBlock />
@@ -178,9 +191,26 @@ export const Resume = () => {
 							<ProjectsBlock/>
 							<ExperiencesBlock/>
 						</Box>
+						<Show if={settings.showWebsiteLink}>
+							<button onClick={() => setView("settings")}>
+								<WebsiteLink />
+							</button>
+						</Show>
 					</Flex.Column>
 				</Box>
 			</Box>
 		</Box>
+	)
+}
+
+const WebsiteLink = () => {
+	const [currentUrl, setCurrentUrl] = useState("");
+
+	useEffect(() => { setCurrentUrl(window.location.href); }, []);
+
+	return (
+		<Copy className="absolute bottom-2 text-sm">
+			CV can be found at <Link href={currentUrl}>{currentUrl}</Link>
+		</Copy>
 	)
 }

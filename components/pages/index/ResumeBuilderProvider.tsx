@@ -20,12 +20,21 @@ import {
 } from "@/library/api";
 import { DetailModel, ExperienceModel, ProjectModel, SkillModel, TagModel } from "@/library/models";
 
+
+const initialSettings = {
+	showReactTag: false,
+	showWebsiteLink: false,
+	useDescriptions: false
+}
+
 const initialContext: ResumeBuilderContextType = {
 	queries: { details: [], projects: [], tags: [], skills: [], experiences: [] },
 	selected: { details: [], projects: [], skills: [], experiences: [] },
 	toggleSelected: () => {},
 	view: null,
 	setView: () => {},
+	settings: initialSettings,
+	editSettings: () => {},
 	isLoading: true,
 	isSuccess: false,
 	isError: false
@@ -58,6 +67,7 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 		skillsQuery
 	]);
 	const [view, setView] = useState<SidebarViews>(null);
+	const [settings, setSettings] = useState(initialSettings);
 
 	const toggleSelected = (id: string, resource: keyof ResumeBuilderContextType["selected"]) => {
 		setSelected(current => {
@@ -75,6 +85,10 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 			}
 		});
 	}
+
+	const editSettings = (data: Partial<typeof settings>) => setSettings(currentSettings => ({
+		...currentSettings, ...data
+	}));
 
 	useEffect(() => {
 		if (detailsQuery.data && !initialLoadComplete.current) {
@@ -124,6 +138,8 @@ export const ResumeBuilderProvider = (props: ResumeBuilderProps) => {
 				skills: skillsQuery.isSuccess ? skillsQuery.data : [],
 				experiences: experiencesQuery.isSuccess ? experiencesQuery.data : []
 			},
+			settings,
+			editSettings,
 			selected,
 			toggleSelected,
 			view,
@@ -147,7 +163,7 @@ export const useResumeBuilder = () => {
 	return context;
 }
 
-export type SidebarViews = "projects" | "experiences" | "skills" | "details" | null;
+export type SidebarViews = "projects" | "experiences" | "skills" | "details" | "settings" | null;
 
 type Queries = {
 	details: DetailModel[];
@@ -165,6 +181,8 @@ export type ResumeBuilderContextType = {
 	toggleSelected: (id: string, resource: "details" | "projects" | "skills" | "experiences") => void;
 	view: SidebarViews;
 	setView: Dispatch<SetStateAction<SidebarViews>>;
+	settings: typeof initialSettings;
+	editSettings: (data: Partial<typeof initialSettings>) => void;
 	isLoading: boolean;
 	isSuccess: boolean;
 	isError: boolean;

@@ -1,8 +1,8 @@
 import { DetailModel } from "@/library/models";
 
-import { Copy, Flex, For, Heading } from "@/components/core";
+import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
-import { useResumeBuilder } from "../../ResumeProvider";
+import { useResumeBuilder } from "../../ResumeBuilderProvider";
 
 const narrowToActivities = (details: DetailModel[]) => {
 	return details.map(
@@ -17,7 +17,7 @@ export const ActivitiesBlock = () => {
 
 	return (
 		<Flex.Column className="w-full space-y-1">
-			<Heading.Two className="text-white uppercase">Activities</Heading.Two>
+			<Heading.Two className="uppercase text-secondary" light>Activities</Heading.Two>
 			<Flex.Column className="space-y-0.5">
 				<For each={activities}>
 					{activity => <ActivityEntry key={activity.id} activity={activity} />}
@@ -31,14 +31,16 @@ const ActivityEntry = (props: InterestEntryProps) => {
 	const { activity } = props;
 
 	return (
-		<Flex.Column>
+		<Box>
 			<Copy className="text-white text-sm tracking-tighter">
 				{activity.title}
 			</Copy>
-			<Copy className="text-secondary text-xs">
-				{activity.data.detail}
-			</Copy>
-		</Flex.Column>
+			<Box className="p-0.5 border border-secondary rounded w-min">
+				<Copy className="text-secondary text-xs tracking-tighter whitespace-nowrap" light>
+					{activity.data.detail}
+				</Copy>
+			</Box>
+		</Box>
 	)
 }
 

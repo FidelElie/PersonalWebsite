@@ -15,7 +15,7 @@ import {
 	Toggle
 } from "@/components/core";
 
-import { useResumeBuilder } from "../../ResumeProvider";
+import { useResumeBuilder } from "../../ResumeBuilderProvider";
 
 export const SidebarProjects = () => {
 	const { selected, queries } = useResumeBuilder();
@@ -49,7 +49,7 @@ const ProjectEntry = (props: ProjectEntryProps) => {
 		<Flex.Column key={project.id} className="space-y-1.5">
 			<Box>
 				<Flex.Row className="items-center justify-between">
-					<Heading.Three className="text-xl mb-1" underline>{project.title}</Heading.Three>
+					<Heading.Three className="text-lg mb-1" underline>{project.title}</Heading.Three>
 					<Toggle
 						className="w-12"
 						label={`Toggle ${project.title}`}

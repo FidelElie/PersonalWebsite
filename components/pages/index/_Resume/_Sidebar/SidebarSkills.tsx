@@ -4,7 +4,7 @@ import { SkillModel } from "@/library/models";
 
 import { Copy, Flex, For, Heading, Icon, Toggle } from "@/components/core";
 
-import { useResumeBuilder } from "../../ResumeProvider";
+import { useResumeBuilder } from "../../ResumeBuilderProvider";
 
 export const SidebarSkills = () => {
 	const { selected, queries } = useResumeBuilder();
@@ -36,8 +36,8 @@ const SkillEntry = (props: ProjectEntryProps) => {
 		<Flex.Column key={skill.id} className="space-y-1.5">
 			<Flex.Row className="items-center justify-between">
 				<Flex.Row className="items-center">
-					<Icon name={skill.icon} className="text-lg mr-1.5"/>
-					<Heading.Three className="text-xl mb-1" underline>{skill.name}</Heading.Three>
+					<Icon name={skill.icon} className="text-lg mr-1.5 dark:text-white"/>
+					<Heading.Three className="text-lg mb-1" underline>{skill.name}</Heading.Three>
 				</Flex.Row>
 				<Toggle
 					className="w-12"

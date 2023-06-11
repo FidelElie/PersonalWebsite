@@ -8,6 +8,7 @@ const BaseCopy = forwardRef<AsElements, BaseCopyProps>((props, ref) => {
 		htmlFor,
 		className,
 		as: Tag = "p",
+		light,
 		children
 	} = props;
 
@@ -16,7 +17,7 @@ const BaseCopy = forwardRef<AsElements, BaseCopyProps>((props, ref) => {
 		<Tag
 			id={id}
 			htmlFor={htmlFor}
-			className={clc("font-light text-gray-500 dark:text-white", className)}
+			className={clc("font-light text-gray-500", !light && "dark:text-white", className)}
 			ref={ref as any}
 		>
 			{ children }
@@ -38,6 +39,7 @@ export interface BaseCopyProps {
 	htmlFor?: string,
 	className?: string,
 	as?: "p" | "span" | "b" | "i" | "label",
+	light?: boolean;
 	children?: ReactNode
 }
 

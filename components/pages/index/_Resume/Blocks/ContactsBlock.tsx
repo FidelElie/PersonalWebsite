@@ -3,7 +3,7 @@ import type { DetailSchema, DetailModel, CONTACT_MEDIUMS } from "@/library/model
 
 import { Flex, For, Copy, Icon, IconNames } from "@/components/core";
 
-import { useResumeBuilder } from "../../ResumeProvider";
+import { useResumeBuilder } from "../../ResumeBuilderProvider";
 
 const renderTypeAsLink: typeof CONTACT_MEDIUMS[number][] = [
   "linkedin", "email", "facebook", "github", "instagram", "linkedin", "phone"
@@ -20,7 +20,7 @@ const narrowToContacts = (details: DetailModel[]) => {
 }
 
 export const ContactsBlock = () => {
-  const { selected: { details }, setView } = useResumeBuilder();
+  const { selected: { details } } = useResumeBuilder();
 
   const narrowedToContacts = narrowToContacts(details);
 
@@ -29,7 +29,7 @@ export const ContactsBlock = () => {
   ).flat();
 
   return (
-    <Flex.Row className="items-center flex-wrap" onClick={() => setView("details")}>
+    <Flex.Row className="items-center flex-wrap">
       <For each={contacts}>
         { contact => <ContactPoint key={contact.id} contact={contact}/> }
       </For>
@@ -86,15 +86,15 @@ const ContactPoint = (props: ContactPointProps) => {
       {...(BaseTag !== "div" ? { href: determineParseLink(data.medium, data.value) } : {}) }
     >
       <Flex.Row className="items-center tracking-tighter text-sm">
-        <Icon name={determineIconName(data.medium)} className="text-lg mr-0.5 text-gray-600"/>
-        <Copy
+        <Icon name={determineIconName(data.medium)} className="text-lg mr-1 text-gray-600"/>
+        <span
           className={clc(
-            "",
-            BaseTag === "a" && "underline text-primary underline-offset-4"
+            "font-light",
+            BaseTag === "a" ? "underline text-primary underline-offset-4" : "text-gray-600"
           )}
         >
           { cleanContact(data.value) }
-        </Copy>
+        </span>
       </Flex.Row>
     </BaseTag>
   )
