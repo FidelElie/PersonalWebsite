@@ -1,4 +1,4 @@
-import { DetailsFormFieldsInterface } from "../DetailsModal.data";
+import { DetailsFormFieldsInterface } from "../DetailsEditor.data";
 
 import { TextField } from "@/components/core";
 

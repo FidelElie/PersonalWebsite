@@ -126,7 +126,7 @@ const IconList = (props: IconListProps) => {
 	});
 
 	return (
-		<Box className={clc("overflow-y-auto min-h-0 max-h-40", !!numberOfIconLines && "border-y")}>
+		<Box className={clc("overflow-y-auto min-h-0 max-h-64", !!numberOfIconLines && "border-y")}>
 			<Flex.Column>
 				<Show if={numberOfIconLines} else={(
 					<Box className="p-3 border rounded">

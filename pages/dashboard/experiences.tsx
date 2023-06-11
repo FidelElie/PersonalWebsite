@@ -1,85 +1,40 @@
-import { useState } from "react";
-
-import { ExperienceModel } from "@/library/models";
 import { useFetchExperiences, useFetchTags } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
 
-import { Button, Flex, For, Icon, Copy } from "@/components/core";
-
-import { QueryHandler } from "@/components/interfaces";
-
+import { CrudHelper } from "@/components/pages/dashboard/CrudHelper";
 import { getDashboardProvider } from "@/components/pages/dashboard/DashboardProvider";
-import { DashboardLayout } from "@/components/pages/dashboard/DashboardLayout";
-import { ExperienceCard } from "@/components/pages/dashboard/experiences/ExperienceCard";
-import { ExperiencesModal } from "@/components/pages/dashboard/experiences/ExperiencesModal";
-import {
-	DeleteExperiencesModal
-} from "@/components/pages/dashboard/experiences/DeleteExperiencesModal";
+import { ExperiencesDeletion } from "@/components/pages/dashboard/experiences/ExperiencesDeletion";
+import { ExperiencesDisplay } from "@/components/pages/dashboard/experiences/ExperiencesDisplay";
+import { ExperiencesEditor } from "@/components/pages/dashboard/experiences/ExperiencesEditor";
 
 const DashboardExperiencesPage: ExtendedNextPage = () => {
 	const experiencesQuery = useFetchExperiences();
 	const tagsQuery = useFetchTags();
 
-	const [modal, setModal] = useState<string | null>(null);
-	const [selected, setSelected] = useState<ExperienceModel | null>(null);
-
-	const startEditing = (detail: ExperienceModel) => {
-		setSelected(detail);
-		setModal("experiences")
-	}
-
-	const startDeletion = (detail: ExperienceModel) => {
-		setSelected(detail);
-		setModal("delete-experience");
-	}
-
-	const closeModal = () => {
-		setModal(null);
-		setSelected(null);
-	};
-
 	return (
-		<DashboardLayout
-			headerTitle="Experiences"
-			headerOptions={(
-				<Button onClick={() => setModal("experiences")} className="flex items-center">
-					<Icon name="add-circle-fill" className="text-white mr-1" />
-					New Experience
-				</Button>
+		<CrudHelper
+			resource={experiencesQuery}
+			resourceName="Experiences"
+			dependents={{ tags: tagsQuery }}
+			display={({ resource, dependents, update, delete: _delete }) => (
+				<ExperiencesDisplay
+					experiences={resource}
+					tags={dependents!.tags.data!}
+					update={update}
+					delete={_delete}
+				/>
 			)}
-		>
-			<QueryHandler resource="experiences" query={experiencesQuery}>
-				<Flex className="flex-col space-y-4">
-					<For
-						each={experiencesQuery.data!}
-						else={<Copy>No experiences created</Copy>}
-					>
-						{
-							experience => (
-								<ExperienceCard
-									key={experience.id}
-									experience={experience}
-									tags={tagsQuery.isSuccess ? tagsQuery.data : []}
-									onEdit={startEditing}
-									onDelete={startDeletion}
-								/>
-							)
-						}
-					</For>
-				</Flex>
-				<ExperiencesModal
-					isOpen={modal === "experiences"}
+			editor={({ dependents, selected, read }) => (
+				<ExperiencesEditor
+					tags={dependents!.tags.data!}
 					experience={selected}
-					tags={tagsQuery.isSuccess ? tagsQuery.data : []}
-					onClose={closeModal}
+					cancel={read}
 				/>
-				<DeleteExperiencesModal
-					isOpen={modal === "delete-experience"}
-					experience={selected!}
-					onClose={closeModal}
-				/>
-			</QueryHandler>
-		</DashboardLayout>
+			)}
+			deletions={({ selected, read }) => (
+				<ExperiencesDeletion experience={selected!} cancel={read} />
+			)}
+		/>
 	)
 }
 

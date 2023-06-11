@@ -1,7 +1,11 @@
 import { ChangeEventHandler, forwardRef } from "react";
 
+import { clc } from "@/library/utilities";
+
 export const LongTextField = forwardRef<HTMLTextAreaElement, LongTextFieldProps>((props, ref) => {
 	const {
+		className,
+		inputClassName,
 		id,
 		label,
 		value,
@@ -17,7 +21,7 @@ export const LongTextField = forwardRef<HTMLTextAreaElement, LongTextFieldProps>
 	}
 
 	return (
-		<div className="flex">
+		<div className={clc("flex", className)}>
 			<label htmlFor={id} className="sr-only">{label}</label>
 			<textarea
 				id={id}
@@ -25,7 +29,7 @@ export const LongTextField = forwardRef<HTMLTextAreaElement, LongTextFieldProps>
 				value={value}
 				placeholder={placeholder}
 				rows={rows}
-				className="w-full rounded border text-sm border-gray-300 font-light tracking-tight py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-gray-100"
+				className={clc("w-full rounded border text-sm border-gray-300 font-light tracking-tight py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-gray-100", inputClassName)}
 				onChange={dispatchOnChange}
 				required={required}
 			/>
@@ -36,13 +40,15 @@ export const LongTextField = forwardRef<HTMLTextAreaElement, LongTextFieldProps>
 LongTextField.displayName = "LongTextField";
 
 export interface LongTextFieldProps {
-	id: string,
-	label: string,
-	placeholder?: string,
-	value?: string,
-	onChange?: (text: string) => void,
-	disabled?: boolean,
-	required?: boolean,
-	rows?: number
+	className?: string;
+	inputClassName?: string;
+	id: string;
+	label: string;
+	placeholder?: string;
+	value?: string;
+	onChange?: (text: string) => void;
+	disabled?: boolean;
+	required?: boolean;
+	rows?: number;
 }
 

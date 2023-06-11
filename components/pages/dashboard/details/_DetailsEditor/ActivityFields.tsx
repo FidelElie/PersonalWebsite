@@ -1,4 +1,4 @@
-import { DetailsFormFieldsInterface } from "../DetailsModal.data";
+import { DetailsFormFieldsInterface } from "../DetailsEditor.data";
 
 import { TextField } from "@/components/core";
 
@@ -19,7 +19,6 @@ export const ActivityFields = (props: ActivityFieldsProps) => {
 			required
 		/>
 	)
-
 }
 
 interface ActivityFieldsProps extends DetailsFormFieldsInterface {}

@@ -1,17 +1,55 @@
 import { useQueryClient } from "@tanstack/react-query";
 
-import { clc, toTimestamp } from "@/library/utilities";
+import { ExperienceModel, TagModel } from "@/library/models"
 import { useEditExperienceById } from "@/library/api";
-import { TagModel, ExperienceModel } from "@/library/models";
+import { clc, toTimestamp } from "@/library/utilities";
 
-import { Card, Flex, Heading, Icon, Copy, Show, Divider, Link, Toggle } from "@/components/core";
+import {
+	Card,
+	Copy,
+	Divider,
+	Flex,
+	For,
+	Heading,
+	Icon,
+	Link,
+	Show,
+	Toggle
+} from "@/components/core";
 import { TagsDisplay } from "@/components/interfaces";
+import { InformationDisplay } from "../InformationDisplay";
 
-export const ExperienceCard = (props: ExperienceCardProps) => {
-	const { experience, tags = [], onEdit, onDelete } = props;
+export const ExperiencesDisplay = (props: ExperiencesDisplayProps) => {
+	const { experiences, tags, update, delete: _delete } = props;
+
+	return (
+		<Flex className="flex-col space-y-4">
+			<For
+				each={experiences!}
+				else={<Copy>No experiences created</Copy>}
+			>
+				{
+					experience => (
+						<ExperienceCard
+							key={experience.id}
+							experience={experience}
+							tags={tags}
+							update={update}
+							delete={_delete}
+						/>
+					)
+				}
+			</For>
+		</Flex>
+	)
+}
+
+
+const ExperienceCard = (props: ExperienceCardProps) => {
+	const { experience, tags = [], update, delete: _delete } = props;
 
 	const queryClient = useQueryClient();
-	const editExperience = useEditExperienceById()
+	const editExperience = useEditExperienceById();
 
 	const handleActiveToggle = async (checked: boolean) => {
 		await editExperience.mutateAsync({ id: experience.id, experience: { active: checked } });
@@ -35,13 +73,13 @@ export const ExperienceCard = (props: ExperienceCardProps) => {
 				<Flex.Row className="items-center space-x-2">
 					<button
 						className="opacity-100 h-min md:opacity-0 group-hover:opacity-100"
-						onClick={() => onEdit(experience)}
+						onClick={() => update(experience.id)}
 					>
 						<Icon name="edit-line" className="text-lg dark:text-white" />
 					</button>
 					<button
 						className="opacity-100 h-min md:opacity-0 group-hover:opacity-100"
-						onClick={() => onDelete(experience)}
+						onClick={() => _delete(experience.id)}
 					>
 						<Icon name="delete-bin-line" className="text-lg dark:text-white" />
 					</button>
@@ -85,14 +123,18 @@ export const ExperienceCard = (props: ExperienceCardProps) => {
 				<TagsDisplay tagIds={experience.tags} tags={tags} className="mt-2" />
 			</Show>
 			<Divider className="my-2" />
-			<Copy className="text-sm">{experience.description}</Copy>
+			<InformationDisplay points={experience.points} description={experience.description}/>
 		</Card>
 	)
 }
 
-export interface ExperienceCardProps {
-	experience: ExperienceModel;
+type SharedProps = {
 	tags: TagModel[];
-	onEdit: (experience: ExperienceModel) => void;
-	onDelete: (experience: ExperienceModel) => void;
+	update: (id: string) => void;
+	delete: (id: string) => void;
 }
+
+export interface ExperienceCardProps extends SharedProps { experience: ExperienceModel; }
+
+
+export interface ExperiencesDisplayProps extends SharedProps { experiences: ExperienceModel[]; }

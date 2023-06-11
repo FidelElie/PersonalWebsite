@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-import type { DetailsFormFieldsInterface } from "../DetailsModal.data";
+import type { DetailsFormFieldsInterface } from "../DetailsEditor.data";
 import { toTimestamp } from "@/library/utilities";
 
 import { Copy, DateField, Flex, Show, TextField } from "@/components/core";

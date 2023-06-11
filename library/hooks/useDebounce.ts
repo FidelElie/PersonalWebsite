@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-const useDebounce = <T>(value: T, delay = 1000): readonly [T, boolean] => {
+export const useDebounce = <T>(value: T, delay = 1000): readonly [T, boolean] => {
 	const initialised = useRef(false);
 	const	timeout = useRef<NodeJS.Timeout | null>(null);
 	const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -26,5 +26,3 @@ const useDebounce = <T>(value: T, delay = 1000): readonly [T, boolean] => {
 
 	return [debouncedValue, debouncing] as const;
 }
-
-export default useDebounce;

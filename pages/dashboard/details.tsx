@@ -1,68 +1,29 @@
-import { useState } from "react";
-
 import { useFetchDetails } from "@/library/api";
 import type { ExtendedNextPage } from "@/library/types";
-import type { DetailModel } from "@/library/models";
 
-import { Button, Icon } from "@/components/core";
-
-import { QueryHandler } from "@/components/interfaces";
-
+import { CrudHelper } from "@/components/pages/dashboard/CrudHelper";
 import { getDashboardProvider } from "@/components/pages/dashboard/DashboardProvider";
-import { DashboardLayout } from "@/components/pages/dashboard/DashboardLayout";
-import { DetailSections } from "@/components/pages/dashboard/details/DetailSections";
-import { DetailsModal } from "@/components/pages/dashboard/details/DetailsModal";
-import { DeleteDetailsModal } from "@/components/pages/dashboard/details/DeleteDetailsModal";
+import { DetailsDeletion } from "@/components/pages/dashboard/details/DetailsDeletion";
+import { DetailsDisplay } from "@/components/pages/dashboard/details/DetailsDisplay";
+import { DetailsEditor } from "@/components/pages/dashboard/details/DetailsEditor";
 
 const DashboardDetailsPage: ExtendedNextPage = () => {
 	const detailsQuery = useFetchDetails();
 
-	const [modal, setModal] = useState<string | null>(null);
-	const [selected, setSelected] = useState<DetailModel | null>(null);
-
-	const startEditing = (detail: DetailModel) => {
-		setSelected(detail);
-		setModal("details")
-	}
-
-	const startDeletion = (detail: DetailModel) => {
-		setSelected(detail);
-		setModal("delete-detail");
-	}
-
-	const closeModal = () => {
-		setModal(null);
-		setSelected(null);
-	};
-
 	return (
-		<DashboardLayout
-			headerTitle="Details"
-			headerOptions={(
-				<Button onClick={() => setModal("details")} className="flex items-center">
-					<Icon name="add-circle-fill" className="text-white mr-1"/>
-					New Detail
-				</Button>
+		<CrudHelper
+			resource={detailsQuery}
+			resourceName="Details"
+			display={({ resource, update, delete: _delete }) => (
+				<DetailsDisplay
+					details={resource}
+					update={update}
+					delete={_delete}
+				/>
 			)}
-		>
-			<QueryHandler resource="details" query={detailsQuery}>
-				<DetailSections
-					details={detailsQuery.data!}
-					startEditing={startEditing}
-					startDeletion={startDeletion}
-				/>
-				<DetailsModal
-					isOpen={modal === "details"}
-					detail={selected}
-					onClose={closeModal}
-				/>
-				<DeleteDetailsModal
-					isOpen={modal === "delete-detail" && !!selected}
-					detail={selected!}
-					onClose={closeModal}
-				/>
-			</QueryHandler>
-		</DashboardLayout>
+			editor={({ selected, read }) => <DetailsEditor detail={selected} cancel={read}/> }
+			deletions={({ selected, read }) => <DetailsDeletion detail={selected!} cancel={read}/>}
+		/>
 	)
 }
 

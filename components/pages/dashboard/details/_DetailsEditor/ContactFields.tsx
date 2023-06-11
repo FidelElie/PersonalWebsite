@@ -1,6 +1,6 @@
 import { CONTACT_MEDIUMS } from "@/library/models";
 
-import type { DetailsFormFieldsInterface } from "../DetailsModal.data";
+import type { DetailsFormFieldsInterface } from "../DetailsEditor.data";
 
 import { Copy, Select, TextField } from "@/components/core";
 

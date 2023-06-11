@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { Tag, TagSchema, TagModel } from "@/library/models";
+import { useQueryStatuses } from "@/library/hooks";
 import { useCreateTags, useEditTagById } from "@/library/api";
+import { Tag, TagSchema, TagModel } from "@/library/models";
 
-import { Button, Flex, Form, Icon, TextField } from "@/components/core"
+import { Button, Flex, Form, Icon, Loader, Show, TextField } from "@/components/core"
 
 export const TagInput = (props: TagInputProps) => {
 	const { tag, onClose } = props;
@@ -14,6 +15,7 @@ export const TagInput = (props: TagInputProps) => {
 
 	const createTags = useCreateTags();
 	const editTag = useEditTagById();
+	const { isLoading } = useQueryStatuses([createTags, editTag]);
 
 	const editFields = (data: Partial<typeof fields>) => setFields(
 		currentFields => ({ ...currentFields, ...data })
@@ -63,19 +65,21 @@ export const TagInput = (props: TagInputProps) => {
 					/>
 				</Flex.Column>
 				<Flex.Row className="items-center justify-between w-full">
-					<button
-						onClick={onClose}
-						className="text-secondary underline text-sm decoration-primary underline-offset-2 decoration-2"
-					>
-						Close
-					</button>
-					<Button.Submit
-						className="flex items-center h-8"
-						disabled={createTags.isLoading || !fields.name}
-					>
-						{ !tag ? "Create" : "Edit" }
-						<Icon name={!tag ? "add-circle-line" : "edit-line"} className="text-lg ml-2" />
-					</Button.Submit>
+					<Show if={!isLoading} else={<Loader>Submitting tag changes... Please wait</Loader>}>
+						<button
+							onClick={onClose}
+							className="text-secondary underline text-sm decoration-primary underline-offset-2 decoration-2 dark:text-white"
+						>
+							Close
+						</button>
+						<Button.Submit
+							className="flex items-center h-8"
+							disabled={createTags.isLoading || !fields.name}
+						>
+							{ !tag ? "Create" : "Edit" }
+							<Icon name={!tag ? "add-circle-line" : "edit-line"} className="text-lg ml-2" />
+						</Button.Submit>
+					</Show>
 				</Flex.Row>
 			</Flex.Column>
 		</Form>

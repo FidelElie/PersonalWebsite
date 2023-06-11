@@ -1,30 +1,32 @@
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { useQueryStatuses } from "@/library/hooks";
 import { useCreateSkills, useEditSkillById } from "@/library/api";
-import { Skill, SkillModel, SkillSchema, TagModel } from "@/library/models";
+import { TagModel, SkillModel, SkillSchema, Skill } from "@/library/models";
 
 import {
 	Form,
 	TextField,
 	Flex,
 	Button,
-	Modal,
 	Heading,
-	Divider,
 	IconNames,
-	type IconProps,
-	type ModalConfiguredProps,
+	Card,
+	Loader,
+	Show,
+	type IconProps
 } from "@/components/core";
 import { TagsSelector, IconPicker } from "@/components/interfaces";
 
-export const SkillsModal = (props: ProjectsModalProps) => {
-	const { isOpen, onClose, skill, skills, tags } = props;
+export const SkillsEditor = (props: SkillsEditorProps) => {
+	const { tags, skill, skills, cancel } = props;
 
 	const queryClient = useQueryClient();
 	const createSkills = useCreateSkills();
 	const editSkill = useEditSkillById();
 	const [fields, setFields] = useState(populateFields(skill));
+	const { isLoading } = useQueryStatuses([createSkills, editSkill]);
 
 	const usedIcons = skills.filter(
 		entry => skill ? skill.id !== entry.id : true
@@ -48,20 +50,16 @@ export const SkillsModal = (props: ProjectsModalProps) => {
 			}
 
 			queryClient.invalidateQueries(["skills"]);
-			onClose();
+			cancel();
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
-	useEffect(() => { if (!isOpen) { setFields(populateFields()); } }, [isOpen]);
-
 	useEffect(() => { setFields(populateFields(skill)) }, [skill]);
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header>{!skill ? "Create new skill" : `Edit skill`}</Modal.Header>
-			<Divider className="my-2"/>
+		<Card className="p-3 md:w-1/2">
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">
 					<TextField
@@ -87,18 +85,27 @@ export const SkillsModal = (props: ProjectsModalProps) => {
 					/>
 				</Flex>
 				<Flex className="items-center justify-between">
-					<button
-						type="button"
-						className="underline text-sm text-blue-500"
-						onClick={onClose}
-					>
-						Cancel
-					</button>
-					<Button.Submit>Submit</Button.Submit>
+					<Show if={!isLoading} else={<Loader>Submitting skill changes... Please wait</Loader>}>
+						<button
+							type="button"
+							className="underline text-sm text-blue-500"
+							onClick={cancel}
+						>
+							Cancel
+						</button>
+						<Button.Submit>Submit</Button.Submit>
+					</Show>
 				</Flex>
 			</Form>
-		</Modal>
+		</Card>
 	)
+}
+
+export interface SkillsEditorProps {
+	tags: TagModel[];
+	skill?: SkillModel;
+	skills: SkillModel[],
+	cancel: () => void
 }
 
 const populateFields = (
@@ -114,9 +121,3 @@ const populateFields = (
 }
 
 type WithOptionalIcon<T> = Omit<T, "icon"> & { icon?: IconProps["name"] };
-
-export interface ProjectsModalProps extends ModalConfiguredProps {
-	skill?: SkillModel | null;
-	skills: SkillModel[];
-	tags: TagModel[];
-}

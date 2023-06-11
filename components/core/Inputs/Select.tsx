@@ -82,6 +82,7 @@ export function Select<Value extends string | string[], Option extends unknown>(
 					ref={refs.setReference}
 					className={clc(
 						"relative py-2 px-3 rounded bg-white w-full border text-sm border-gray-200 text-left",
+						"flex justify-between items-center",
 						"dark:text-white dark:border-gray-100 dark:bg-gray-700",
 						selectClassName
 					)}
@@ -93,6 +94,14 @@ export function Select<Value extends string | string[], Option extends unknown>(
 							valueDisplay(getAccessedOptions())
 						)
 					}
+					<svg
+						width="1em"
+						height="1em"
+						fill="currentColor"
+						className="text-xl text-gray-500 dark:text-white flex-shrink-0"
+					>
+						<use href={`/remixicon.symbol.svg#ri-arrow-down-s-line`}></use>
+					</svg>
 				</Listbox.Button>
 				<FloatingPortal>
 					<Transition

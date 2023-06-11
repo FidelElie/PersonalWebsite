@@ -2,9 +2,18 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { useDeleteTags } from "@/library/api";
 
-import { Button, Copy, Divider, Flex, Modal, type ModalConfiguredProps } from "@/components/core";
+import {
+	Button,
+	Copy,
+	Divider,
+	Flex,
+	Modal,
+	Show,
+	Loader,
+	type ModalConfiguredProps
+} from "@/components/core";
 
-export const DeleteTagsModal = (props: DeleteTagsModalProps) => {
+export const TagsDeletionModal = (props: TagsDeletionModalProps) => {
 	const { isOpen, onClose, selected = [], onSuccess } = props;
 
 	const queryClient = useQueryClient();
@@ -30,20 +39,24 @@ export const DeleteTagsModal = (props: DeleteTagsModalProps) => {
 				Are you sure you would like to <Copy.Bold>{selected.length} tags</Copy.Bold>? Confirm your choice below.
 			</Copy>
 			<Flex className="items-center justify-between">
-				<button
-					type="button"
-					className="underline text-sm text-blue-500"
-					onClick={onClose}
-				>
-					Cancel
-				</button>
-				<Button onClick={handleConfirmation}>Submit</Button>
+				<Show if={!deleteTags.isLoading} else={(
+					<Loader>Deleting tag{selected.length > 1 ? "s" : ""}... Please wait</Loader>
+				)}>
+					<button
+						type="button"
+						className="underline text-sm text-blue-500"
+						onClick={onClose}
+					>
+						Cancel
+					</button>
+					<Button onClick={handleConfirmation}>Submit</Button>
+				</Show>
 			</Flex>
 		</Modal>
 	)
 }
 
-interface DeleteTagsModalProps extends ModalConfiguredProps {
+interface TagsDeletionModalProps extends ModalConfiguredProps {
 	selected: string[],
 	onSuccess?: () => void,
 }

@@ -20,24 +20,26 @@ export const TagsSelector = (props: TagsSelectorProps) => {
 			options={tags}
 			onChange={onChange}
 			placeholder="Select Tags"
-			selectClassName="flex flex-wrap min-h-12"
+			selectClassName="min-h-12"
 			valueDisplay={tags => (
-				<For each={tags || []}>
-					{
-						tag => (
-							<Box as="span" key={tag.id} className="p-0.5">
-								<Card>
-									<Flex as="span" className="p-1 items-center">
-										<Copy className="text-xs mr-2">{tag.name}</Copy>
-										<Box role="button" onClick={(event) => removeTag(event, tag.id)}>
-											<Icon name="close-circle-line" className="text-lg text-gray-500" />
-										</Box>
-									</Flex>
-								</Card>
-							</Box>
-						)
-					}
-				</For>
+				<Flex.Row className="flex-wrap">
+					<For each={tags || []}>
+						{
+							tag => (
+								<Box as="span" key={tag.id} className="p-0.5">
+									<Card>
+										<Flex as="span" className="p-1 items-center">
+											<Copy className="text-xs mr-2">{tag.name}</Copy>
+											<Box role="button" onClick={(event) => removeTag(event, tag.id)}>
+												<Icon name="close-circle-line" className="text-lg text-gray-500" />
+											</Box>
+										</Flex>
+									</Card>
+								</Box>
+							)
+						}
+					</For>
+				</Flex.Row>
 			)}
 			optionDisplay={(option, selected) => (
 				<Flex.Row className="items-center justify-between w-fill">

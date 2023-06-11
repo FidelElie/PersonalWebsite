@@ -1,6 +1,6 @@
 import { LanguageProficiencies } from "@/library/models";
 
-import type { DetailsFormFieldsInterface } from "../DetailsModal.data";
+import type { DetailsFormFieldsInterface } from "../DetailsEditor.data";
 
 import { Copy, Select } from "@/components/core";
 

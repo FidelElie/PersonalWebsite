@@ -1,20 +1,58 @@
 import { useQueryClient } from "@tanstack/react-query";
 
-import { clc } from "@/library/utilities";
+
+import type { ProjectModel, TagModel } from "@/library/models";
 import { useEditProjectById } from "@/library/api";
-import { ProjectModel, TagModel } from "@/library/models";
+import { clc } from "@/library/utilities";
 
-import { Card, Copy, Divider, Flex, Heading, Icon, Link, Show, Toggle } from "@/components/core";
+import {
+	Flex,
+	For,
+	Copy,
+	Card,
+	Divider,
+	Heading,
+	Icon,
+	Link,
+	Show,
+	Toggle
+} from "@/components/core";
 import { TagsDisplay } from "@/components/interfaces";
+import { InformationDisplay } from "../InformationDisplay";
 
-export const ProjectCard = (props: ProjectCardProps) => {
-	const { project, tags, onEdit, onDelete } = props;
+export const ProjectsDisplay = (props: ProjectsDisplayProps) => {
+	const { projects, tags, update, delete: _delete } = props;
+
+	return (
+		<Flex className="flex-col space-y-4">
+			<For
+				each={projects}
+				else={<Copy>No projects created</Copy>}
+			>
+				{
+					project => (
+						<ProjectCard
+							key={project.id}
+							project={project}
+							tags={tags}
+							update={update}
+							delete={_delete}
+						/>
+					)
+				}
+			</For>
+		</Flex>
+	)
+}
+
+const ProjectCard = (props: ProjectCardProps) => {
+	const { project, tags, update, delete: _delete } = props;
 
 	const queryClient = useQueryClient();
-	const editProject = useEditProjectById();
+	const editProject = useEditProjectById();1
 
 	const handleActiveToggle = async (checked: boolean) => {
-		await editProject.mutateAsync({ id: project.id, project: { active: checked }});
+		await editProject.mutateAsync({ id: project.id, project: { active: checked } });
 		queryClient.invalidateQueries(["projects"]);
 	}
 
@@ -27,13 +65,13 @@ export const ProjectCard = (props: ProjectCardProps) => {
 				<Flex.Row className="items-center space-x-2">
 					<button
 						className="opacity-100 md:opacity-0 group-hover:opacity-100"
-						onClick={() => onEdit(project)}
+						onClick={() => update(project.id)}
 					>
 						<Icon name="edit-line" className="text-lg dark:text-white" />
 					</button>
 					<button
 						className="opacity-100 md:opacity-0 group-hover:opacity-100"
-						onClick={() => onDelete(project)}
+						onClick={() => _delete(project.id)}
 					>
 						<Icon name="delete-bin-line" className="text-lg dark:text-white" />
 					</button>
@@ -47,7 +85,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
 			</Flex>
 			<Show if={project.link}>
 				<Flex.Row className="items-center overflow-hidden">
-					<Icon name="link" className="text-lg mr-2 flex-shrink-0 dark:text-white"/>
+					<Icon name="link" className="text-lg mr-2 flex-shrink-0 dark:text-white" />
 					<Link href={project.link!} className="text-sm text-ellipsis whitespace-nowrap">
 						{project.link}
 					</Link>
@@ -55,24 +93,27 @@ export const ProjectCard = (props: ProjectCardProps) => {
 			</Show>
 			<Show if={project.repo}>
 				<Flex.Row className="items-center overflow-hidden text-ellipsis">
-					<Icon name="github-fill" className="text-lg mr-2 flex-shrink-0 dark:text-white"/>
+					<Icon name="github-fill" className="text-lg mr-2 flex-shrink-0 dark:text-white" />
 					<Link href={project.repo!} className="text-sm text-ellipsis whitespace-nowrap">
 						{project.repo}
 					</Link>
 				</Flex.Row>
 			</Show>
 			<Show if={project.tags.length} else={<Copy className="text-xs my-2">No Tags added</Copy>}>
-				<TagsDisplay tagIds={project.tags} tags={tags} className="mt-2"/>
+				<TagsDisplay tagIds={project.tags} tags={tags} className="mt-2" />
 			</Show>
 			<Divider className="my-2" />
-			<Copy className="text-sm">{project.description}</Copy>
+			<InformationDisplay points={project.points} description={project.description} />
 		</Card>
 	)
 }
 
-export interface ProjectCardProps {
-	project: ProjectModel;
+type SharedProps = {
 	tags: TagModel[];
-	onEdit: (project: ProjectModel) => void;
-	onDelete: (project: ProjectModel) => void;
+	update: (id: string) => void;
+	delete: (id: string) => void;
 }
+
+export interface ProjectCardProps extends SharedProps { project: ProjectModel; }
+
+export interface ProjectsDisplayProps extends SharedProps { projects: ProjectModel[]; }

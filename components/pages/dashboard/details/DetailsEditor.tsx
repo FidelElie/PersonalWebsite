@@ -1,39 +1,41 @@
-import { useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Timestamp } from "firebase/firestore";
+import { useQueryClient } from "@tanstack/react-query";
 
+import { useQueryStatuses } from "@/library/hooks";
 import { useCreateDetails, useEditDetailById } from "@/library/api";
-import { DetailSchema, DetailModel, DETAIL_TYPES } from "@/library/models";
+import { DETAIL_TYPES, DetailModel, DetailSchema } from "@/library/models";
 
 import {
+	Card,
 	Form,
-	TextField,
 	Flex,
-	Select,
-	Button,
-	Modal,
-	Divider,
 	Heading,
+	TextField,
+	Select,
 	Copy,
-	type ModalConfiguredProps
+	Button,
+	Show,
+	Loader
 } from "@/components/core";
 
-import { EducationFields } from "./_DetailsModal/EducationFields";
-import { ContactFields } from "./_DetailsModal/ContactFields";
-import { LanguageFields } from "./_DetailsModal/LanguageFields";
-import { InterestFields } from "./_DetailsModal/InterestFields";
-import { ActivityFields } from "./_DetailsModal/ActivityFields";
+import { ActivityFields } from "./_DetailsEditor/ActivityFields";
+import { ContactFields } from "./_DetailsEditor/ContactFields";
+import { EducationFields } from "./_DetailsEditor/EducationFields";
+import { InterestFields } from "./_DetailsEditor/InterestFields";
+import { LanguageFields } from "./_DetailsEditor/LanguageFields";
 
-export const DetailsModal = (props: DetailsModalProps) => {
-	const { isOpen, onClose, detail } = props;
+export const DetailsEditor = (props: DetailsEditorProps) => {
+	const { detail, cancel } = props;
 
 	const queryClient = useQueryClient();
 	const createDetails = useCreateDetails();
 	const editDetail = useEditDetailById();
 	const [fields, setFields] = useState(populateFields(detail));
+	const { isLoading } = useQueryStatuses([createDetails, editDetail]);
 
 	const editFields = (data: Partial<DetailSchema>) => setFields(
-		currentFields => ({...currentFields, ...data})
+		currentFields => ({ ...currentFields, ...data })
 	);
 
 	const editDataFields = (data: Partial<DetailSchema["data"]>) => editFields({
@@ -49,20 +51,16 @@ export const DetailsModal = (props: DetailsModalProps) => {
 			}
 
 			queryClient.invalidateQueries(["details"]);
-			onClose();
+			cancel();
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
-	useEffect(() => {if (!isOpen) { setFields(populateFields()); } }, [isOpen]);
-
 	useEffect(() => { setFields(populateFields(detail)) }, [detail]);
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header>{!detail ? "Create new detail" : `Edit detail`}</Modal.Header>
-			<Divider className="my-2"/>
+		<Card className="p-3 md:w-1/2">
 			<Form onSubmit={handleSubmission} className="space-y-5">
 				<Flex className="flex-col space-y-2">
 					<Heading.Three className="text-lg">Detail Information</Heading.Three>
@@ -84,24 +82,26 @@ export const DetailsModal = (props: DetailsModalProps) => {
 							<Copy className="px-3 py-2 capitalize text-sm w-full">{option}</Copy>
 						)}
 					/>
-					<EducationFields fields={fields} editDataFields={editDataFields}/>
-					<ContactFields fields={fields} editDataFields={editDataFields}/>
-					<LanguageFields fields={fields} editDataFields={editDataFields}/>
-					<InterestFields fields={fields} editDataFields={editDataFields}/>
-					<ActivityFields fields={fields} editDataFields={editDataFields}/>
+					<EducationFields fields={fields} editDataFields={editDataFields} />
+					<ContactFields fields={fields} editDataFields={editDataFields} />
+					<LanguageFields fields={fields} editDataFields={editDataFields} />
+					<InterestFields fields={fields} editDataFields={editDataFields} />
+					<ActivityFields fields={fields} editDataFields={editDataFields} />
 				</Flex>
 				<Flex className="items-center justify-between">
-					<button
-						type="button"
-						className="underline text-sm text-blue-500"
-						onClick={onClose}
-					>
-						Cancel
-					</button>
-					<Button.Submit>Submit</Button.Submit>
+					<Show if={!isLoading} else={<Loader>Submitting detail changes... Please wait</Loader>}>
+						<button
+							type="button"
+							className="underline text-sm text-blue-500"
+							onClick={cancel}
+						>
+							Cancel
+						</button>
+						<Button.Submit>Submit</Button.Submit>
+					</Show>
 				</Flex>
 			</Form>
-		</Modal>
+		</Card>
 	)
 }
 
@@ -137,4 +137,7 @@ const populateDataField = (type: DetailSchema["data"]["type"]): DetailSchema["da
 	}
 }
 
-export interface DetailsModalProps extends ModalConfiguredProps { detail?: DetailModel | null; }
+export interface DetailsEditorProps {
+	detail?: DetailModel;
+	cancel: () => void;
+}

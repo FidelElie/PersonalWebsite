@@ -1,34 +1,36 @@
 import { useState, useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { Timestamp } from "firebase/firestore";
+import { useQueryClient } from "@tanstack/react-query";
 
-import { useCreateExperiences, useEditExperienceById } from "@/library/api";
-import { ExperienceSchema, ExperienceModel, TagModel } from "@/library/models";
 import { toTimestamp } from "@/library/utilities";
+import { useQueryStatuses } from "@/library/hooks";
+import { useCreateExperiences, useEditExperienceById } from "@/library/api";
+import { ExperienceModel, ExperienceSchema, TagModel, Experience } from "@/library/models";
 
 import {
-	Form,
-	TextField,
-	LongTextField,
-	Flex,
 	Button,
-	Modal,
-	DateField,
-	Show,
-	Heading,
-	Divider,
+	Card,
 	Copy,
-	type ModalConfiguredProps
+	DateField,
+	Flex,
+	Form,
+	Heading,
+	Loader,
+	LongTextField,
+	Show,
+	TextField,
+	Toggle
 } from "@/components/core";
-import { TagsSelector } from "@/components/interfaces";
+import { TagsSelector, PointsEditor } from "@/components/interfaces";
 
-export const ExperiencesModal = (props: ExperiencesModalProps) => {
-	const { isOpen, onClose, experience, tags } = props;
+export const ExperiencesEditor = (props: ExperienceEditorProps) => {
+	const { experience, tags, cancel } = props;
 
 	const queryClient = useQueryClient();
 	const createExperiences = useCreateExperiences();
 	const editExperience = useEditExperienceById();
 	const [fields, setFields] = useState(populateFields(experience));
+	const { isLoading } = useQueryStatuses([createExperiences, editExperience]);
 
 	const editFields = (data: Partial<ExperienceSchema>) => setFields(
 		currentFields => ({ ...currentFields, ...data })
@@ -41,31 +43,36 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 	const handleSubmission = async () => {
 		try {
 			if (!experience) {
-				await createExperiences.mutateAsync([fields]);
+				await createExperiences.mutateAsync([Experience.schema.parse(fields)]);
 			} else {
 				await editExperience.mutateAsync({
 					id: experience.id,
-					experience: { ...experience, ...fields }
+					experience: Experience.schema.parse({ ...experience, ...fields })
 				});
 			}
 
 			queryClient.invalidateQueries(["experiences"]);
-			onClose();
+			cancel();
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
-	useEffect(() => { if (!isOpen) { setFields(populateFields()); } }, [isOpen]);
-
 	useEffect(() => { setFields(populateFields(experience)) }, [experience]);
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
-			<Modal.Header>{!experience ? "Create new experience" : `Edit experience`}</Modal.Header>
-			<Divider className="my-2"/>
+		<Card className="p-3 md:w-1/2">
 			<Form onSubmit={handleSubmission} className="space-y-5">
-				<Flex className="flex-col space-y-2">
+				<Flex.Column className="space-y-2">
+					<Flex.Row className="space-x-2 items-center">
+						<Toggle
+							className="w-12"
+							label="Active experience"
+							checked={fields.active}
+							onChange={active => editFields({ active })}
+						/>
+						<Copy className="text-sm">Active Experience</Copy>
+					</Flex.Row>
 					<TextField
 						id="title"
 						label="Title"
@@ -90,6 +97,10 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 						onChange={description => editFields({ description })}
 						rows={5}
 						required
+					/>
+					<PointsEditor
+						points={fields.points}
+						onChange={(points) => editFields({ points })}
 					/>
 					<Heading.Three className="text-lg tracking-tight">Date Information</Heading.Three>
 					<DateField
@@ -137,19 +148,21 @@ export const ExperiencesModal = (props: ExperiencesModalProps) => {
 						value={fields.link}
 						onChange={link => editFields({ link })}
 					/>
-				</Flex>
-				<Flex className="items-center justify-between">
-					<button
-						type="button"
-						className="underline text-sm text-blue-500"
-						onClick={onClose}
-					>
-						Cancel
-					</button>
-					<Button.Submit>Submit</Button.Submit>
-				</Flex>
+				</Flex.Column>
+				<Flex.Row className="items-center justify-between">
+					<Show if={!isLoading} else={<Loader>Submitting experience change... Please wait</Loader>}>
+						<button
+							type="button"
+							className="underline text-sm text-blue-500"
+							onClick={cancel}
+						>
+							Cancel
+						</button>
+						<Button.Submit>Submit</Button.Submit>
+					</Show>
+				</Flex.Row>
 			</Form>
-		</Modal>
+		</Card>
 	)
 }
 
@@ -170,7 +183,8 @@ const populateFields = (
 	}
 }
 
-export interface ExperiencesModalProps extends ModalConfiguredProps {
-	experience?: ExperienceModel | null;
+export interface ExperienceEditorProps {
+	experience?: ExperienceModel;
 	tags: TagModel[];
+	cancel: () => void;
 }
