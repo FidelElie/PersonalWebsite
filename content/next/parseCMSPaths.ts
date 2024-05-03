@@ -5,7 +5,7 @@ import ContentConfig from "@/content.config";
 import { mergeObjects } from "@/libraries/utilities";
 
 import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
-import { getFilePathsFromDirectory } from "@/content/utilities";
+import { getFilePathsFromDirectory } from "@/content/utilities/getFilePathsFromDirectory";
 
 /**
  * Parse CMS content to their corresponding paths

@@ -1,26 +1,15 @@
 import path from "path";
 import fs from "fs/promises";
 
-import matter from "gray-matter";
 import chokidar from "chokidar";
-import picocolors from "picocolors";
 
-import { mergeObjects } from "@/libraries/utilities";
-import { RequiredObject } from "@/libraries/types";
-
-import { writePostMetadata } from "@/content/core";
 import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
-import type { ContentConfig, MetaPostEntry, PostEntryFields } from "@/content/types";
-import { getFileName, getFilePathsFromDirectory } from "@/content/utilities";
+import type { ContentConfig } from "@/content/types";
+import { contentLogger } from "@/content/utilities";
+import { MetaFile, MetaPostEntry } from "@/content/core";
 
-const logPrefix = "CMS";
-
-const logger = {
-	info: (message: string) => console.info(`[${picocolors.blue(logPrefix)}] ${message}`),
-	warn: (message: string) => console.warn(`[${picocolors.yellow(logPrefix)}] ${message}`),
-	debug: (message: string) => console.debug(`[${picocolors.gray(logPrefix)}] ${message}`),
-	error: (message: string) => console.error(`[${picocolors.red(logPrefix)}] ${message}`)
-}
+import type { RequiredObject } from "@/libraries/types";
+import { mergeObjects } from "@/libraries/utilities";
 
 export const watchCMSContent = async (contentConfig: ContentConfig) => {
 	const config = mergeObjects(DEFAULT_CONTENT_CONFIG, contentConfig);
@@ -28,85 +17,42 @@ export const watchCMSContent = async (contentConfig: ContentConfig) => {
 	const {
 		debug,
 		entries,
-		posts: {
-			postsDir,
-			emitMetadata,
-			metadataDir,
-			metadataFormat
-		},
+		posts: { postsDir },
 	} = config;
 
 	if (!entries.length) { throw new Error("No entries are registered"); }
 
-	if (emitMetadata) {
-		const outputPaths = await Promise.all(
-			entries.map(async entry => {
-				const directoryPath = path.join(postsDir, entry.id);
-
-				const outputPath = path.join(
-					metadataDir || directoryPath,
-					`${entry.id}.meta.${metadataFormat}`
-				);
-
-				const meta = await getFilePathsFromDirectory({
-					path: directoryPath,
-					recursive: true,
-					transform: async (path) => await createContentEntry(path) || []
-				});
-
-				return { path: outputPath, entry, meta: meta.flat() };
-			})
-		);
-
-		if (debug) {
-			logger.debug("Creating meta output for following paths:");
-			for (const outputPath of outputPaths) { logger.debug(outputPath.path); }
-		}
-
-		await Promise.all(
-			outputPaths.map(outputPath => writePostMetadata({
-				entry: outputPath.entry,
-				entries: outputPath.meta,
-				config
-			}))
-		);
-	}
+	// await resolveCurrentMetadata(contentConfig);
 
 	const watcher = chokidar.watch(
 		postsDir,
-		{ persistent: true, ignored: ["**/*.meta.*"] }
+		{ persistent: true, ignored: ["**/*.json"],  }
 	);
 
 	watcher.on("ready", () => {
-		logger.info("Content dev server is ready");
+		contentLogger.info("Content dev server is ready");
 
 		watcher.on("add", async (filePath) => {
-			logger.info(`New content entry at ${filePath}`);
+			contentLogger.info(`New content entry at ${filePath}`);
 
-			mutatePost({ action: "add", config, filePath });
+			handleWatchEvent({ action: "add", config, filePath });
 		});
 
 		watcher.on("change", (filePath) => {
-			logger.info(`Modified content entry at ${filePath}`);
+			contentLogger.info(`Modified content entry at ${filePath}`);
 
-			mutatePost({ action: "change", config, filePath });
+			handleWatchEvent({ action: "change", config, filePath });
 		});
 
 		watcher.on("unlink", (filePath) => {
-			logger.info(`Removing content entry at ${filePath}`);
+			contentLogger.info(`Removing content entry at ${filePath}`);
 
-			mutatePost({ action: "unlink", config, filePath });
+			handleWatchEvent({ action: "unlink", config, filePath });
 		});
 	});
-
 }
 
-/**
- *
- * @param context
- * @returns
- */
-const mutatePost = async (
+const handleWatchEvent = async (
 	context: {
 		action: "add" | "unlink" | "change";
 		config: RequiredObject<ContentConfig>;
@@ -117,11 +63,7 @@ const mutatePost = async (
 
 	const { entries, posts } = config;
 
-	if (config.debug) { logger.debug(`Mutating with action ${action} for path ${filePath}`); }
-
-	if (!config.posts.emitMetadata) {
-		return logger.warn("emitMetadata is disabled - skipping process");
-	}
+	if (config.debug) { contentLogger.debug(`Mutating with action ${action} for path ${filePath}`); }
 
 	const entryPaths = entries.map(
 		entry => ({ ...entry, basePath: path.join(posts.postsDir, entry.id) })
@@ -129,90 +71,122 @@ const mutatePost = async (
 
 	const entry = entryPaths.find(entry => filePath.startsWith(entry.basePath));
 
-	if (!entry) { return logger.warn(`Corresponding entry not found at path ${filePath}`); }
+	if (!entry) { return contentLogger.warn(`Corresponding entry not found at path ${filePath}`); }
 
-	const directoryPath = path.join(
-		entry.path || posts.postsDir || DEFAULT_CONTENT_CONFIG.posts.postsDir,
-		entry.id
-	);
+	const { meta: metaFileContents } = await MetaFile.readPostMeta({ config, entry });
 
-	const metaFilePath = path.join(
-		posts.metadataDir || directoryPath,
-		`${path.basename(entry.id)}.meta.${posts.metadataFormat}`
-	);
-
-	const metadataContent = await (async () => {
-		const metadata = JSON.parse((await fs.readFile(metaFilePath)).toString()) || {
-			entries: []
-		};
-
-		if (!metadata.entries || !Array.isArray(metadata.entries)) {
-			throw new Error(`Invalid entries found in metadata file ${metaFilePath}`);
-		}
-
-		const validatedEntries = metadata.entries.map(
-			(input: MetaPostEntry) => {
-				return entry.validator ? {
-					...input,
-					metadata: entry.validator(input.metadata)
-				} : input;
-			}
-		);
-
-		return { entries: validatedEntries };
-	})();
-
-	const modifiedEntries = await (async () => {
+	const info = await (async () => {
 		switch (action) {
 			case "add":
+				const newContentEntry = await MetaPostEntry.new({ filePath: filePath, post: entry.id });
+
+				const entriesWithNew = Array.from(
+					new Map(
+						metaFileContents.entries.concat([newContentEntry]).map(entry => [entry.path, entry])
+					).values()
+				);
+
+				return { entries: entriesWithNew, entry: newContentEntry };
 			case "change":
-				const contentEntry = await createContentEntry(filePath);
+				const existingEntry = metaFileContents.entries.find(entry => entry.path === filePath);
 
-				if (!contentEntry) { return logger.warn(`Content entry not found at path ${filePath}`); }
+				if (!existingEntry) {
+					return { entries: undefined, entry: undefined, error: "No existing entry found" };
+				}
 
-				const entryExists = metadataContent.entries.some(
-					(filEntry: PostEntryFields) => filEntry.slug === contentEntry.slug
+				const updatedEntry = await MetaPostEntry.update(existingEntry);
+
+				if (!updatedEntry) {
+					return { entries: undefined, entry: undefined, error: "Error updating entry" };
+				}
+
+				const updatedEntries = Array.from(
+					new Map(
+						metaFileContents.entries.concat([updatedEntry]).map(entry => [entry.path, entry])
+					).values()
 				);
 
-				if (!entryExists) { return metadataContent.entries.concat([contentEntry]); }
-
-				return metadataContent.entries.map(
-					(fileEntry: PostEntryFields) => fileEntry.slug === contentEntry.slug ? contentEntry : contentEntry
-				);
+				return { entries: updatedEntries, entry: updatedEntry };
 			case "unlink":
-				return metadataContent.entries.filter((filEntry: any) => filEntry.slug === entry.id);
+				const filteredEntries = metaFileContents.entries.filter(entry => entry.path !== filePath);
+
+				return { entries: filteredEntries };
 			default:
-				throw new Error(`Undefined action when mutating post, got ${action}`);
+				throw new Error(`Unknown action found - got ${action}`);
 		}
 	})();
 
-	if (modifiedEntries) { await writePostMetadata({ entry, entries: modifiedEntries, config }); }
-}
+	if (!info.entries) {
+		return contentLogger.warn(`Error performing ${action} on path ${filePath} - ${info.error}`);
+	}
 
-/**
- *
- * @param filePath
- * @returns
- */
-const createContentEntry = async (filePath: string) => {
-	try {
-		const source = await fs.readFile(path.resolve(filePath));
-
-		const { data: metadata, content } = matter(source);
-
-		const slug = getFileName(filePath);
-
-		if (!Object.keys(metadata).length) {
-			logger.warn(`No valid metadata was found at path ${filePath} - skipping`);
-			return null;
+	const metadataUpdates = await (async () => {
+		// Don't run metadata syncing on post content update
+		if (action === "change" || !entry.onSync) {
+			return { internal: metaFileContents.metadata, external: [] };
 		}
 
-		return { path: filePath, slug, metadata, content };
-	} catch (error) {
-		console.warn(`Couldn't pass metadata for path ${filePath}`);
-		console.error(error);
-		return null;
-	}
-}
+		const syncedData = await entry.onSync({ entry, posts: info.entries });
 
-if (require.main === module) { watchCMSContent(DEFAULT_CONTENT_CONFIG); }
+		const metadataEntriesToEdit = (entry.metadata || []).map(data => {
+			const syncedMetadata = (syncedData.metadata || {})[data.id] || [];
+
+			return { ...data, entries: syncedMetadata }
+		})
+
+		const internalMetadata = metadataEntriesToEdit.filter(entry => !entry.external);
+
+		const externalMetadata = metadataEntriesToEdit.filter(entry => entry.external);
+
+		const editedMetadata = Object.fromEntries(
+			(internalMetadata || []).map(meta => {
+				const editedMetadata = (() => {
+					if (!meta.accessor) { return meta.entries; }
+
+					return Array.from(
+						new Map(
+							meta.entries.map(
+								// FIXME
+								entry => [meta.accessor!(entry), entry]
+							)
+						).values()
+					)
+				})();
+
+				return [meta.id, editedMetadata] as const;
+			})
+		);
+
+		return { internal: editedMetadata, external: externalMetadata }
+	})();
+
+	await Promise.all(
+		metadataUpdates.external.map(async metadata => {
+			const externalMetadataFilePath = MetaFile.getExternalFilePath({ config, entry, metadata });
+
+			const editedExternalMetadata = (() => {
+				if (!metadata.accessor) { return metadata.entries; }
+
+				return Array.from(
+					new Map(
+						metadata.entries.map(
+							// FIXME
+							entry => [metadata.accessor!(entry), entry]
+						)
+					).values()
+				)
+			})();
+
+			const editedFileContents = { entries: editedExternalMetadata };
+
+			await fs.writeFile(externalMetadataFilePath, JSON.stringify(editedFileContents, null, 2));
+		})
+	);
+
+	await MetaFile.writePostMeta({
+		config,
+		entry,
+		posts: info.entries,
+		metadata: metadataUpdates.internal
+	});
+}

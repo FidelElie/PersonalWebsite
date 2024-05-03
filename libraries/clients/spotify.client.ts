@@ -13,7 +13,7 @@ const URLS = {
 }
 
 export const createSpotifyClient = (config: SpotifyClientConfig) => {
-	const { clientId, clientSecret, redirectURI } = config;
+	const { clientId, clientSecret, redirectURI, refreshToken } = config;
 
 	if (!clientId || !clientSecret) {
 		throw new Error("clientId and clientSecret is required to initialise Spotify client");
@@ -38,6 +38,34 @@ export const createSpotifyClient = (config: SpotifyClientConfig) => {
 
 	const generateBearerAuthClaim = (accessToken?: string) => {
 		return { Authorization: headers.Authorization || `Bearer ${accessToken}` };
+	}
+
+	const refreshAccessToken = async (token?: string, setAuth?: boolean) => {
+		const passedToken = token || refreshToken;
+
+		if (!passedToken) { throw new Error("No refresh token was provided") }
+
+		const payload = new URLSearchParams({
+			grant_type: "refresh_token",
+			refresh_token: passedToken,
+			client_id: clientId
+		});
+
+		const response = await clients.accounts<SpotifyResponses["getAccessToken"]>({
+			url: "/api/token",
+			method: "POST",
+			body: payload,
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+				Authorization: generateBasicAuthClaim()
+			}
+		});
+
+		if ((!token && refreshToken) || setAuth) {
+			headers.Authorization = `Bearer ${response.access_token}`;
+		}
+
+		return response;
 	}
 
 	return {
@@ -100,27 +128,7 @@ export const createSpotifyClient = (config: SpotifyClientConfig) => {
 		 * @param refreshToken
 		 * @returns
 		 */
-		refreshAccessToken: async (refreshToken: string, setAuth?: boolean) => {
-			const payload = new URLSearchParams({
-				grant_type: "refresh_token",
-				refresh_token: refreshToken,
-				client_id: clientId
-			});
-
-			const response = await clients.accounts<SpotifyResponses["getAccessToken"]>({
-				url: "/api/token",
-				method: "POST",
-				body: payload,
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-					Authorization: generateBasicAuthClaim()
-				}
-			});
-
-			if (setAuth) { headers.Authorization = `Bearer ${response.access_token}`; }
-
-			return response;
-		},
+		refreshAccessToken,
 		/**
 		 *
 		 * @param config
@@ -137,7 +145,7 @@ export const createSpotifyClient = (config: SpotifyClientConfig) => {
 				headers: generateBearerAuthClaim(accessToken)
 			});
 		},
-		getArtistMusic: (config: SpotifyConfigs["getArtistMusic"], accessToken?: string) => {
+		getArtistMusic: async (config: SpotifyConfigs["getArtistMusic"], accessToken?: string) => {
 			const queryParams = new URLSearchParams(
 				Object.entries(config).map(([param, value]) => [param, parseValueToString(value)])
 			);
@@ -151,7 +159,44 @@ export const createSpotifyClient = (config: SpotifyClientConfig) => {
 				headers: generateBearerAuthClaim(accessToken)
 			});
 		},
-		getAlbumTracks: (config: SpotifyConfigs["getAlbumTracks"], accessToken?: string) => {
+		getAlbum: async (config: SpotifyConfigs["getAlbum"], accessToken?: string) => {
+			const queryParams = new URLSearchParams(
+				Object.entries(config).map(([param, value]) => [param, parseValueToString(value)])
+			);
+
+			const albumId = queryParams.get("id");
+
+			queryParams.delete("id");
+
+			return clients.api<SpotifyResponses["getAlbum"]>({
+				url: `/v1/albums/${albumId}?${queryParams.toString()}`,
+				headers: generateBearerAuthClaim(accessToken)
+			});
+		},
+		getAlbums: async (config: SpotifyConfigs["getAlbums"], accessToken?: string) => {
+			const { ids } = config;
+
+			const maxNumberOfIds = 100;
+
+			const numberOfBuckets = Math.ceil(ids.length / maxNumberOfIds);
+
+			const results = await Promise.all(
+				new Array(numberOfBuckets).fill(null).map(async (_, bucketIndex) => {
+					const start = bucketIndex * ids.length;
+					const bucketIds = ids.slice(start, start + maxNumberOfIds);
+
+					const response = await clients.api<SpotifyResponses["getAlbums"]>({
+						url: `/v1/albums?ids=${parseValueToString(bucketIds)}`,
+						headers: generateBearerAuthClaim(accessToken)
+					});
+
+					return response.albums;
+				})
+			);
+
+			return results.flat();
+		},
+		getAlbumTracks: async (config: SpotifyConfigs["getAlbumTracks"], accessToken?: string) => {
 			const queryParams = new URLSearchParams(
 				Object.entries(config).map(([param, value]) => [param, parseValueToString(value)])
 			);
@@ -164,6 +209,52 @@ export const createSpotifyClient = (config: SpotifyClientConfig) => {
 				url: `/v1/albums/${albumId}/tracks?${queryParams.toString()}`,
 				headers: generateBearerAuthClaim(accessToken)
 			});
+		},
+		getArtists: async (config: SpotifyConfigs["getArtists"], accessToken?: string) => {
+			const { ids } = config;
+
+			const maxNumberOfIds = 100;
+
+			const numberOfBuckets = Math.ceil(ids.length / maxNumberOfIds);
+
+			const results = await Promise.all(
+				new Array(numberOfBuckets).fill(null).map(async (_, bucketIndex) => {
+					const start = bucketIndex * ids.length;
+					const bucketIds = ids.slice(start, start + maxNumberOfIds);
+
+					const response = await clients.api<SpotifyResponses["getArtists"]>({
+						url: `/v1/artists?ids=${parseValueToString(bucketIds)}`,
+						headers: generateBearerAuthClaim(accessToken)
+					});
+
+					return response.artists;
+				})
+			);
+
+			return results.flat();
+		},
+		getTracks: async (config: SpotifyConfigs["getTracks"], accessToken?: string) => {
+			const { ids } = config;
+
+			const maxNumberOfIds = 100;
+
+			const numberOfBuckets = Math.ceil(ids.length / maxNumberOfIds);
+
+			const results = await Promise.all(
+				new Array(numberOfBuckets).fill(null).map(async (_, bucketIndex) => {
+					const start = bucketIndex * ids.length;
+					const bucketIds = ids.slice(start, start + maxNumberOfIds);
+
+					const response = await clients.api<SpotifyResponses["getTracks"]>({
+						url: `/v1/tracks?ids=${parseValueToString(bucketIds)}`,
+						headers: generateBearerAuthClaim(accessToken)
+					});
+
+					return response.tracks;
+				})
+			);
+
+			return results.flat();
 		}
 	}
 }

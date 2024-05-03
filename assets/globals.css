@@ -2,13 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-blockquote {
-	@apply ml-8;
-	position: relative;
-}
-
-blockquote::before {
-	content: "";
-	position: absolute;
-	@apply bg-gray-500 h-full absolute w-1 rounded-sm -ml-4 py-2;
+#__next {
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
 }

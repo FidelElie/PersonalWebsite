@@ -1,53 +1,95 @@
 import Head from "next/head";
+import Link from "next/link";
 import Image from "next/image";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
 
 import MusicMeta from "@/posts/music.meta.json";
 
-import { MusicPostSchema } from "@/libraries/schemas";
-import { parseCMSContent, parseCMSPaths } from "@/content/next";
+import { parseCMSPaths } from "@/content/next";
+import { ContentPost } from "@/content/types";
+
+import {
+	MusicArtistMetadataSchema,
+	MusicPostMetadataSchema,
+	SpotifyImageMetadataSchema
+} from "@/libraries/schemas";
+import { fetchMusicPostInformation } from "@/libraries/functions";
 
 export default function MusicPostPage(props: MusicPostProps) {
-	const { source, metadata } = props;
+	const { source, post: { metadata, publishedAt } } = props;
 
 	const firstArtist = metadata.artists[0];
-	const firstImage = metadata.images[0];
+	const firstImageCover = metadata.cover;
 
 	return (
-		<main className="container max-w-4xl mx-auto py-5 px-5 flex flex-col gap-5 sm:gap-10 sm:flex-row">
-			{/* <Head>
-				<title>{firstArtist.name} - {metadata.name} | FiPE</title>
-			</Head> */}
-			<aside className="sm:w-1/3 flex-shrink-0 h-min sm:sticky top-0">
-				<div className="relative aspect-square rounded-lg overflow-hidden border mb-3">
-					<Image src={firstImage.url} alt={`${metadata.name} cover`} fill/>
+		<main className="container max-w-5xl mx-auto py-5 px-5 flex flex-col gap-5 sm:gap-10 sm:flex-row">
+			<Head>
+				<title>{`${firstArtist.name} - ${metadata.name} | FiPE`}</title>
+			</Head>
+			<aside className="sm:w-1/3 flex-shrink-0 h-min sm:sticky top-5">
+				<div className="relative aspect-square border mb-3">
+					{
+						firstImageCover && (
+							<Image
+								src={firstImageCover.images[0].url}
+								alt={`${metadata.name} cover`}
+								placeholder="blur"
+								blurDataURL={firstImageCover.placeholder}
+								fill
+							/>
+						)
+					}
 				</div>
-				<div className="flex flex-col items-end">
-					<ul className="text-right space-y-2">
+				<div className="flex flex-col items-end w-full">
+					<ul className="text-right space-y-2 font-light w-full">
+						<li><Link href="/music" className="text-sm">Back to music</Link></li>
+						<hr className="w-full"/>
 						<li>{metadata.type === "album" ? "LP" : "Single"}</li>
-						<li>{new Date(metadata.release).toLocaleDateString()}</li>
+						<li>{metadata.release}</li>
+						<li>{Math.ceil(metadata.duration / 1000 / 60)} mins</li>
+						{ !!metadata.genres.length && <li>{metadata.genres.join(", ")}</li> }
 					</ul>
 				</div>
 			</aside>
 			<article className="sm:w-2/3">
 				<section className="mb-4">
-					<span className="text-xl font-extra flex items-center">
-						<div className="h-7 w-7 rounded-full border mr-2">
-
+					<span className="text-xl font-extra flex items-center gap-2">
+						<div
+							className="h-12 w-12 rounded-full border relative overflow-hidden"
+						>
+							{
+								firstArtist.cover && (
+									<Image
+										src={firstArtist.cover.images[0].url}
+										alt={`${firstArtist.name} avatar`}
+										placeholder="blur"
+										blurDataURL={firstArtist.cover.placeholder}
+										fill
+									/>
+								)
+							}
 						</div>
-						{/* {firstArtist.name} */}
+						<h2 className="font-light">{firstArtist.name}</h2>
 					</span>
 					<h1 className="text-5xl">{metadata.name}</h1>
 					{
+						publishedAt && (
+							<span className="text-sm font-light mt-1">
+								Published on {new Date(publishedAt).toLocaleDateString()}
+							</span>
+						)
+					}
+					{
 						metadata.type === "album" && (
 							<p className="mt-2 text-gray-500 font-light">
-								Favourite Songs: { metadata.favourites.map(favourite => favourite.name).join(", ") }
+								Favourite Songs: { metadata.tracks.filter(track => track.favourite).map(favourite => favourite.name).join(", ") }
 							</p>
 						)
 					}
 				</section>
-				<div className="font-light space-y-6">
+				<div className="font-light space-y-6 prose lg:prose-lg">
 					<MDXRemote {...source} />
 				</div>
 			</article>
@@ -57,19 +99,40 @@ export default function MusicPostPage(props: MusicPostProps) {
 
 interface MusicPostProps {
 	source: MDXRemoteSerializeResult;
-	metadata: MusicPostSchema;
+	post: ContentPost<
+		(
+			Omit<Extract<MusicPostMetadataSchema, { type: "album" }>, "artists"> |
+			Omit<Extract<MusicPostMetadataSchema, { type: "track" }>, "artists">
+		) & {
+			cover: SpotifyImageMetadataSchema | null;
+			artists: (MusicArtistMetadataSchema & { cover: SpotifyImageMetadataSchema | null })[]
+		}
+	>;
 }
 
 export const getStaticProps: GetStaticProps<MusicPostProps, { slug: string }> = async (context) => {
 	const { params } = context;
 
-	const props = await parseCMSContent({ slug: params?.slug, meta: MusicMeta.entries });
+	if (!params?.slug) {
+		return { redirect: { destination: "/music", permanent: false } };
+	}
 
-	console.log(props);
+	const post = await fetchMusicPostInformation.local(params?.slug);
 
-	if (!props) { return { redirect: { destination: "/music", permanent: false } }; }
+	if (!post) { return { redirect: { destination: "/music", permanent: false } }; }
 
-	return { props: { ...props, metadata: MusicPostSchema.parse(props.metadata) } };
+	const source = await serialize(
+		post.content || "",
+		{
+			// mdxOptions: {
+			// 	remarkPlugins: markdown.plugins?.remarkPlugins as any,
+			// 	rehypePlugins: markdown.plugins?.rehypePlugins as any,
+			// },
+			scope: post.metadata
+		}
+	);
+
+	return { props: { source, post } };
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

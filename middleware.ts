@@ -1,21 +1,13 @@
-import * as valibot from "valibot";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
-import { spotifyEnvironment } from "@/libraries/schemas";
+import { getSpotifyEnv } from "@/libraries/schemas";
 import { createSpotifyClient } from "@/libraries/clients";
 
 export async function middleware(request: NextRequest) {
 	if (request.url.includes("/callback")) {
 		const query = new URLSearchParams((new URL(request.url)).search);
 
-		const validatedEnvironment = valibot.parse(spotifyEnvironment, process.env);
-
-		const spotifyClient = createSpotifyClient({
-			clientId: validatedEnvironment.SPOTIFY_CLIENT_ID,
-			clientSecret: validatedEnvironment.SPOTIFY_CLIENT_SECRET,
-			redirectURI: validatedEnvironment.SPOTIFY_REDIRECT_URI
-		});
+		const spotifyClient = createSpotifyClient(getSpotifyEnv());
 
 		const code = query.get("code");
 		const state = query.get("state");
@@ -35,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
 		console.log(spotifyAccessToken);
 
-		return NextResponse.redirect(new URL("/", request.url))
+		return NextResponse.redirect(new URL("/", request.url));
 	}
 
 	return NextResponse.next();

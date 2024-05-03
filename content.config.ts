@@ -1,23 +1,11 @@
 import { defineContentConfig } from "@/content/config";
 
-import { createNewMusicPost } from "@/libraries/commands";
-import { MusicPostSchema } from "@/libraries/schemas";
+import { MusicContent } from "@/posts/music.content";
 
 export default defineContentConfig(
 	{
 		debug: true,
-		entries: [
-			{
-				id: "music",
-				name: "Music",
-				onCreate: createNewMusicPost,
-				validator: (input) => MusicPostSchema.parse(input)
-			},
-			// {
-			// 	id: "projects",
-			// 	name: "Projects"
-			// }
-		],
+		entries: [MusicContent],
 		posts: {
 			metadataDir: "./posts"
 		}

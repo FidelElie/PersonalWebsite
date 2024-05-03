@@ -2,6 +2,7 @@ export type SpotifyClientConfig = {
 	clientId: string;
 	clientSecret: string;
 	redirectURI: string;
+	refreshToken?: string;
 }
 
 export type SpotifyScopes = (
@@ -73,7 +74,7 @@ export type SpotifySimplifiedArtistObject = {
 };
 
 export type SpotifyTrackObject = {
-	album: SpotifyAlbumObject<{ artists: SpotifyArtistObject[] }>;
+	album: Omit<SpotifySimplifiedAlbumObject, "genres">;
 	artists: SpotifyArtistObject[];
 	available_markets: AvailableMarkets;
 	disc_number: number;
@@ -110,6 +111,7 @@ export type SpotifyAlbumObject<T> = {
 	type: "album";
 	uri: string;
 	album_group: "album" | "single" | "compilation" | "appears_on";
+	genres: string[];
 } & T;
 
 export type SpotifySimplifiedAlbumObject = SpotifyAlbumObject<{
@@ -239,12 +241,21 @@ export type SpotifyConfigs = {
 		limit?: number;
 		offset?: number;
 	};
+	getAlbum: {
+		id: string;
+		market?: AvailableMarkets[number];
+	};
+	getAlbums: { ids: string[] | string; };
 	getAlbumTracks: {
 		id: string;
 		market?: AvailableMarkets[number];
 		limit?: number;
 		offset?: number;
-	}
+	};
+	getArtist: { id: string; market?: AvailableMarkets[number]; };
+	getArtists: { ids: string[] | string; };
+	getTrack: { id: string; market?: AvailableMarkets[number]; };
+	getTracks: { ids: string[] | string; };
 };
 
 export type SpotifyResponses = {
@@ -270,5 +281,11 @@ export type SpotifyResponses = {
 		audiobooks: SpotifyResponsePayload<{ items: SpotifySimplifiedAudiobookObject[]; }>;
 	};
 	getArtistMusic: SpotifyResponsePayload<{ items: SpotifySimplifiedAlbumObject[]; }>;
+	getAlbum: SpotifyAlbumObject<{ artists: SpotifySimplifiedArtistObject[] }>;
+	getAlbums: { albums: SpotifyAlbumObject<{ artists: SpotifySimplifiedArtistObject[] }>[]; };
 	getAlbumTracks: SpotifyResponsePayload<{ items: SpotifyTrackObject[]; }>;
+	getArtist: SpotifyArtistObject;
+	getArtists: { artists: SpotifyArtistObject[]; };
+	getTrack: SpotifyTrackObject;
+	getTracks: { tracks: SpotifyTrackObject[]; };
 };

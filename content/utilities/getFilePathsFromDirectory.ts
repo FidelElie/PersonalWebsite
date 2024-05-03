@@ -1,8 +1,8 @@
 import path from "path";
 import fs from "fs/promises";
 
+import type { PromiseOrNot } from "@/libraries/types";
 import { ensureDirExists } from "@/content/utilities/ensureDirExists";
-import { PromiseOrNot } from "@/libraries/types";
 
 /**
  * Get all file paths starting from a given directory recursively

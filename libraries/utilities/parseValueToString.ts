@@ -5,7 +5,7 @@
  */
 export const parseValueToString = (value: unknown) => {
 	if (Array.isArray(value)) {
-		return value.map(value => value.toString()).join(",");
+		return value.map(entry => entry.toString()).join(",");
 	} else if (value instanceof Date) {
 		return value.toISOString();
 	} else if (

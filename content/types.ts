@@ -1,33 +1,43 @@
 import type { CompileOptions } from "@mdx-js/mdx";
 
-import type { GenericObject, PromiseOrNot } from "@/libraries/types";
+import type { ArrayOrNot, PromiseOrNot } from "@/libraries/types";
 
-export type ContentConfig<Schema extends PostSchema = unknown> = {
-	/** Enable debug flag to provide verbose logging */
+export type ContentConfig = {
+	/**
+	 * Enable more verbose logging
+	 */
 	debug?: boolean;
-	/** Define multiple post entries for your project */
-	entries: PostEntry<Schema>[];
-	/** Configuration for posts */
-	posts?: {
-		/** Directory where posts are located - relative to root */
-		postsDir?: string;
-		/** Whether meta files should be created */
-		emitMetadata?: boolean;
-		/** Locate metadata directory will override collocation */
-		metadataDir?: string | null;
-		/** What format should metadata files be outputted in */
-		metadataFormat?: "js" | "ts" | "json";
-	};
-	/** Control build command settings */
+	/**
+	 * Register post entries here
+	 */
+	entries: PostEntry<any>[];
 	build?: {
-		/** Include content strings in metadata build output */
+		/**
+		 * Include content strings in metadata build output
+		 */
 		includeContent?: boolean;
 	};
-	/** Configure markdown settings */
+	posts?: {
+		/**
+		 * Directory where posts are located - relative to root
+		 */
+		postsDir?: string;
+		/**
+		 * Locate metadata directory will override collocation
+		 */
+		metadataDir?: string | null;
+	};
+	/**
+	 * Configure markdown settings
+	 */
 	markdown?: {
-		/** Choose markdown type */
+		/**
+		 * Choose markdown type
+		 */
 		type: "md" | "mdx";
-		/** Register plugins to control markdown */
+		/**
+		 * Register plugins to control markdown
+		 */
 		plugins?: {
 			remarkPlugins?: CompileOptions["remarkPlugins"];
 			rehypePlugins?: CompileOptions["rehypePlugins"];
@@ -35,37 +45,97 @@ export type ContentConfig<Schema extends PostSchema = unknown> = {
 	};
 }
 
-export type PostEntry<Schema extends PostSchema = unknown> = {
-	/** Identifier slug for where posts will be saved  */
+export type PostEntry<T> = {
+	/**
+	 * Identifier slug for where posts will be saved
+	 */
 	id: string;
-	/** Give entry a more human friendly name */
+	/**
+	 * Give entry a more human friendly name
+	 */
 	name?: string;
-	/** Define extra path segments when creating new posts */
-	path?: string;
-	/** Define flow for creating a new post - will revert to default process if not found */
-	onCreate?: (context: PostContext<NoInfer<Schema>>) => PromiseOrNot<void>;
-	// TODO add on edit callback
-	// onEdit?: (context: PostContext) => PromiseOrNot<void>;
-	validator?: (input: unknown) => Schema extends GenericObject ? GenericObject : unknown;
-	/** Define shared metadata between posts */
-	metadata?: MetadataEntry<Schema>[];
-};
+	/**
+	 * Define extra path segments when creating new posts
+	 */
+	path?: (
+		string |
+		((post: Pick<ContentPost<NoInfer<T>>, "slug" | "metadata">) => PromiseOrNot<string>)
+	);
+	/**
+	 * Create validator for post
+	 */
+	validator?: (input: unknown) => PromiseOrNot<T>;
+	/**
+	 * Define flow for creating a new post - will revert to default process if not found
+	 */
+	onCreate?: PostCreationContext<T>;
+	/**
+	 * Define flow for editing an existing post
+	 */
+	onEdit?: PostEditContext<T>;
+	/**
+	 * Define flow for metadata and assets when defining posts
+	 */
+	onSync?: PostSyncContext<T>;
+	/**
+	 * Define shared metadata between posts
+	 */
+	metadata?: PostMetadataEntry<any>[];
+}
 
-export type MetadataEntry<Schema extends PostSchema = unknown> = {
+export type PostMetadataEntry<T> = {
+	/**
+	 * Identifier for metadata used to create metadata files
+	*/
 	id: string;
-	onUpdate?: (entries: MetaPostEntry<Schema>[]) => PromiseOrNot<void>;
+	/**
+	 * Validate the metadata with optional validation function
+	 */
+	validator?: (input: unknown) => PromiseOrNot<T>;
+	/**
+	 * Unique accessor to be used when deduping entries
+	 */
+	accessor?: (entry: NoInfer<T>) => string;
+	/**
+	 * Determine whether metadata is created within a external file or inlined in main posts file
+	 */
+	external?: boolean | string;
 }
 
-export type PostContext<Schema extends PostSchema = unknown> = {
-	config: ContentConfig<Schema>;
-	entry: PostEntry<Schema>;
-};
-
-export type PostEntryFields = { slug: string; path: string; }
-
-export type MetaPostEntry<Schema extends PostSchema = unknown> = PostEntryFields & {
-	metadata: Schema;
-	content: string;
+export type ContentPost<T> = {
+	slug: string;
+	path: string;
+	post: string;
+	createdAt: string;
+	updatedAt?: string | null;
+	publishedAt?: string | null;
+	content?: string;
+	metadata: T;
 }
 
-export type PostSchema = GenericObject | unknown;
+type PostContext<T> = { entry: PostEntry<T>; }
+
+export type PostCreationContext<T> = (context: PostContext<T>) => PromiseOrNot<
+	ArrayOrNot<{ slug: string; path?: string; metadata: T }>
+>;
+
+export type PostEditContext<T> = (
+	context: PostContext<T> & { post: ContentPost<T> }
+) => PromiseOrNot<
+	{ slug: string; path?: string; metadata: T; }
+>
+
+export type PostSyncContext<T> = (
+	context: PostContext<T> & { posts: ContentPost<T>[] }
+) => PromiseOrNot<{
+	metadata?: { [id: string]: unknown[]; };
+}>;
+
+export type ContentFile<T> = {
+	entries: ContentPost<T>[];
+	metadata: {
+		[key: string]: unknown[];
+	};
+}
+
+export type ExternalContentFile<T> = { entries: T[]; }

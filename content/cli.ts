@@ -1,11 +1,15 @@
 import "dotenv/config";
 
 import { Command } from "commander";
-import { select } from "@inquirer/prompts";
 
 import type { ContentConfig } from "@/content/types";
-import { getContentConfig, defaultOnCreate } from "@/content/utilities";
-import {  buildCMSContent, watchCMSContent } from "@/content/commands";
+import { getContentConfig } from "@/content/utilities";
+import {
+	buildCMSContent,
+	createCMSContent,
+	publishCMSContent,
+	watchCMSContent
+} from "@/content/commands";
 
 function createDevCommand(config: ContentConfig) {
 	const devCommand = new Command("dev");
@@ -28,7 +32,7 @@ function createBuildCommand(config: ContentConfig) {
 }
 
 function createPostsCommand(config: ContentConfig) {
-	const { entries, posts } = config;
+	const { entries } = config;
 
 	const postsCommand = new Command("posts");
 
@@ -37,37 +41,35 @@ function createPostsCommand(config: ContentConfig) {
 		.description("Create a new post -  registered in config")
 		.option("--type <value>", "Type of post to create")
 		.action(async (options) => {
-			const fetchCorrespondingEntry = (id: string) => {
-				const entry = entries.find(entry => entry.id === id);
-
-				if (!entry) { throw new Error(`Couldn't find entry with corresponding id ${id}`); }
-
-				return entry;
+			if (options.type && !entries.some(entry => entry.id === options.type)) {
+				throw new Error(
+					`Invalid --type expected id to be one of: ${entries.map(entry => entry.id).join(",")}`
+				);
 			}
 
-			const { type } = options;
-
-			if (entries.length === 1) {
-				const onlyEntry = entries[0];
-
-				return (onlyEntry.onCreate || defaultOnCreate)({ config, entry: onlyEntry });
-			}
-
-			if (type) {
-				const entry = fetchCorrespondingEntry(type);
-
-				return (entry.onCreate || defaultOnCreate)({ config, entry });
-			}
-
-			const option = await select({
-				message: "What type of post would you like to create?",
-				choices: entries.map(post => ({ value: post.id, name: post.name || post.id }))
-			});
-
-			const entry = fetchCorrespondingEntry(option);
-
-			return (entry.onCreate || defaultOnCreate)({ config, entry });
+			await createCMSContent({ entries, config, ...options });
 		});
+
+	postsCommand
+		.command("publish")
+		.description("Publish new posts interactively or through optional parameters")
+		.option("--filter <value>", "Filter to a certain type of posts")
+		.option("--unpublish", "Unpublish or publish posts")
+		.action(async (options) => {
+			if (options.filter && !entries.some(entry => entry.id === options.filter)) {
+				throw new Error(
+					`Invalid --filter expected id to be one of: ${entries.map(entry => entry.id).join(",")}`
+				);
+			}
+
+			if (options["--unpublish"] && typeof options["--unpublish"] !== "boolean") {
+				throw new Error(
+					`Invalid --unpublish flag expected boolean got ${typeof options["--unpublish"]}`
+				);
+			}
+
+			await publishCMSContent({ config, ...options });
+		 });
 
 	return postsCommand;
 }

@@ -5,13 +5,19 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "@/assets/globals.css";
 
+import { Footer, Navbar } from "@/components/interfaces";
+
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useRef(new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient.current}>
       <HydrationBoundary state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <Navbar/>
+        <main className="flex flex-col flex-grow">
+          <Component {...pageProps} />
+        </main>
+        <Footer/>
       </HydrationBoundary>
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right"/>
     </QueryClientProvider>

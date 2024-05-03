@@ -1,21 +1,17 @@
 import "dotenv/config";
 
 import open from "open";
-import * as valibot from "valibot";
 import picocolors from "picocolors";
 
-import { spotifyEnvironment } from "@/libraries/schemas";
+import { getSpotifyEnv } from "@/libraries/schemas";
 import { createSpotifyClient } from "@/libraries/clients";
 
-const startSpotifyAuthFlow = () => {
+const startSpotifyAuthFlow = async () => {
 	console.log("Starting Spotify authorisation code flow");
-	const validatedEnvironment = valibot.parse(spotifyEnvironment, process.env);
 
-	const spotifyClient = createSpotifyClient({
-		clientId: validatedEnvironment.SPOTIFY_CLIENT_ID,
-		clientSecret: validatedEnvironment.SPOTIFY_CLIENT_SECRET,
-		redirectURI: validatedEnvironment.SPOTIFY_REDIRECT_URI
-	});
+	const spotifyClient = createSpotifyClient(getSpotifyEnv());
+
+	await spotifyClient.refreshAccessToken();
 
 	const url = spotifyClient.generateAuthorizationCodeFlowURL(
 		[
