@@ -5,13 +5,12 @@ import matter from "gray-matter";
 
 import { GenericObject } from "@/libraries/types";
 
-import { ContentConfig, ContentPost, PostEntry } from "@/content/types";
+import { ContentConfig, PostEntry } from "@/content/types";
 import { mergeObjects } from "@/libraries/utilities";
-import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
+import { DEFAULT_CONTENT_CONFIG, getContentConfig } from "@/content/config";
 import {
 	contentLogger,
 	ensureDirExists,
-	getContentConfig,
 	getFileName,
 	parseContent
 } from "@/content/utilities";

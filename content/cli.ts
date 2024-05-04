@@ -2,8 +2,8 @@ import "dotenv/config";
 
 import { Command } from "commander";
 
+import { getContentConfig } from "@/content/config";
 import type { ContentConfig } from "@/content/types";
-import { getContentConfig } from "@/content/utilities";
 import {
 	buildCMSContent,
 	createCMSContent,
