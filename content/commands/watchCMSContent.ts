@@ -3,7 +3,7 @@ import fs from "fs/promises";
 
 import chokidar from "chokidar";
 
-import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
+import { DEFAULT_CONTENT_CONFIG } from "@/content/defaults";
 import type { ContentConfig } from "@/content/types";
 import { contentLogger } from "@/content/utilities";
 import { MetaFile, MetaPostEntry } from "@/content/core";

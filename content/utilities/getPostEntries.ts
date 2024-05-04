@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs/promises";
 import { existsSync } from "fs";
 
-import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
+import { DEFAULT_CONTENT_CONFIG } from "@/content/defaults";
 import { ContentConfig, ContentPost } from "@/content/types";
 import { ensureDirExists } from "@/content/utilities/ensureDirExists";
 

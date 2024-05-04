@@ -8,7 +8,7 @@ import ContentConfig from "@/content.config";
 
 import { mergeObjects } from "@/libraries/utilities";
 
-import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
+import { DEFAULT_CONTENT_CONFIG } from "@/content/defaults";
 import { getFilePathsFromDirectory } from "@/content/utilities/getFilePathsFromDirectory";
 
 /**

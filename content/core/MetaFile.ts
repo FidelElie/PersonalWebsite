@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import { existsSync } from "fs";
 
 import { ensureDirExists } from "@/content/utilities";
-import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
+import { DEFAULT_CONTENT_CONFIG } from "@/content/defaults";
 import type {
 	ContentConfig,
 	ContentFile,

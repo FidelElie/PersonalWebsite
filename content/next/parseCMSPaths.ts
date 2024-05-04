@@ -1,11 +1,6 @@
 import path from "path";
 
-import ContentConfig from "@/content.config";
-
-import { mergeObjects } from "@/libraries/utilities";
-
-import { DEFAULT_CONTENT_CONFIG } from "@/content/config";
-import { getFilePathsFromDirectory } from "@/content/utilities/getFilePathsFromDirectory";
+import { getFilePathsFromDirectory } from "@/content/utilities";
 
 /**
  * Parse CMS content to their corresponding paths
@@ -15,13 +10,11 @@ import { getFilePathsFromDirectory } from "@/content/utilities/getFilePathsFromD
 export const parseCMSPaths = async <T extends MetaEntry[]>(config: ParseCMSPathsConfig<T>) => {
 	const { path: filePath, meta } = config;
 
-	const contentConfig = mergeObjects(DEFAULT_CONTENT_CONFIG, ContentConfig);
-
 	if (process.env.NODE_ENV === "development") {
 		return meta.map(entry => ({ params: { slug: entry.slug } }));
 	}
 
-	const contentPath = path.join(process.cwd(), contentConfig.posts?.postsDir || "", filePath);
+	const contentPath = path.join(process.cwd(), filePath);
 
 	const paths = getFilePathsFromDirectory({
 		path: contentPath,

@@ -4,7 +4,7 @@ import {
 	MusicArtistMetadataSchema,
 	MusicPostMetadataSchema,
 	SpotifyImageMetadataSchema
-} from "@/libraries/schemas/music.schemas";
+} from "@/libraries/schemas";
 import { onCreateMusicPost, onSyncMusicData } from "@/libraries/commands/music";
 
 export const MusicContent = definePostEntry({

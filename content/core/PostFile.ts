@@ -4,10 +4,11 @@ import fs from "fs/promises";
 import matter from "gray-matter";
 
 import { GenericObject } from "@/libraries/types";
+import { mergeObjects } from "@/libraries/utilities";
 
 import { ContentConfig, PostEntry } from "@/content/types";
-import { mergeObjects } from "@/libraries/utilities";
-import { DEFAULT_CONTENT_CONFIG, getContentConfig } from "@/content/config";
+import { getContentConfig } from "@/content/config";
+import { DEFAULT_CONTENT_CONFIG } from "@/content/defaults";
 import {
 	contentLogger,
 	ensureDirExists,
