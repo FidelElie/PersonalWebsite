@@ -1,111 +1,124 @@
-import { z } from "zod";
-import { useInfiniteQuery } from "@tanstack/react-query";
-
 import {
 	fetchMusicPosts,
 	fetchMusicArtists,
 	fetchMusicCoverBySlug,
-	fetchMusicPostBySlug
+	fetchMusicPostBySlug,
+	fetchMusicArtistBySlug
 } from "@/libraries/functions/music.functions";
-import { request } from "../clients";
-import { PaginatedResponse } from "../schemas";
-import { parseValueToString } from "../utilities";
 
-export const fetchMusicInformation = {
-	local: async function (config: {
-		offset?: number | string | null;
-		limit?: number | string | null;
-	}) {
-		return fetchMusicPosts.local({
-			limit: config.limit || 9,
-			offset: config.offset || 0,
-			transform: async (entries) => {
-				return Promise.all(
-					entries.map(async entry => {
-						const musicArtists = await fetchMusicArtists.local({
-							offset: 0,
-							limit: Number.MAX_SAFE_INTEGER,
-							filter: (artist) => entry.metadata.artists.includes(artist.spotifyId),
-							transform: (artists) => {
-								return artists.map(artist => {
-									const artistCover = fetchMusicCoverBySlug.local(artist.slug);
+export const fetchMusicInformation = async function (config: {
+	offset?: number | string | null;
+	limit?: number | string | null;
+}) {
+	return fetchMusicPosts({
+		limit: config.limit || 9,
+		offset: config.offset || 0,
+		transform: async (entries) => {
+			return Promise.all(
+				entries.map(async entry => {
+					const musicArtists = await fetchMusicArtists({
+						offset: 0,
+						limit: Number.MAX_SAFE_INTEGER,
+						filter: (artist) => entry.metadata.artists.includes(artist.spotifyId),
+						transform: (artists) => {
+							return artists.map(artist => {
+								const artistCover = fetchMusicCoverBySlug(artist.slug);
 
-									return { ...artist, cover: artistCover };
-								})
-							}
-						});
-
-						const projectCover = fetchMusicCoverBySlug.local(entry.slug);
-
-						return {
-							...entry,
-							metadata: {
-								...entry.metadata,
-								artists: musicArtists.items,
-								cover: projectCover
-							}
+								return { ...artist, cover: artistCover };
+							})
 						}
-					})
-				);
-			}
-		});
-	},
-	request: async function (
-		config?: { offset?: number | string | null; limit?: number | string | null }
-	) {
-		const params = new URLSearchParams();
+					});
 
-		if (config?.limit) { params.set("limit", parseValueToString(config.limit)); }
+					const projectCover = fetchMusicCoverBySlug(entry.slug);
 
-		if (config?.offset) { params.set("offset", parseValueToString(config.offset)); }
+					return {
+						...entry,
+						metadata: {
+							...entry.metadata,
+							artists: musicArtists.items,
+							cover: projectCover
+						}
+					}
+				})
+			);
+		}
+	});
+}
 
-		const response = await request({
-			url: `/api/music${params.size > 1 ? `?${params.toString()}` : ""}`
-		});
+export const fetchMusicPostInformationBySlug = async function (slug: string) {
+	const musicPost = await fetchMusicPostBySlug(slug);
 
-		return PaginatedResponse(z.any()).parse(response);
-	},
-	useInfiniteQuery: function (
-		config?: { offset?: number; limit?: number }
-	) {
-		return useInfiniteQuery({
-			queryKey: ["music"],
-			queryFn: ({ pageParam }) => this.request({ offset: pageParam, limit: config?.limit }),
-			initialPageParam: config?.offset || 0,
-			getPreviousPageParam: (firstPage) => firstPage.previous,
-			getNextPageParam: (lastPage) => lastPage.next,
-		})
+	if (!musicPost) { return null; }
+
+	const musicCover = fetchMusicCoverBySlug(slug);
+
+	const artistsInPost = await fetchMusicArtists({
+		filter: (artist) => musicPost.metadata.artists.includes(artist.spotifyId),
+		transform: (artists) => {
+			return Promise.all(
+				artists.map(artist => {
+					const artistCover = fetchMusicCoverBySlug(artist.slug);
+
+					return { ...artist, cover: artistCover };
+				})
+			)
+		}
+	});
+
+	return {
+		...musicPost,
+		metadata: {
+			...musicPost.metadata,
+			cover: musicCover,
+			artists: artistsInPost.items
+		}
 	}
 }
 
-export const fetchMusicPostInformation = {
-	local: async function (slug: string) {
-		const musicPost = await fetchMusicPostBySlug.local(slug);
+export const fetchMusicArtistsWithCovers = async function (config: {
+	offset?: number | string | null;
+	limit?: number | string | null;
+}) {
+	return fetchMusicArtists({
+		limit: config.limit,
+		offset: config.offset || 0,
+		transform: async (artists) => {
+			return Promise.all(
+				artists.map(async artist => {
+					const artistCover = fetchMusicCoverBySlug(artist.slug);
 
-		if (!musicPost) { return null; }
-
-		const musicCover = fetchMusicCoverBySlug.local(slug);
-
-		const artistsInPost = await fetchMusicArtists.local({
-			filter: (artist) => musicPost.metadata.artists.includes(artist.spotifyId),
-			transform: (artists) => {
-				return Promise.all(
-					artists.map(artist => {
-						const artistCover = fetchMusicCoverBySlug.local(artist.slug);
-
-						return { ...artist, cover: artistCover };
-					})
-				)
-			}
-		});
-
-		return {
-			...musicPost,
-			metadata: {
-				...musicPost.metadata,
-				cover: musicCover,
-				artists: artistsInPost.items
-			}
+					return {...artist, cover: artistCover }
+				})
+			)
 		}
+	});
+}
+
+export const fetchMusicArtistInformationBySlug = async function (slug: string) {
+	const musicArtist = fetchMusicArtistBySlug(slug);
+
+	if (!musicArtist) { return null; }
+
+	const artistCover = fetchMusicCoverBySlug(slug);
+
+	const artistPosts = await fetchMusicPosts({
+		filter: (post) => post.metadata.artists.includes(musicArtist.spotifyId),
+		transform: (posts) => posts.map(post => {
+			const postCover = fetchMusicCoverBySlug(post.slug);
+
+			return {
+				...post,
+				metadata: {
+					...post.metadata,
+					cover: postCover
+				}
+			}
+		})
+	});
+
+	return {
+		...musicArtist,
+		cover: artistCover,
+		posts: artistPosts.items
 	}
 }

@@ -1,0 +1,273 @@
+{
+  "entries": [
+    {
+      "slug": "raleigh-ritchie-time-in-a-tree",
+      "type": "project",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab67616d0000b273e5fcb17a4d3c661377fac744",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616d00001e02e5fcb17a4d3c661377fac744",
+          "width": 300,
+          "height": 300
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616d00004851e5fcb17a4d3c661377fac744",
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABLUlEQVR4nGPI699bOuNw3eJTq7ed3rbr9MYdZzbtONW26mzzqvN1S04xOARN90laFF6wOq18dXrJqvSylZlVa2JK14Xmr/JOXMigoFmnZd5m6tJn5DLB3qcnKrbbwbtX36FXx7JdQbOOgVsgV1iiRFKhQkquMiesZlpNraVumYB4iYBoIQd3NgMzazoHdza3QC4vb25JTHVfQamKaDYrVw47ZxYzSzoDE1MaK1sGA1O6vVFpa1JNXUylqkgOA1sGG3sGM1MaAyNjKjNTGiNTmq5iTrxFYV1wpTRvBgNzOgtzGhNjKgMDQwojiEqV4EtLtc3PdioQ5UljYEgFy6VApFMYGJJNlDKrAwuyXPNUJDIYGJLBgmBpJiaQtINeVn96QXFwnrFKFgNDMhNYGgDvv1oiBlKUuwAAAABJRU5ErkJggg=="
+    },
+    {
+      "slug": "saba-care-for-me",
+      "type": "project",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2734bb13f7847252cc829e05aa6",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e024bb13f7847252cc829e05aa6",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d000048514bb13f7847252cc829e05aa6",
+          "width": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAC4jAAAuIwF4pT92AAABLklEQVR4nB3OPcuCQAAA4BvSyYhL6tS86+PkIj2EtlQCwxIi3EIQmgKhsWiLhqbG1hz9F0JTLRFODY39mHjf5xc8ACGUJMl6vZ5Op4vFYjwer1aroijm87mqqkDXddd1t9ttnudZlh0Oh9FoxBizbds0TQAhbDQam83m/X5/Pp/X63U6neI45pxDCEGr1aKU7vf77/f7fD5vt9v9fr9cLkEQdDodQAgZDAbH4/HxePi+P5lMyrK8Xq9hGHqeB7rdrqIou90uTVNBEIIgOJ/Ps9mMEIIQAhhjQkgURWEY9nq94XDIGJNlWdO0ZrP5N8cYO46zXC79f4qiiKJYqVSq1Sqo1+u1Wo1zblkWY0zTNEqpYRgIIUmSgCzL7Xabc66qKsa43+9blmXbNqUUQvgDfYJQGt5PAtQAAAAASUVORK5CYII="
+    },
+    {
+      "slug": "nascent-dont-grow-up-too-soon",
+      "type": "project",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273a60fab3dccbfd6f5ee136c26",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02a60fab3dccbfd6f5ee136c26",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851a60fab3dccbfd6f5ee136c26",
+          "width": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABNElEQVR4nAXB3U6CUAAA4PNSbXVXXrTl5vxJxGmhcAyRI4QoIJCCjMISTZQkTcnI5oVtXthVvVzfB2arg6pYlu4htkuWoG3Zomaaw9CwvHAfglwKN4x+9OS5HOyIzMSfeM8DVhaSdUIeiSBxdEKfx6Klsnm5ibzKpFMcKCWOTSgOvPNFkE9g6OI0XPCvgbCLFIknM1QPUil3StihDgroPn9V276hv6hzCLWeTHECT8NMoyVxpgaKTLvcfAjGTF+6Xk6N3/3j3BdkPm2yssp74DiJFSrlr1WDqV7OBu2f79FubUr1JM2pRNUFJAfxWm4+0z838m6tbT/MYKELzRIm+FBfA5YnRaeGLKJFZFE2LpTJsWo73WmhEdV77yCGY46vDlctMQfhWZpM0wZym7dBPK9gOPUPXHuMdOyyCx8AAAAASUVORK5CYII="
+    },
+    {
+      "slug": "ama-lou-ddd",
+      "type": "project",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2737da9f1a5290e974382aee15e",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e027da9f1a5290e974382aee15e",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d000048517da9f1a5290e974382aee15e",
+          "width": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+AM25nNC6ndG7n9G8n9bAo9S+n9K8ndG7ntC6nc63mgDXvZzZv53awJ3dw6HLsY7TuJTew57bv5rav5ravJUA48Sd5cWe6cuj2beOjVkqjmQ63LuP6sid58SY5cOWAO3Mou/NovLRpuvGmKBhLWAxEcCYZPrSn/zUpPrToAD51aT61KX71qf21qmifVVONCF3USzds3zwy5njvYkA/eOx/eSz/OGwy7KRrJmBo5R+kHdehVUqg10xaUolAP/suf/vuPzpsryedaCIaZ2Ia5+Ha6R7T5pxQm5NJQDSrnDHo2TLqGyuj12eglaNelaVgl6Vd0iLZzN6Wy0AhGAoe1gimnhCknlRkXlThXVUdWdMg2pAgV0ofl4sAHtaKHdWJ5Z2QV5LMysYDzEfFCYXEHllQJN0P4ttOqzsrk8+o08wAAAAAElFTkSuQmCC"
+    },
+    {
+      "slug": "sir-november",
+      "type": "project",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2736892023452c99d13a58c7647",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e026892023452c99d13a58c7647",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d000048516892023452c99d13a58c7647",
+          "width": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAArwAAAK8AFCrDSYAAABQUlEQVR4nAE2Acn+APf5/NnBvHlYVEUxMXhZRH9kUC0iJmZHQte6sPj5+QDSvreFXEeeinWZjHukkHSlmYdZU099bmCNYUXJs6wAiWpcdGtrZ2JlgHRxrZeLlIKDfXFwSkdQdGtqfGNdAHJjYnZ7hWRfaXJhYyIaGyIaHHdlaGhgaXR3gWpnawBZSlVaZHd7bHNSRkUnKiovMTBORUd8bHJlZ3FGRFAAm5CUmZ2miW9pRjgzJysrLTAxU0lIcGBjdHqLgY6kAMOvncrIwcOwoXxiWB4TFCcbGnNaUYR5d5Ccq1xicwDDkX+3sq+rr7Clk4uffnGEaF93aWRub3WdmJJ6ZWAA38PCp356lIqFgnx7WVRXWlJRbGJfPTtDWkRCu6qpAPz6+M2ttYhib0tCTzAvPEZBSVNIT2BGS6qVmvz498geiO5l2NMWAAAAAElFTkSuQmCC"
+    },
+    {
+      "slug": "mac-miller-swimming",
+      "type": "project",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273175c577a61aa13d4fb4b6534",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02175c577a61aa13d4fb4b6534",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851175c577a61aa13d4fb4b6534",
+          "width": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAC4YAAAuGAEqqicgAAAA3ElEQVR4nGP4DwM/fvy4euXK5UsXP3748P///3///v3//5/h////f//+/f////27dzVVlXnYWVcsWfz///8/f/5ApSEKb9+4HpeQ6h0QvmDubCzSt65fzczKj0vKmD9nJhbph/fvGenpCvByLVu8EE0aZPedu3esTQwtNZUWLZiPzfCbNyoiowu8fZbMm/v////fv3//+/cPLA12+c2bN/O9fRsDQzauWI5F9/WTh5a3t61sbdu/GKT727dvnz9/BklDwLf3b399+fz7169Pr1/+////zJkz27dvBwCQrPmLHyoQxwAAAABJRU5ErkJggg=="
+    },
+    {
+      "slug": "saba",
+      "type": "artist",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5ebed8fc47f905709e79b06f12e",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616100005174ed8fc47f905709e79b06f12e",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f178ed8fc47f905709e79b06f12e",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+ANLJqs/GqM3EpMrBodHHpdLHo8e8msC2k76zjsCzjgDUzK/Qx6vLxKfJwqSVkXl+f2m2r5HFupm+tJPBt5QA1MywzMaq1s6whYJuCA0LLx8VdG5axsCiv7WXw7iYANTNsc/KrcO/ozk5LxkWEWxBKFtNPby5n8G5ncK6nQDVzrPPzLG2qYQpJhoVFRFYNCI8OC6xsJXFvaHDvJ8A1c+22c6o+erDZGJaBw0KHx0ZGyQhsq+WxsGlxr+jAN7YvfHjv///76SfmBMQByQnIS41LsG3mL+0lL2xkADdyZrm3cXy7N/CrpB0aFUlIhdPUEHQwZ64qoizpoQA5c2h8N218uXF+PHc3s2vo5h/vbilvbGPsaaEtKeFANa1d8yqbtK0evjz5/Dlxv//9/Xy7r+vi8CuiM+6kWMFuAbgbUMpAAAAAElFTkSuQmCC"
+    },
+    {
+      "slug": "nascent",
+      "type": "artist",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5eb95029c44a3aa380a3545bc39",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000517495029c44a3aa380a3545bc39",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f17895029c44a3aa380a3545bc39",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+AMrZ6c/c6tXg7Nvk7t3l79/n8OXr8+Xr8ubr8ubq8QDP1uDh5u7k6PHk5+/q7PDp7PHe4OTh5evl6e/r7PEAiIZ7k5SHu7u229zd8vLy5eTlgXJpraal6ezy4uTpAIeFfH97cYmPj6qmp7etpZaNf3ZYP72qm+rr8fDx9QCanJ17aVp1YEZ4WD+ifmeGbFlrSCSFc12Xmpioq60AiYN8XjoVXTYOXzYLfVIoo3tZdHJvXkw5aVpJdnhyAI+OjWhJKFwzCWE6EHxSKIhiQHB2fVtAJWJFJImNkQCOkJCHgXlsVDxmQBlbMQheQyprb3hXMQpePx2GiYsAgX99i46PfnhxVzANVCcAaGRmaWdsVSoAZEswgYiOAHl2c4KEh3RoXVQoAF4+I3eMqFxCLls3EHl4dYCIkBrsox83sqBtAAAAAElFTkSuQmCC"
+    },
+    {
+      "slug": "ama-lou",
+      "type": "artist",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5ebd936ef4f6e926b1c6d7ac0d0",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616100005174d936ef4f6e926b1c6d7ac0d0",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f178d936ef4f6e926b1c6d7ac0d0",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+ABEdDRkfDSIiDC4mDSEfCB8eCSolDR4hDBUeDQ4cCgAaHw4qJQ1CLw86KgtJQDA3NSUlIAY1Kg4eIQ0UHQwAKiUOKyQLMycLEBAAdFJAdlE9DRMAMSgNKSUNHyENACkkDQoZCiIkE2BNPnlSOGRBIgkSBRIgDBAcCCglDAAfJREBFQdEMRTgpZbfqa2kcEdLNhYKGAYLHAolJAwAFyQTABIGPisPzZiT6bDB2JyfSj8sFSgSFSQQGiALAA4cDAIRBE0xD8eRj+6ywMySkiUiFAsaChQfDBIdCQATGgk4LBRBLBKlgYfurbLdmpFzSCYXFgINGAYVHAcAMCYPWT4jEhIFr3Fg65B4wHBRYTkaQzAWTzccIB4GAEAuEBMUAC8yJ2RJNkMvHiAbDxUWCRUZCCskDjAkB0AmPcvlGczUAAAAAElFTkSuQmCC"
+    },
+    {
+      "slug": "sir",
+      "type": "artist",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5eb49650981041de1e313be97d8",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000517449650981041de1e313be97d8",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f17849650981041de1e313be97d8",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABKElEQVR4nAXBy0oCURgA4LOtzZzLf/5z84xM42SRZTUFFkSLiFxYahfQxC6E6wiKMKgWuggUAiGhRQTVrnWL3qDH6vvIT7P9Wztc81OcY0YaCyoBqCO70fQYBSmvpJ3yTjGXlxQs6DmQKYgS8EdNtyWQo80NHwS5TNYJ6aVaBbEvWd/wujUxGnJbrewuL0XaeZChkAUQKUDHyJMkvxVGpGXkrHWJC5Ej5SoFuECeR9WIk0Y8TUYhpixQxs9kp4qcdzX/zMCl12VrD+IcGcLkqdfrzl1n8NvxL8tfnXiL7DjyNWvIoLr3vDg/tKyv6ZOFgWFdTXuG/YXyXAN5TxfGht7roI2sgaxn6JmiLeQfllYQyJ2YaCIrSX6lghcbPGhaEKKl2MjQqpL/T+M4F3fabK0AAAAASUVORK5CYII="
+    },
+    {
+      "slug": "mac-miller",
+      "type": "artist",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5ebed3b89aa602145fde71a163a",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616100005174ed3b89aa602145fde71a163a",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f178ed3b89aa602145fde71a163a",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAABcMAAAXDAGKAo5mAAABQUlEQVR4nAE2Acn+ANnE0NzF0eLN2eXR3OLL2OLI1uTN2ujT3+rU4OrV4ADbxdHhy9jlz9vu2OTx3Ojp2eXq1uPq0+Dr1uLr1eEA28TQ3sfU6NDex7O/alVck1lo5sPR7Nnl69Pg7NThANi9zNrAz+3R4WRUXBwBA4wSKtx1kOvb5+vQ3uvR3wDVtsXZusrpydptU1s7EBd5Gyy7X3by1uXqzdvszdwA0bDA07LC6sfZjXJ9HwkMcxMhyWN579Hi6cfX6cjYAMynudiyxd24yjwzOiAKDWwmMNGLnOrL3OfC0+fC1ADNpbjNprlSQUoAAAFRGinGdI3bwNHnvtHlvtHlvtAAzaK3SjpCAAAAGg4ZGw4cfj5cwI6k58DU4LjL4rnMAIRodgMAAxoNFyQPICQMJFMiP79xlNy5zuG6zeC5zLX7v8XVcXYrAAAAAElFTkSuQmCC"
+    },
+    {
+      "slug": "raleigh-ritchie",
+      "type": "artist",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/a5998df6dfd4c3976aee56d7de23bf0a186890a2",
+          "height": 1000,
+          "width": 1000
+        },
+        {
+          "url": "https://i.scdn.co/image/4f79f25ebb8f9d283fe3d85967859e72375ea983",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/05bfb19c46bf053d766775bcd734692682872d6d",
+          "height": 200,
+          "width": 200
+        },
+        {
+          "url": "https://i.scdn.co/image/547de28f7a2a26c02d4391dd7ed348c80aab564f",
+          "height": 64,
+          "width": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA50lEQVR4nFWOIaqGQBRG3YdZXMBLYlAwGsQgWMakYNAFiFjcg8GkxSSCUdPgAgwOVhHjLMA0M87jOT/8vJM+7uG790r8hb6IzBgjhDzPwzmXOOciXdeVJInruhBCUfin27bN89y2bcMwMMZiLgl333ff9+u6DsNgWRZCSFz5a4tV4zjWdZ1lma7r8zw/L9/lx3FM0xRFke/7TdNgjL+aUgohLIrCNE3DMKqqOs/z8xqldBgGAEAcx6qqyrIMANi27dMmhHRd5zhOWZae5ymKEobhvu8fzRhbliUIAk3Tfl7SNEUIMcZ+ASMg34p/ld8mAAAAAElFTkSuQmCC"
+    }
+  ]
+}

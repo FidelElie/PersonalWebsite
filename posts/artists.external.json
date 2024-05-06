@@ -1,0 +1,65 @@
+{
+  "entries": [
+    {
+      "slug": "saba",
+      "name": "Saba",
+      "spotifyLink": "https://open.spotify.com/artist/7Hjbimq43OgxaBRpFXic4x",
+      "spotifyId": "7Hjbimq43OgxaBRpFXic4x",
+      "genres": [
+        "alternative r&b",
+        "chicago rap"
+      ]
+    },
+    {
+      "slug": "nascent",
+      "name": "Nascent",
+      "spotifyLink": "https://open.spotify.com/artist/5727wMPGcNsG22DBboWpX6",
+      "spotifyId": "5727wMPGcNsG22DBboWpX6",
+      "genres": [
+        "indie hip hop",
+        "indie r&b"
+      ]
+    },
+    {
+      "slug": "ama-lou",
+      "name": "Ama Lou",
+      "spotifyLink": "https://open.spotify.com/artist/2tAqnHDAgnGtjnlzyoa38L",
+      "spotifyId": "2tAqnHDAgnGtjnlzyoa38L",
+      "genres": [
+        "alternative r&b",
+        "r&drill",
+        "uk contemporary r&b"
+      ]
+    },
+    {
+      "slug": "sir",
+      "name": "SiR",
+      "spotifyLink": "https://open.spotify.com/artist/3QTDHixorJelOLxoxcjqGx",
+      "spotifyId": "3QTDHixorJelOLxoxcjqGx",
+      "genres": [
+        "alternative r&b",
+        "la pop"
+      ]
+    },
+    {
+      "slug": "mac-miller",
+      "name": "Mac Miller",
+      "spotifyLink": "https://open.spotify.com/artist/4LLpKhyESsyAXpc4laK94U",
+      "spotifyId": "4LLpKhyESsyAXpc4laK94U",
+      "genres": [
+        "hip hop",
+        "pittsburgh rap",
+        "rap"
+      ]
+    },
+    {
+      "slug": "raleigh-ritchie",
+      "name": "Raleigh Ritchie",
+      "spotifyLink": "https://open.spotify.com/artist/0IB0VjX9NSrGX6PjCXGVcq",
+      "spotifyId": "0IB0VjX9NSrGX6PjCXGVcq",
+      "genres": [
+        "uk contemporary r&b"
+      ]
+    }
+  ]
+}

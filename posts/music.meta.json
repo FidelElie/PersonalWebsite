@@ -1,0 +1,422 @@
+{
+  "entries": [
+    {
+      "path": "posts/music/3-5-2024/saba-care-for-me.mdx",
+      "slug": "saba-care-for-me",
+      "post": "music",
+      "metadata": {
+        "name": "CARE FOR ME",
+        "spotifyId": "6Te111t5gDZ7W94myHRqUt",
+        "spotifyLink": "https://open.spotify.com/album/6Te111t5gDZ7W94myHRqUt",
+        "artists": [
+          "7Hjbimq43OgxaBRpFXic4x"
+        ],
+        "duration": 2500129,
+        "release": "2018-04-05",
+        "rating": "Must listen",
+        "genres": [],
+        "type": "album",
+        "tracks": [
+          {
+            "spotifyId": "4YdRnTnXYwgI48kkzWy6uk",
+            "name": "BUSY / SIRENS",
+            "favourite": true
+          },
+          {
+            "spotifyId": "5AdhyCxxguV1wXde1vqgWC",
+            "name": "BROKEN GIRLS",
+            "favourite": false
+          },
+          {
+            "spotifyId": "3au0pvHqcTtszysswan6AO",
+            "name": "LIFE",
+            "favourite": false
+          },
+          {
+            "spotifyId": "7LBdv0ek7Tj2s0bgxmlrC6",
+            "name": "CALLIGRAPHY",
+            "favourite": true
+          },
+          {
+            "spotifyId": "1raxsVXIs7WrI8apWGkWDk",
+            "name": "FIGHTER",
+            "favourite": false
+          },
+          {
+            "spotifyId": "06JYno5nqk64Jeg8q2qZKy",
+            "name": "SMILE",
+            "favourite": false
+          },
+          {
+            "spotifyId": "0Q8A7MPsoFg72xcVFBsS8Q",
+            "name": "LOGOUT",
+            "favourite": false
+          },
+          {
+            "spotifyId": "3ym9gIBrWP3LKjiH2kxyr5",
+            "name": "GREY",
+            "favourite": true
+          },
+          {
+            "spotifyId": "5cZpwmXGzDvBDX9Iv6wXzx",
+            "name": "PROM / KING",
+            "favourite": true
+          },
+          {
+            "spotifyId": "7o2IbwyONZhbwYmjYXtTF4",
+            "name": "HEAVEN ALL AROUND ME",
+            "favourite": false
+          }
+        ]
+      },
+      "content": "",
+      "createdAt": "2024-05-03T23:18:04.502Z",
+      "updatedAt": "2024-05-03T23:18:04.502Z",
+      "publishedAt": null
+    },
+    {
+      "path": "posts/music/4-5-2024/nascent-dont-grow-up-too-soon.mdx",
+      "slug": "nascent-dont-grow-up-too-soon",
+      "post": "music",
+      "metadata": {
+        "name": "DON'T GROW UP TOO SOON",
+        "spotifyId": "31DPAfBVeHDM3bTxc5wI2v",
+        "spotifyLink": "https://open.spotify.com/album/31DPAfBVeHDM3bTxc5wI2v",
+        "artists": [
+          "5727wMPGcNsG22DBboWpX6"
+        ],
+        "duration": 3356792,
+        "release": "2024-04-26",
+        "rating": "Worth it",
+        "genres": [],
+        "type": "album",
+        "tracks": [
+          {
+            "spotifyId": "2s3jEDDokwMlhrhoc5aCnI",
+            "name": "Lil Chris (Intro)",
+            "favourite": true
+          },
+          {
+            "spotifyId": "12N9VEUrRcRvEOPHAYYYBk",
+            "name": "Take Your Time",
+            "favourite": true
+          },
+          {
+            "spotifyId": "2VFgYkEP5RbTxRzVM7i6Cz",
+            "name": "U Shoulda Been There",
+            "favourite": true
+          },
+          {
+            "spotifyId": "3As19hYDpTwkp9Ia2yEqVF",
+            "name": "Plata O Plomo (Remix)",
+            "favourite": false
+          },
+          {
+            "spotifyId": "5G8y6DhzM6YMorFC0rh8RK",
+            "name": "Spinnin These Blocks",
+            "favourite": false
+          },
+          {
+            "spotifyId": "2hXo9A8f3hWhclFCAkJGix",
+            "name": "Autopay (Skit)",
+            "favourite": false
+          },
+          {
+            "spotifyId": "6ui0MLJOBIjEmenfOQ5ugI",
+            "name": "Run Me Back My Bread",
+            "favourite": true
+          },
+          {
+            "spotifyId": "5rv9k7djjWFq8LzsnMkINx",
+            "name": "Mangosteen",
+            "favourite": false
+          },
+          {
+            "spotifyId": "4q2o6EShCEUFPNohiOln4d",
+            "name": "Don't Check 4 Me (feat. Duckwrth & Saba)",
+            "favourite": true
+          },
+          {
+            "spotifyId": "3IIK2PF857uUCC8rLUEkwv",
+            "name": "Hold Me",
+            "favourite": false
+          },
+          {
+            "spotifyId": "67pb8AaJkZzgXjTSHEqo1F",
+            "name": "All To Me",
+            "favourite": false
+          },
+          {
+            "spotifyId": "6S6zEbyS0FGkMcVWERd8cS",
+            "name": "Big Brown Eyes",
+            "favourite": true
+          },
+          {
+            "spotifyId": "4zs8YvAX5GZxKyEziqWvrr",
+            "name": "Time",
+            "favourite": false
+          },
+          {
+            "spotifyId": "1KRvtRhh9m6XfWOUCUQscH",
+            "name": "U A Star",
+            "favourite": false
+          },
+          {
+            "spotifyId": "6pbxPH9L6iXSYw4Xgq23RY",
+            "name": "He Got The Gas",
+            "favourite": false
+          },
+          {
+            "spotifyId": "3qOzDtXdWVAVZ0DbJbtgki",
+            "name": "Before I Leave",
+            "favourite": true
+          },
+          {
+            "spotifyId": "2fBx9NDWSdxk7NZIzJWwqQ",
+            "name": "Found You (Outro)",
+            "favourite": true
+          },
+          {
+            "spotifyId": "2Li5EVxVHq3yAXBIixJpvK",
+            "name": "LONG LIVE DOC (BONUS)",
+            "favourite": false
+          }
+        ]
+      },
+      "content": "",
+      "createdAt": "2024-05-03T23:00:41.526Z",
+      "updatedAt": "2024-05-03T23:00:41.526Z",
+      "publishedAt": null
+    },
+    {
+      "path": "posts/music/4-5-2024/ama-lou-ddd.mdx",
+      "slug": "ama-lou-ddd",
+      "post": "music",
+      "metadata": {
+        "name": "DDD",
+        "spotifyId": "4hxN3mwTeDjV8AhrgoXAQK",
+        "spotifyLink": "https://open.spotify.com/album/4hxN3mwTeDjV8AhrgoXAQK",
+        "artists": [
+          "2tAqnHDAgnGtjnlzyoa38L"
+        ],
+        "duration": 611149,
+        "release": "2018-03-28",
+        "rating": "Must listen",
+        "genres": [],
+        "type": "album",
+        "tracks": [
+          {
+            "spotifyId": "1xXk9IMrUPwqpOXXTk7sCt",
+            "name": "Tried Up",
+            "favourite": true
+          },
+          {
+            "spotifyId": "7mIVyZCp78iYt6QJl3qE6X",
+            "name": "Wrong Lesson",
+            "favourite": true
+          },
+          {
+            "spotifyId": "0jJOVtwAT6gpldYt3p6KhE",
+            "name": "Wire",
+            "favourite": true
+          }
+        ]
+      },
+      "content": "This has been a great year for R'n'B and all its subsidiaries. And after Carlos has been pestering me to listen to this project. With it being some of the best things hes listened to in a while. And after listening to it he was right, this three song EP is up there with some of the other great projects. It gives the likes of some of my favorites so far like #[music/sir-november] a run for its money, in pure quality terms. Each of the songs on it have a very distinct feel to them. With the influences changing as you go through it. From a more focused R'n'B song in Tried Up to a very jazz influenced song in Wire (my favorite song by miles, I'm a sucker for horns).\n\nEven Wrong Lesson, which initially I wasn't feeling as much as the other songs. Takes it  back in terms of its R'n'B influences and sounds more like something from the nineties. With the super punchy baseline, the hard kick and synth. To me it seems like this was intentional, it's like going back in time to the roots almost. Which is bought home by the last song, god I love horns ( I know I've said that already, but still). It almost tells a story when you listen to it, where she was going with this project. The 10 minute video that I need to get round to listening to, absolutely makes sense to me when listening to the songs without it. She made some great songs and I'm looking forward to seeing what she makes next and I will watch the video.... Eventually. Check it out for yourself below.\n\nhttps://www.youtube.com/watch?v=HcBFyVnf-_o\n",
+      "createdAt": "2024-05-04T09:51:54.341Z",
+      "updatedAt": "2024-05-04T14:16:08.601Z",
+      "publishedAt": null
+    },
+    {
+      "path": "posts/music/4-5-2024/sir-november.mdx",
+      "slug": "sir-november",
+      "post": "music",
+      "metadata": {
+        "name": "November",
+        "spotifyId": "5zdFKRmlSDwAMZ5NFVGbx9",
+        "spotifyLink": "https://open.spotify.com/album/5zdFKRmlSDwAMZ5NFVGbx9",
+        "artists": [
+          "3QTDHixorJelOLxoxcjqGx"
+        ],
+        "duration": 1966495,
+        "release": "2018-01-19",
+        "rating": "Must listen",
+        "genres": [],
+        "type": "album",
+        "tracks": [
+          {
+            "spotifyId": "67Rfh4RQognntMmU5onIbD",
+            "name": "Gone",
+            "favourite": false
+          },
+          {
+            "spotifyId": "5f9BMDIX18Mx4v6AAbMJjp",
+            "name": "That's Alright",
+            "favourite": false
+          },
+          {
+            "spotifyId": "51HuSQ3lAnMuZiPu9YBJqN",
+            "name": "Something Foreign",
+            "favourite": true
+          },
+          {
+            "spotifyId": "0wY9rA9fJkuESyYm9uzVK5",
+            "name": "D'Evils",
+            "favourite": true
+          },
+          {
+            "spotifyId": "3DdBQIpZ8gx7Zph2uUyKry",
+            "name": "Something New",
+            "favourite": true
+          },
+          {
+            "spotifyId": "0vP0RXP4RTkjTXiHa2mvZ3",
+            "name": "I Know",
+            "favourite": false
+          },
+          {
+            "spotifyId": "6V801FXxGdzXwYXz6Q4tSw",
+            "name": "Never Home",
+            "favourite": false
+          },
+          {
+            "spotifyId": "09PaypEcFmih85xXedBBKP",
+            "name": "War",
+            "favourite": true
+          },
+          {
+            "spotifyId": "6fmAlvTWtWt8JNinkGlyRU",
+            "name": "Better",
+            "favourite": false
+          },
+          {
+            "spotifyId": "6NueIkCzLhp4rXpNAiXDdh",
+            "name": "Dreaming of Me",
+            "favourite": false
+          },
+          {
+            "spotifyId": "1USFYZrDt86UdqZxuXYHUG",
+            "name": "Summer in November",
+            "favourite": true
+          }
+        ]
+      },
+      "content": "",
+      "createdAt": "2024-05-04T10:46:18.351Z",
+      "updatedAt": "2024-05-04T10:46:18.351Z",
+      "publishedAt": null
+    },
+    {
+      "path": "posts/music/4-5-2024/mac-miller-swimming.mdx",
+      "slug": "mac-miller-swimming",
+      "post": "music",
+      "metadata": {
+        "name": "Swimming",
+        "spotifyId": "5wtE5aLX5r7jOosmPhJhhk",
+        "spotifyLink": "https://open.spotify.com/album/5wtE5aLX5r7jOosmPhJhhk",
+        "artists": [
+          "4LLpKhyESsyAXpc4laK94U"
+        ],
+        "duration": 3519064,
+        "release": "2018-08-03",
+        "rating": "Must listen",
+        "genres": [],
+        "type": "album",
+        "tracks": [
+          {
+            "spotifyId": "01z2fBGB8Hl3Jd3zXe4IXR",
+            "name": "Come Back to Earth",
+            "favourite": true
+          },
+          {
+            "spotifyId": "5p7GiBZNL1afJJDUrOA6C8",
+            "name": "Hurt Feelings",
+            "favourite": true
+          },
+          {
+            "spotifyId": "2dgrYdgguVZKeCsrVb9XEs",
+            "name": "What's the Use?",
+            "favourite": false
+          },
+          {
+            "spotifyId": "0Xcy81PsJCOO6mhLZaQyQ4",
+            "name": "Perfecto",
+            "favourite": false
+          },
+          {
+            "spotifyId": "5bJ1DrEM4hNCafcDd1oxHx",
+            "name": "Self Care",
+            "favourite": true
+          },
+          {
+            "spotifyId": "16umSNZfofRpDqTvf8DIAo",
+            "name": "Wings",
+            "favourite": false
+          },
+          {
+            "spotifyId": "39NDBdU5Xkm5pCFGa5kZtI",
+            "name": "Ladders",
+            "favourite": true
+          },
+          {
+            "spotifyId": "4gT3mNJA8lnlkYFqGZ8IA2",
+            "name": "Small Worlds",
+            "favourite": true
+          },
+          {
+            "spotifyId": "1oFEAWvPHP5TdSlmIs77sV",
+            "name": "Conversation Pt. 1",
+            "favourite": false
+          },
+          {
+            "spotifyId": "3YnwIp2b99p3e5dsFTXIIx",
+            "name": "Dunno",
+            "favourite": false
+          },
+          {
+            "spotifyId": "2JmFRXaJrkAUD2cs6U20KG",
+            "name": "Jet Fuel",
+            "favourite": false
+          },
+          {
+            "spotifyId": "6dFn6my1sHK2bcf23GlHwM",
+            "name": "2009",
+            "favourite": false
+          },
+          {
+            "spotifyId": "0EA2RhRHL4KWeNa7JfD1Yw",
+            "name": "So It Goes",
+            "favourite": false
+          }
+        ]
+      },
+      "content": "First off what does this album fall under. Hip Hop, funk, a bit of soul? I don't really know. But that is probably why I love it so much. I think this album is the love child of his previous albums of GO:OD:AM which accounts for the rapping. And The Divine Feminine which was predominantly smooth R'n'B and some funk in places. It results in his best album yet in my humble opinion. Mac has his own style and he sticks to it, he is not the best rapper no but he does come up with some good stuff like:\n\n>And the stroke is just so PGA - just a pretty smart line for what he is talking about - taken from Small Worlds - Swimming\n\nHe's not the best vocalist, but he can hold a note, so when he sings it's nothing but flames. With no faux pas when it comes to autotune. The production is great throughout the album with only one song I can say that I wasn't really feeling. The rest, was awesome. He makes some great music, I hope he keeps it up with the next one. For now though I'm going to have this on repeat.\n",
+      "createdAt": "2024-05-04T14:26:13.739Z",
+      "updatedAt": "2024-05-04T14:27:55.743Z",
+      "publishedAt": null
+    },
+    {
+      "path": "posts/music/4-5-2024/raleigh-ritchie-time-in-a-tree.mdx",
+      "slug": "raleigh-ritchie-time-in-a-tree",
+      "post": "music",
+      "metadata": {
+        "name": "Time in a Tree",
+        "spotifyId": "6XI34GwbuT0JPQ3lcRleVi",
+        "spotifyLink": "https://open.spotify.com/track/6XI34GwbuT0JPQ3lcRleVi",
+        "artists": [
+          "0IB0VjX9NSrGX6PjCXGVcq"
+        ],
+        "duration": 225630,
+        "release": "2018-08-03",
+        "rating": "Must listen",
+        "genres": [],
+        "type": "track"
+      },
+      "content": "It's like me and Mr Ritchie are on the same wavelength, as I was getting a hankering for some new stuff. So much so that I had some content planned for him on the site. He decides to release something new and it is a solid song. Very solid in fact. It has all the trademark signs of a Raleigh Ritchie song for me. Genre bending check, some great vocals from the man himself. I'm just a massive fan of his work.\n\nHim (Greyworm in Game of Thrones) and Childish Gambino. (Troy in Community, because yeah I've been listening to him for ages, way before Because the Internet came out. Sorry had to be one of those fans for a moment). To me they are the perfect examples that good can come out of watching a TV show other than laughs, drama or suspense. I found an artist who hasn't done any wrong in my eyes when it comes Raleigh, he makes the music he feels like making and it bangs. How can I be against that? Now I'm just waiting for the next album to drop....\n",
+      "createdAt": "2024-05-04T14:33:27.297Z",
+      "updatedAt": "2024-05-04T16:37:39.696Z",
+      "publishedAt": null
+    }
+  ],
+  "metadata": {}
+}

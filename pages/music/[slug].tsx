@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import remarkEmbedder from "@remark-embedder/core";
 import { serialize } from "next-mdx-remote/serialize";
 
 import MusicMeta from "@/posts/music.meta.json";
@@ -15,7 +16,10 @@ import {
 	MusicPostMetadataSchema,
 	SpotifyImageMetadataSchema
 } from "@/libraries/schemas";
-import { fetchMusicPostInformation } from "@/libraries/functions";
+import { fetchMusicPostInformationBySlug } from "@/libraries/functions";
+import { YoutubeEmbedTransformer, remarkLocalPost } from "@/libraries/plugins";
+
+const components = { Link };
 
 export default function MusicPostPage(props: MusicPostProps) {
 	const { source, post: { metadata, publishedAt } } = props;
@@ -45,7 +49,7 @@ export default function MusicPostPage(props: MusicPostProps) {
 				<div className="flex flex-col items-end w-full">
 					<ul className="text-right space-y-2 font-light w-full">
 						<li><Link href="/music" className="text-sm">Back to music</Link></li>
-						<hr className="w-full"/>
+						<li><hr className="w-full" /></li>
 						<li>{metadata.type === "album" ? "LP" : "Single"}</li>
 						<li>{metadata.release}</li>
 						<li>{Math.ceil(metadata.duration / 1000 / 60)} mins</li>
@@ -55,10 +59,12 @@ export default function MusicPostPage(props: MusicPostProps) {
 			</aside>
 			<article className="sm:w-2/3">
 				<section className="mb-4">
-					<span className="text-xl font-extra flex items-center gap-2">
-						<div
-							className="h-12 w-12 rounded-full border relative overflow-hidden"
-						>
+					<Link
+						href={`/music/artists/${firstArtist.slug}`}
+						aria-label={`${firstArtist.name} Artist Page`}
+						className="text-xl font-extra flex items-center gap-2"
+					>
+						<div className="h-12 w-12 rounded-full border relative overflow-hidden">
 							{
 								firstArtist.cover && (
 									<Image
@@ -72,7 +78,7 @@ export default function MusicPostPage(props: MusicPostProps) {
 							}
 						</div>
 						<h2 className="font-light">{firstArtist.name}</h2>
-					</span>
+					</Link>
 					<h1 className="text-5xl">{metadata.name}</h1>
 					{
 						publishedAt && (
@@ -89,8 +95,8 @@ export default function MusicPostPage(props: MusicPostProps) {
 						)
 					}
 				</section>
-				<div className="font-light space-y-6 prose lg:prose-lg">
-					<MDXRemote {...source} />
+				<div className="font-light space-y-6 prose">
+					<MDXRemote {...source} components={components} />
 				</div>
 			</article>
 		</main>
@@ -117,17 +123,22 @@ export const getStaticProps: GetStaticProps<MusicPostProps, { slug: string }> = 
 		return { redirect: { destination: "/music", permanent: false } };
 	}
 
-	const post = await fetchMusicPostInformation.local(params?.slug);
+	const post = await fetchMusicPostInformationBySlug(params?.slug);
 
 	if (!post) { return { redirect: { destination: "/music", permanent: false } }; }
 
 	const source = await serialize(
 		post.content || "",
 		{
-			// mdxOptions: {
-			// 	remarkPlugins: markdown.plugins?.remarkPlugins as any,
-			// 	rehypePlugins: markdown.plugins?.rehypePlugins as any,
-			// },
+			mdxOptions: {
+				remarkPlugins: [
+					remarkLocalPost,
+					[
+						remarkEmbedder,
+						{ transformers: [YoutubeEmbedTransformer] }
+					],
+				]
+			},
 			scope: post.metadata
 		}
 	);
@@ -136,7 +147,7 @@ export const getStaticProps: GetStaticProps<MusicPostProps, { slug: string }> = 
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const paths = await parseCMSPaths({ path: "./music", meta: MusicMeta.entries })
+	const paths = await parseCMSPaths({ path: "./posts/music", meta: MusicMeta.entries })
 
 	return { paths, fallback: false };
 }

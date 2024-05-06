@@ -26,9 +26,6 @@ importers:
       '@remark-embedder/core':
         specifier: ^3.0.2
         version: 3.0.2
-      '@tanstack/react-query':
-        specifier: ^5.31.0
-        version: 5.31.0(react@18.2.0)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -38,9 +35,6 @@ importers:
       next:
         specifier: 14.2.2
         version: 14.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      next-connect:
-        specifier: ^1.0.0
-        version: 1.0.0
       next-mdx-remote:
         specifier: ^4.4.1
         version: 4.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -56,9 +50,6 @@ importers:
       react-icons:
         specifier: ^5.1.0
         version: 5.1.0(react@18.2.0)
-      sharp:
-        specifier: ^0.33.3
-        version: 0.33.3
       zod:
         specifier: ^3.23.4
         version: 3.23.4
@@ -66,9 +57,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.12
         version: 0.5.12(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5)))
-      '@tanstack/react-query-devtools':
-        specifier: ^5.31.0
-        version: 5.31.0(@tanstack/react-query@5.31.0(react@18.2.0))(react@18.2.0)
+      '@types/mdast':
+        specifier: ^4.0.3
+        version: 4.0.3
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
@@ -102,6 +93,9 @@ importers:
       postcss:
         specifier: ^8
         version: 8.4.38
+      sharp:
+        specifier: ^0.33.3
+        version: 0.33.3
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))
@@ -117,6 +111,9 @@ importers:
       typescript:
         specifier: ^5
         version: 5.4.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
       vitest:
         specifier: ^1.5.2
         version: 1.5.2(@types/node@20.12.7)(terser@4.8.1)
@@ -669,23 +666,6 @@ packages:
     resolution: {integrity: sha512-CNwpBpconcP7ppxmuq3qvaCxiRWnbhANpY/ruH4L5qs2GCiVDJXde/pjj2HWPV1+Q4G9+V/etrwUYopdcjAlyg==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
-
-  '@tanstack/query-core@5.31.0':
-    resolution: {integrity: sha512-r1V6RXB1LUGoEp7HGHVK4Tl59kOvAfwI9/kNNwPsb6cR5oHgfn1683sQnoH/3xEDUKOen3fEO90EnGE+OjRw5A==}
-
-  '@tanstack/query-devtools@5.28.10':
-    resolution: {integrity: sha512-5UN629fKa5/1K/2Pd26gaU7epxRrYiT1gy+V+pW5K6hnf1DeUKK3pANSb2eHKlecjIKIhTwyF7k9XdyE2gREvQ==}
-
-  '@tanstack/react-query-devtools@5.31.0':
-    resolution: {integrity: sha512-YAS9JT/9fq+0a6kXh2cgpJiJvrguHMJcXmQvJqcx14c2EJjdVGdcxDPhqrWeeUp5yO9uY3glyZ4XZ9YkUcNRUQ==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.31.0
-      react: ^18.0.0
-
-  '@tanstack/react-query@5.31.0':
-    resolution: {integrity: sha512-/GUUDFA8yNIYZaSyImkecVfN9mAVw1Y+9LpHkOQ1DdWaKnbLtwfjelh6OF+6EtwQCycH50EjTL68UK3YTMxwvg==}
-    peerDependencies:
-      react: ^18.0.0
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -2351,10 +2331,6 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  next-connect@1.0.0:
-    resolution: {integrity: sha512-FeLURm9MdvzY1SDUGE74tk66mukSqL6MAzxajW7Gqh6DZKBZLrXmXnGWtHJZXkfvoi+V/DUe9Hhtfkl4+nTlYA==}
-    engines: {node: '>=16'}
-
   next-mdx-remote@4.4.1:
     resolution: {integrity: sha512-1BvyXaIou6xy3XoNF4yaMZUCb6vD2GTAa5ciOa6WoO+gAUTYsb1K4rI/HSC2ogAWLrb/7VSV52skz07vOzmqIQ==}
     engines: {node: '>=14', npm: '>=7'}
@@ -2711,10 +2687,6 @@ packages:
   regex-not@1.0.2:
     resolution: {integrity: sha512-J6SDjUgDxQj5NusnOtdFxDwN/+HWykR8GELwctJ7mdqhcyy1xEc4SRFHUXvxTp661YaVKAjfRLZ9cCqS6tn32A==}
     engines: {node: '>=0.10.0'}
-
-  regexparam@2.0.2:
-    resolution: {integrity: sha512-A1PeDEYMrkLrfyOwv2jwihXbo9qxdGD3atBYQA9JJgreAx8/7rC6IUkWOw2NQlOxLp2wL0ifQbh1HuidDfYA6w==}
-    engines: {node: '>=8'}
 
   remark-mdx@2.3.0:
     resolution: {integrity: sha512-g53hMkpM0I98MU266IzDFMrTD980gNF3BJnkyFcmN+dD873mQeD5rdMO3Y2X+x8umQfbSE0PcoEDl7ledSA+2g==}
@@ -3932,21 +3904,6 @@ snapshots:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))
-
-  '@tanstack/query-core@5.31.0': {}
-
-  '@tanstack/query-devtools@5.28.10': {}
-
-  '@tanstack/react-query-devtools@5.31.0(@tanstack/react-query@5.31.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@tanstack/query-devtools': 5.28.10
-      '@tanstack/react-query': 5.31.0(react@18.2.0)
-      react: 18.2.0
-
-  '@tanstack/react-query@5.31.0(react@18.2.0)':
-    dependencies:
-      '@tanstack/query-core': 5.31.0
-      react: 18.2.0
 
   '@tsconfig/node10@1.0.11': {}
 
@@ -6242,11 +6199,6 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-connect@1.0.0:
-    dependencies:
-      '@tsconfig/node16': 1.0.4
-      regexparam: 2.0.2
-
   next-mdx-remote@4.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@mdx-js/mdx': 2.3.0
@@ -6659,8 +6611,6 @@ snapshots:
     dependencies:
       extend-shallow: 3.0.2
       safe-regex: 1.1.0
-
-  regexparam@2.0.2: {}
 
   remark-mdx@2.3.0:
     dependencies:
