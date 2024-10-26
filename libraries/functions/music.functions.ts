@@ -11,7 +11,10 @@ import {
 } from "@/libraries/schemas";
 import { PromiseOrNot } from "../types";
 
-export const fetchMusicPostBySlug = async function (slug: string) {
+const musicArtists = z.array(MusicArtistMetadataSchema).parse(MusicArtistsMeta.entries);
+const musicCovers = z.array(SpotifyImageMetadataSchema).parse(MusicCoversMeta.entries);
+
+export const fetchMusicPostBySlug = function (slug: string) {
 	const musicPosts = z.array(MusicContentPostSchema).parse(MusicPostsMeta.entries);
 
 	return musicPosts.find(post => post.slug === slug) || null;
@@ -103,14 +106,14 @@ export const fetchMusicArtists = async function <T>(
 	}
 }
 
-export const fetchMusicArtistBySlug = function (slug: string) {
-	const musicArtists = z.array(MusicArtistMetadataSchema).parse(MusicArtistsMeta.entries);
+export const fetchMusicArtistBySpotifyID = function (spotifyId: string) {
+	return musicArtists.find(artist => artist.spotifyId === spotifyId);
+}
 
+export const fetchMusicArtistBySlug = function (slug: string) {
 	return musicArtists.find(post => post.slug === slug) || null;
 }
 
 export const fetchMusicCoverBySlug = function (slug: string) {
-	const musicCovers = z.array(SpotifyImageMetadataSchema).parse(MusicCoversMeta.entries);
-
 	return musicCovers.find(post => post.slug === slug) || null;
 }

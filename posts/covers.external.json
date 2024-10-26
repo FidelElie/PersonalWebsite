@@ -67,28 +67,6 @@
       "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABNElEQVR4nAXB3U6CUAAA4PNSbXVXXrTl5vxJxGmhcAyRI4QoIJCCjMISTZQkTcnI5oVtXthVvVzfB2arg6pYlu4htkuWoG3Zomaaw9CwvHAfglwKN4x+9OS5HOyIzMSfeM8DVhaSdUIeiSBxdEKfx6Klsnm5ibzKpFMcKCWOTSgOvPNFkE9g6OI0XPCvgbCLFIknM1QPUil3StihDgroPn9V276hv6hzCLWeTHECT8NMoyVxpgaKTLvcfAjGTF+6Xk6N3/3j3BdkPm2yssp74DiJFSrlr1WDqV7OBu2f79FubUr1JM2pRNUFJAfxWm4+0z838m6tbT/MYKELzRIm+FBfA5YnRaeGLKJFZFE2LpTJsWo73WmhEdV77yCGY46vDlctMQfhWZpM0wZym7dBPK9gOPUPXHuMdOyyCx8AAAAASUVORK5CYII="
     },
     {
-      "slug": "ama-lou-ddd",
-      "type": "project",
-      "images": [
-        {
-          "height": 640,
-          "url": "https://i.scdn.co/image/ab67616d0000b2737da9f1a5290e974382aee15e",
-          "width": 640
-        },
-        {
-          "height": 300,
-          "url": "https://i.scdn.co/image/ab67616d00001e027da9f1a5290e974382aee15e",
-          "width": 300
-        },
-        {
-          "height": 64,
-          "url": "https://i.scdn.co/image/ab67616d000048517da9f1a5290e974382aee15e",
-          "width": 64
-        }
-      ],
-      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+AM25nNC6ndG7n9G8n9bAo9S+n9K8ndG7ntC6nc63mgDXvZzZv53awJ3dw6HLsY7TuJTew57bv5rav5ravJUA48Sd5cWe6cuj2beOjVkqjmQ63LuP6sid58SY5cOWAO3Mou/NovLRpuvGmKBhLWAxEcCYZPrSn/zUpPrToAD51aT61KX71qf21qmifVVONCF3USzds3zwy5njvYkA/eOx/eSz/OGwy7KRrJmBo5R+kHdehVUqg10xaUolAP/suf/vuPzpsryedaCIaZ2Ia5+Ha6R7T5pxQm5NJQDSrnDHo2TLqGyuj12eglaNelaVgl6Vd0iLZzN6Wy0AhGAoe1gimnhCknlRkXlThXVUdWdMg2pAgV0ofl4sAHtaKHdWJ5Z2QV5LMysYDzEfFCYXEHllQJN0P4ttOqzsrk8+o08wAAAAAElFTkSuQmCC"
-    },
-    {
       "slug": "sir-november",
       "type": "project",
       "images": [
@@ -133,6 +111,28 @@
       "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAC4YAAAuGAEqqicgAAAA3ElEQVR4nGP4DwM/fvy4euXK5UsXP3748P///3///v3//5/h////f//+/f////27dzVVlXnYWVcsWfz///8/f/5ApSEKb9+4HpeQ6h0QvmDubCzSt65fzczKj0vKmD9nJhbph/fvGenpCvByLVu8EE0aZPedu3esTQwtNZUWLZiPzfCbNyoiowu8fZbMm/v////fv3//+/cPLA12+c2bN/O9fRsDQzauWI5F9/WTh5a3t61sbdu/GKT727dvnz9/BklDwLf3b399+fz7169Pr1/+////zJkz27dvBwCQrPmLHyoQxwAAAABJRU5ErkJggg=="
     },
     {
+      "slug": "ama-lou-ddd",
+      "type": "project",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2737da9f1a5290e974382aee15e",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e027da9f1a5290e974382aee15e",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d000048517da9f1a5290e974382aee15e",
+          "width": 64
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+AM25nNC6ndG7n9G8n9bAo9S+n9K8ndG7ntC6nc63mgDXvZzZv53awJ3dw6HLsY7TuJTew57bv5rav5ravJUA48Sd5cWe6cuj2beOjVkqjmQ63LuP6sid58SY5cOWAO3Mou/NovLRpuvGmKBhLWAxEcCYZPrSn/zUpPrToAD51aT61KX71qf21qmifVVONCF3USzds3zwy5njvYkA/eOx/eSz/OGwy7KRrJmBo5R+kHdehVUqg10xaUolAP/suf/vuPzpsryedaCIaZ2Ia5+Ha6R7T5pxQm5NJQDSrnDHo2TLqGyuj12eglaNelaVgl6Vd0iLZzN6Wy0AhGAoe1gimnhCknlRkXlThXVUdWdMg2pAgV0ofl4sAHtaKHdWJ5Z2QV5LMysYDzEfFCYXEHllQJN0P4ttOqzsrk8+o08wAAAAAElFTkSuQmCC"
+    },
+    {
       "slug": "saba",
       "type": "artist",
       "images": [
@@ -175,28 +175,6 @@
         }
       ],
       "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+AMrZ6c/c6tXg7Nvk7t3l79/n8OXr8+Xr8ubr8ubq8QDP1uDh5u7k6PHk5+/q7PDp7PHe4OTh5evl6e/r7PEAiIZ7k5SHu7u229zd8vLy5eTlgXJpraal6ezy4uTpAIeFfH97cYmPj6qmp7etpZaNf3ZYP72qm+rr8fDx9QCanJ17aVp1YEZ4WD+ifmeGbFlrSCSFc12Xmpioq60AiYN8XjoVXTYOXzYLfVIoo3tZdHJvXkw5aVpJdnhyAI+OjWhJKFwzCWE6EHxSKIhiQHB2fVtAJWJFJImNkQCOkJCHgXlsVDxmQBlbMQheQyprb3hXMQpePx2GiYsAgX99i46PfnhxVzANVCcAaGRmaWdsVSoAZEswgYiOAHl2c4KEh3RoXVQoAF4+I3eMqFxCLls3EHl4dYCIkBrsox83sqBtAAAAAElFTkSuQmCC"
-    },
-    {
-      "slug": "ama-lou",
-      "type": "artist",
-      "images": [
-        {
-          "url": "https://i.scdn.co/image/ab6761610000e5ebd936ef4f6e926b1c6d7ac0d0",
-          "height": 640,
-          "width": 640
-        },
-        {
-          "url": "https://i.scdn.co/image/ab67616100005174d936ef4f6e926b1c6d7ac0d0",
-          "height": 320,
-          "width": 320
-        },
-        {
-          "url": "https://i.scdn.co/image/ab6761610000f178d936ef4f6e926b1c6d7ac0d0",
-          "height": 160,
-          "width": 160
-        }
-      ],
-      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+ABEdDRkfDSIiDC4mDSEfCB8eCSolDR4hDBUeDQ4cCgAaHw4qJQ1CLw86KgtJQDA3NSUlIAY1Kg4eIQ0UHQwAKiUOKyQLMycLEBAAdFJAdlE9DRMAMSgNKSUNHyENACkkDQoZCiIkE2BNPnlSOGRBIgkSBRIgDBAcCCglDAAfJREBFQdEMRTgpZbfqa2kcEdLNhYKGAYLHAolJAwAFyQTABIGPisPzZiT6bDB2JyfSj8sFSgSFSQQGiALAA4cDAIRBE0xD8eRj+6ywMySkiUiFAsaChQfDBIdCQATGgk4LBRBLBKlgYfurbLdmpFzSCYXFgINGAYVHAcAMCYPWT4jEhIFr3Fg65B4wHBRYTkaQzAWTzccIB4GAEAuEBMUAC8yJ2RJNkMvHiAbDxUWCRUZCCskDjAkB0AmPcvlGczUAAAAAElFTkSuQmCC"
     },
     {
       "slug": "sir",
@@ -268,6 +246,28 @@
         }
       ],
       "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA50lEQVR4nFWOIaqGQBRG3YdZXMBLYlAwGsQgWMakYNAFiFjcg8GkxSSCUdPgAgwOVhHjLMA0M87jOT/8vJM+7uG790r8hb6IzBgjhDzPwzmXOOciXdeVJInruhBCUfin27bN89y2bcMwMMZiLgl333ff9+u6DsNgWRZCSFz5a4tV4zjWdZ1lma7r8zw/L9/lx3FM0xRFke/7TdNgjL+aUgohLIrCNE3DMKqqOs/z8xqldBgGAEAcx6qqyrIMANi27dMmhHRd5zhOWZae5ymKEobhvu8fzRhbliUIAk3Tfl7SNEUIMcZ+ASMg34p/ld8mAAAAAElFTkSuQmCC"
+    },
+    {
+      "slug": "ama-lou",
+      "type": "artist",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5ebd936ef4f6e926b1c6d7ac0d0",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616100005174d936ef4f6e926b1c6d7ac0d0",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f178d936ef4f6e926b1c6d7ac0d0",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "placeholder": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVR4nAE2Acn+ABEdDRkfDSIiDC4mDSEfCB8eCSolDR4hDBUeDQ4cCgAaHw4qJQ1CLw86KgtJQDA3NSUlIAY1Kg4eIQ0UHQwAKiUOKyQLMycLEBAAdFJAdlE9DRMAMSgNKSUNHyENACkkDQoZCiIkE2BNPnlSOGRBIgkSBRIgDBAcCCglDAAfJREBFQdEMRTgpZbfqa2kcEdLNhYKGAYLHAolJAwAFyQTABIGPisPzZiT6bDB2JyfSj8sFSgSFSQQGiALAA4cDAIRBE0xD8eRj+6ywMySkiUiFAsaChQfDBIdCQATGgk4LBRBLBKlgYfurbLdmpFzSCYXFgINGAYVHAcAMCYPWT4jEhIFr3Fg65B4wHBRYTkaQzAWTzccIB4GAEAuEBMUAC8yJ2RJNkMvHiAbDxUWCRUZCCskDjAkB0AmPcvlGczUAAAAAElFTkSuQmCC"
     }
   ]
 }

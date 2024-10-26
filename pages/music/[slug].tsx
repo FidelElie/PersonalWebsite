@@ -17,9 +17,14 @@ import {
 	SpotifyImageMetadataSchema
 } from "@/libraries/schemas";
 import { fetchMusicPostInformationBySlug } from "@/libraries/functions";
-import { YoutubeEmbedTransformer, remarkLocalPost } from "@/libraries/plugins";
+import { YoutubeEmbedTransformer, remarkRegExpDirective } from "@/libraries/plugins";
+import { EmbedDirective, MusicPostDirective } from "@/libraries/plugins/directives";
 
-const components = { Link };
+import { MusicBookmark } from "@/components/interfaces";
+
+const components = {
+	MusicBookmark
+}
 
 export default function MusicPostPage(props: MusicPostProps) {
 	const { source, post: { metadata, publishedAt } } = props;
@@ -40,6 +45,7 @@ export default function MusicPostPage(props: MusicPostProps) {
 								src={firstImageCover.images[0].url}
 								alt={`${metadata.name} cover`}
 								placeholder="blur"
+								className="rounded"
 								blurDataURL={firstImageCover.placeholder}
 								fill
 							/>
@@ -96,7 +102,7 @@ export default function MusicPostPage(props: MusicPostProps) {
 					}
 				</section>
 				<div className="font-light space-y-6 prose">
-					<MDXRemote {...source} components={components} />
+					<MDXRemote {...source} components={components}/>
 				</div>
 			</article>
 		</main>
@@ -132,11 +138,14 @@ export const getStaticProps: GetStaticProps<MusicPostProps, { slug: string }> = 
 		{
 			mdxOptions: {
 				remarkPlugins: [
-					remarkLocalPost,
 					[
-						remarkEmbedder,
-						{ transformers: [YoutubeEmbedTransformer] }
+						remarkRegExpDirective,
+						[MusicPostDirective, EmbedDirective]
 					],
+					// [
+					// 	remarkEmbedder,
+					// 	{ transformers: [YoutubeEmbedTransformer] }
+					// ],
 				]
 			},
 			scope: post.metadata

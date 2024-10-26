@@ -1,6 +1,7 @@
 import { renderToString } from "react-dom/server";
 import { Transformer } from "@remark-embedder/core";
-import { request } from "../clients";
+
+import { request } from "@/libraries/clients";
 
 export const YoutubeEmbedTransformer: Transformer = {
 	name: "Youtube",

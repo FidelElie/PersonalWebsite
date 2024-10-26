@@ -21,17 +21,6 @@
       ]
     },
     {
-      "slug": "ama-lou",
-      "name": "Ama Lou",
-      "spotifyLink": "https://open.spotify.com/artist/2tAqnHDAgnGtjnlzyoa38L",
-      "spotifyId": "2tAqnHDAgnGtjnlzyoa38L",
-      "genres": [
-        "alternative r&b",
-        "r&drill",
-        "uk contemporary r&b"
-      ]
-    },
-    {
       "slug": "sir",
       "name": "SiR",
       "spotifyLink": "https://open.spotify.com/artist/3QTDHixorJelOLxoxcjqGx",
@@ -58,6 +47,17 @@
       "spotifyLink": "https://open.spotify.com/artist/0IB0VjX9NSrGX6PjCXGVcq",
       "spotifyId": "0IB0VjX9NSrGX6PjCXGVcq",
       "genres": [
+        "uk contemporary r&b"
+      ]
+    },
+    {
+      "slug": "ama-lou",
+      "name": "Ama Lou",
+      "spotifyLink": "https://open.spotify.com/artist/2tAqnHDAgnGtjnlzyoa38L",
+      "spotifyId": "2tAqnHDAgnGtjnlzyoa38L",
+      "genres": [
+        "alternative r&b",
+        "r&drill",
         "uk contemporary r&b"
       ]
     }

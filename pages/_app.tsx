@@ -7,11 +7,11 @@ import { Footer, Navbar } from "@/components/interfaces";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <main className="flex flex-col flex-grow">
         <Component {...pageProps} />
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 }
