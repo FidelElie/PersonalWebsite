@@ -1,34 +1,43 @@
 {
   "name": "app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest",
+    "@env": "ts-node ./scripts/env.ts",
+    "@icons": "ts-node ./scripts/icon.ts"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
-    "firebase": "^8.7.1",
-    "firebase-admin": "^9.11.0",
-    "next": "11.0.1",
-    "nookies": "^2.5.2",
-    "react": "17.0.2",
-    "react-datepicker": "^4.1.1",
-    "react-dom": "17.0.2",
-    "swr": "^0.5.6"
+    "@floating-ui/react": "^0.23.0",
+    "@headlessui/react": "^1.7.14",
+    "@tanstack/react-query": "^4.29.1",
+    "@tanstack/react-query-devtools": "^4.29.1",
+    "date-fns": "^4.4.0",
+    "firebase": "^9.19.1",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-viewport-list": "^7.1.1",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.3.3",
-    "@types/react": "17.0.14",
-    "@types/react-datepicker": "^4.1.3",
-    "autoprefixer": "^10.3.1",
-    "eslint": "7.30.0",
-    "eslint-config-next": "11.0.1",
-    "postcss": "^8.3.5",
-    "tailwind-scrollbar": "^1.3.1",
-    "tailwindcss": "^2.2.4",
-    "typescript": "4.3.5"
+    "@tailwindcss/forms": "^0.5.3",
+    "@types/node": "^18.15.11",
+    "@types/react": "18.0.35",
+    "@types/react-dom": "^18.0.11",
+    "autoprefixer": "^10.4.14",
+    "commander": "^10.0.0",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.2",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "5.0.4",
+    "vitest": "^0.30.1"
   }
 }

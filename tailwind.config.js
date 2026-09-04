@@ -1,10 +1,11 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: [
+  content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./lib/**/*.{js,ts,jsx,tsx}"
+    "./library/**/*.{js,ts,jsx,tsx}"
   ],
-  darkMode: false,
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -12,13 +13,21 @@ module.exports = {
         "secondary": "#282C34",
         "tertiary": "#7b869b"
       },
+      borderWidth: {
+        DEFAULT: '0.5px',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-0.5deg)' },
+          '50%': { transform: 'rotate(0.5deg)' },
+        }
+      },
+      animation: {
+        wiggle: 'wiggle 1s ease-in-out infinite',
+      }
     }
   },
-  variants: {
-    extend: {},
-  },
   plugins: [
-    require("@tailwindcss/forms"),
-    require("tailwind-scrollbar"),
+    require("@tailwindcss/forms")
   ],
 }

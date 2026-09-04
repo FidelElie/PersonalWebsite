@@ -1,0 +1,22 @@
+.CurriculumVitaePage {
+	width: 21cm;
+	height: 29.7cm;
+	@apply shadow-lg bg-white overflow-hidden flex rounded relative;
+}
+
+.CurriculumVitaeContainerTrack { position: absolute; }
+
+.CurriculumVitaeContainer {
+	@apply w-full h-full overflow-hidden relative transition-all;
+}
+
+
+@media print {
+	.CurriculumVitaePage {
+		@apply rounded-none border-none shadow-none;
+	}
+
+	.CurriculumVitaeContainer, .CurriculumVitaeContainerTrack {
+		all: unset !important;
+	}
+}
