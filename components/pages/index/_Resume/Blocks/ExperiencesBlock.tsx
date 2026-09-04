@@ -1,8 +1,9 @@
-import { toTimestamp } from "@/library/utilities";
+import { formatDate, toTimestamp } from "@/library/utilities";
 import { ExperienceModel, TagModel } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 import { PointsDisplay } from "@/components/interfaces";
+
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
 import { PlaceholderBlock } from "./PlaceholderBlock";
 
@@ -14,22 +15,27 @@ export const ExperiencesBlock = () => {
 	);
 
 	return (
-		<Box className="space-y-1.5 cursor-pointer" onClick={() => setView("experiences")}>
-			<Heading.Two className="text-primary uppercase" light>Relevant Work Experience</Heading.Two>
-			<Flex.Column className="space-y-2">
-				<For each={experiences} else={<PlaceholderBlock title="experiences"/>}>
-					{	experience => (
-							<ExperiencePoint
-								key={experience.id}
-								experience={experience}
-								tags={tags}
-								showDescription={settings.useDescriptions}
-							/>
-						)
-					}
-				</For>
-			</Flex.Column>
-		</Box>
+		<Show if={experiences.length}>
+			<Box
+				className="space-y-1.5 cursor-pointer"
+				onClick={() => setView("experiences")}
+			>
+				<Heading.Two className="text-primary uppercase" light>Relevant Work Experience</Heading.Two>
+				<Flex.Column className="space-y-2">
+					<For each={experiences} else={<PlaceholderBlock title="experiences"/>}>
+						{	experience => (
+								<ExperiencePoint
+									key={experience.id}
+									experience={experience}
+									tags={tags}
+									showDescription={settings.useDescriptions}
+								/>
+							)
+						}
+					</For>
+				</Flex.Column>
+			</Box>
+		</Show>
 	)
 }
 
@@ -44,12 +50,12 @@ const ExperiencePoint = (props: ExperiencePointProps) => {
 				<Heading.Three className="text-black" light>{experience.title}</Heading.Three>
 				<Flex.Row className="items-center text-xs text-secondary">
 					<Copy.Inline className="text-black tracking-wide" light>
-						{toTimestamp(experience.startDate).toDate().getFullYear()}
+						{formatDate(experience.startDate)}
 					</Copy.Inline>
 					<Copy.Inline light>&nbsp;-&nbsp;</Copy.Inline>
 					<Copy.Inline className="text-black tracking-wide" light>
 						<Show if={experience.endDate} else="Present">
-							{ endDate => toTimestamp(endDate).toDate().getFullYear() }
+							{ endDate => formatDate(endDate) }
 						</Show>
 					</Copy.Inline>
 				</Flex.Row>

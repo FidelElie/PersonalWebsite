@@ -1,9 +1,10 @@
-import { toTimestamp } from "@/library/utilities";
+import { formatDate, toTimestamp } from "@/library/utilities";
 import type { DetailModel } from "@/library/models";
 
 import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
+import { SidebarTag } from "@/components/interfaces";
 
 const narrowToEducation = (details: DetailModel[]) => {
 	return details.map(
@@ -41,12 +42,12 @@ const EducationEntry = (props: EducationEntryProps) => {
 				<Copy className="text-white">
 					{education.title}
 				</Copy>
-				<Flex.Row className="items-center text-xs" >
-					<Copy.Inline className="text-white tracking-wide" light>
+				<Flex.Row className="items-center">
+					<Copy.Inline className="text-white text-xs whitespace-nowrap" light>
 						{toTimestamp(education.data.startDate).toDate().getFullYear()}
 					</Copy.Inline>
-					<Copy.Inline light>&nbsp;-&nbsp;</Copy.Inline>
-					<Copy.Inline className="text-white tracking-wide" light>
+					<Copy.Inline>&nbsp;-&nbsp;</Copy.Inline>
+					<Copy.Inline className="text-white text-xs whitespace-nowrap" light>
 						<Show if={education.data.endDate} else="Present">
 							{endDate => toTimestamp(endDate).toDate().getFullYear()}
 						</Show>
@@ -56,11 +57,7 @@ const EducationEntry = (props: EducationEntryProps) => {
 			<Copy className="text-white text-xs">
 				{education.data.qualification}
 			</Copy>
-			<Box className="p-0.5 border border-secondary rounded w-min">
-				<Copy className="text-secondary text-xs whitespace-nowrap" light>
-					{education.data.organisation}
-				</Copy>
-			</Box>
+			<SidebarTag>{education.data.organisation}</SidebarTag>
 		</Box>
 	)
 }

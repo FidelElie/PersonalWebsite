@@ -4,29 +4,37 @@ import { Box, Copy, Flex, For, Heading, Show } from "@/components/core";
 import { PointsDisplay } from "@/components/interfaces";
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
 import { PlaceholderBlock } from "./PlaceholderBlock";
+import { clc } from "@/library/utilities";
 
 export const ProjectsBlock = () => {
 	const { selected: { projects }, queries: { tags }, setView, settings } = useResumeBuilder();
 
 	return (
-		<Box
-			className="items-center flex-wrap space-y-1.5 cursor-pointer"
-			onClick={() => setView("projects")}
-		>
-			<Heading.Two className="text-primary uppercase" light>Notable Projects</Heading.Two>
-			<Flex.Column className="space-y-2">
-				<For each={projects} else={<PlaceholderBlock title="projects"/>}>
-					{project => (
-							<ProjectPoint
-								key={project.id}
-								project={project}
-								tags={tags}
-								showDescription={settings.useDescriptions}
-							/>
-						)}
-				</For>
-			</Flex.Column>
-		</Box>
+		<Show if={projects.length}>
+			<Box
+				className={
+						clc(
+							"items-center flex-wrap space-y-1.5 cursor-pointer",
+							!projects.length && "no-print"
+						)
+				}
+				onClick={() => setView("projects")}
+			>
+				<Heading.Two className="text-primary uppercase" light>Notable Projects</Heading.Two>
+				<Flex.Column className="space-y-2">
+					<For each={projects} else={<PlaceholderBlock title="projects"/>}>
+						{project => (
+								<ProjectPoint
+									key={project.id}
+									project={project}
+									tags={tags}
+									showDescription={settings.useDescriptions}
+								/>
+							)}
+					</For>
+				</Flex.Column>
+			</Box>
+		</Show>
 	)
 }
 

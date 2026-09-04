@@ -6,18 +6,18 @@ export const SidebarSettings = () => {
 
 	return (
 		<Flex.Column className="space-y-3 pr-1">
-			<SettingsToggle
+			{/* <SettingsToggle
 				label="Show Descriptions (Not recommended)"
 				description="Display project and work experience descriptions instead of listing points."
 				checked={settings.useDescriptions}
 				setting="useDescriptions"
-			/>
-			<SettingsToggle
+			/> */}
+			{/* <SettingsToggle
 				label="Show React Tag"
 				description="Display 'Made With React' tag on CV."
 				checked={settings.showReactTag}
 				setting="showReactTag"
-			/>
+			/> */}
 			<SettingsToggle
 				label="Show Website Link"
 				description="Show link to the website on CV."

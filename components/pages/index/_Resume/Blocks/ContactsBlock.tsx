@@ -6,11 +6,11 @@ import { Flex, For, Copy, Icon, IconNames } from "@/components/core";
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
 
 const renderTypeAsLink: typeof CONTACT_MEDIUMS[number][] = [
-  "linkedin", "email", "facebook", "github", "instagram", "linkedin", "phone"
+  "linkedin", "email", "facebook", "github", "instagram", "linkedin", "phone", "portfolio"
 ];
 
 const orderPriority: readonly typeof CONTACT_MEDIUMS[number][] = [
-  "phone", "location", "email", "github", "linkedin"
+  "phone", "location", "email", "github", "linkedin", "portfolio"
 ];
 
 const narrowToContacts = (details: DetailModel[]) => {
@@ -60,6 +60,8 @@ const ContactPoint = (props: ContactPointProps) => {
         return "instagram-fill";
       case "location":
         return "map-pin-2-line";
+      case "portfolio":
+        return "book-line";
       default:
         throw new Error("Unknown contact medium");
     }
@@ -83,7 +85,10 @@ const ContactPoint = (props: ContactPointProps) => {
   return (
     <BaseTag
       className="pr-2 pb-2"
-      {...(BaseTag !== "div" ? { href: determineParseLink(data.medium, data.value) } : {}) }
+      {...(BaseTag !== "div" ? {
+        href: determineParseLink(data.medium, data.value),
+        ...(!(["phone", "email"]).includes(data.medium) ? { target: "_blank" } :{})
+      } : {}) }
     >
       <Flex.Row className="items-center tracking-tighter text-sm">
         <Icon name={determineIconName(data.medium)} className="text-lg mr-1 text-gray-600"/>

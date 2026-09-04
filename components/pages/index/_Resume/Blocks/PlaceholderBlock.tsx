@@ -14,7 +14,7 @@ export const PlaceholderBlock = (props: PlaceholderBlockProps) => {
 			)}
 		>
 			<Icon name="add-circle-line" className="text-4xl mb-3 group-hover:text-primary" />
-			<Copy className="group-hover:text-primary">Add {title}</Copy>
+			<Copy className="group-hover:text-primary" light>Add {title}</Copy>
 		</Flex.Column>
 	)
 }

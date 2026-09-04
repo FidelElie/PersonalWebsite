@@ -3,6 +3,7 @@ import { DetailModel } from "@/library/models";
 import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
+import { SidebarTag } from "@/components/interfaces";
 
 const proficiencyPriority = {
 	Native: 1,
@@ -43,9 +44,7 @@ const LanguageEntry = (props: LanguageEntryProps) => {
 	return (
 		<Flex.Row className="justify-between items-center">
 			<Copy className="text-white text-sm">{language.title}</Copy>
-			<Copy className="text-white text-xs tracking-tighter" light>
-				{language.data.proficiency}
-			</Copy>
+			<SidebarTag>{language.data.proficiency}</SidebarTag>
 		</Flex.Row>
 	)
 }

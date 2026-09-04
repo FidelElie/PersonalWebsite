@@ -19,7 +19,7 @@ export type EducationDetailSchema = z.infer<typeof EducationDetailSchema>;
 
 // Contact
 export const CONTACT_MEDIUMS = [
-	"phone", "linkedin", "instagram", "facebook", "github", "location", "email"
+	"phone", "linkedin", "instagram", "facebook", "github", "location", "email", "portfolio"
 ] as const;
 
 export const ContactDetailSchema = z.object({

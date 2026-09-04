@@ -1,6 +1,7 @@
 import { ReactNode, forwardRef } from "react";
 
 import { clc } from "@/library/utilities";
+import { twMerge } from "tailwind-merge";
 
 const BaseCopy = forwardRef<AsElements, BaseCopyProps>((props, ref) => {
 	const {
@@ -17,7 +18,7 @@ const BaseCopy = forwardRef<AsElements, BaseCopyProps>((props, ref) => {
 		<Tag
 			id={id}
 			htmlFor={htmlFor}
-			className={clc("font-light text-gray-500", !light && "dark:text-white", className)}
+			className={twMerge(clc("font-light text-gray-500", !light && "dark:text-white", className))}
 			ref={ref as any}
 		>
 			{ children }

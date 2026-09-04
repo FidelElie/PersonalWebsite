@@ -3,6 +3,7 @@ import { DetailModel } from "@/library/models";
 import { Box, Copy, Flex, For, Heading } from "@/components/core";
 
 import { useResumeBuilder } from "../../ResumeBuilderProvider";
+import { SidebarTag } from "@/components/interfaces";
 
 const narrowToActivities = (details: DetailModel[]) => {
 	return details.map(
@@ -32,14 +33,10 @@ const ActivityEntry = (props: InterestEntryProps) => {
 
 	return (
 		<Box>
-			<Copy className="text-white text-sm tracking-tighter">
+			<Copy className="text-white text-sm tracking-tighter mb-1">
 				{activity.title}
 			</Copy>
-			<Box className="p-0.5 border border-secondary rounded w-min">
-				<Copy className="text-secondary text-xs tracking-tighter whitespace-nowrap" light>
-					{activity.data.detail}
-				</Copy>
-			</Box>
+			<SidebarTag>{activity.data.detail}</SidebarTag>
 		</Box>
 	)
 }

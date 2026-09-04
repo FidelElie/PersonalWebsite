@@ -23,7 +23,7 @@ import { DetailModel, ExperienceModel, ProjectModel, SkillModel, TagModel } from
 
 const initialSettings = {
 	showReactTag: false,
-	showWebsiteLink: false,
+	showWebsiteLink: true,
 	useDescriptions: false
 }
 

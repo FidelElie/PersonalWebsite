@@ -186,7 +186,7 @@ export const Resume = () => {
 						<InterestsBlock />
 						<Show if={settings.showReactTag}>
 							<button onClick={() => setView("settings")}>
-								<Copy className="absolute bottom-2 text-white text-sm">Made with React</Copy>
+								<Copy className="absolute bottom-2 text-white text-xs">Made with React</Copy>
 							</button>
 						</Show>
 					</Flex.Column>
@@ -218,8 +218,8 @@ const WebsiteLink = () => {
 	useEffect(() => { setCurrentUrl(window.location.href); }, []);
 
 	return (
-		<Copy className="absolute bottom-2 text-sm">
-			CV can be found at <Link href={currentUrl}>{currentUrl}</Link>
+		<Copy className="absolute bottom-2 text-xs" light>
+			CV hosted at <Link href={currentUrl}>{currentUrl}</Link>
 		</Copy>
 	)
 }
