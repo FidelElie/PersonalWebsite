@@ -178,7 +178,7 @@ export const Resume = () => {
 				}}
 			>
 				<Box as="article" ref={page} className={styles.CurriculumVitaePage}>
-					<Flex.Column className="w-1/3 p-5 flex-shrink-0 bg-blue-500 relative space-y-3">
+					<Flex.Column className="w-1/3 p-5 flex-shrink-0 bg-blue-500 relative space-y-3 overflow-hidden">
 						<AboutBlock/>
 						<EducationBlock />
 						<ActivitiesBlock />

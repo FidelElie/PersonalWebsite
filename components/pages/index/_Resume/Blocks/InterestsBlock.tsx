@@ -32,11 +32,11 @@ const InterestEntry = (props: InterestEntryProps) => {
 	const { interest } = props;
 
 	return (
-		<Flex.Column className="tracking-tighter">
+		<Flex.Column className="tracking-tighter gap-y-1">
 			<Copy className="text-white text-sm">
 				{interest.title}
 			</Copy>
-			<Flex.Row className="flex-wrap gap-x-1.5 gap-y-1 my-1 line-clamp-2">
+			<Flex.Row className="flex-wrap gap-x-1.5 gap-y-1 line-clamp-2">
 				<For each={interest.data.detail.split(",")}>
 					{(detail, detailIndex) => <SidebarTag key={detailIndex}>{detail}</SidebarTag>}
 				</For>
